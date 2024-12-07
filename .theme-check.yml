@@ -15,9 +15,6 @@ ContentForHeaderModification:
   enabled: false
 
 # Enable specific checks
-Performance:
-  enabled: true
-
 LiquidSyntax:
   enabled: true
 
