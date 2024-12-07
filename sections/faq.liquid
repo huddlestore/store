@@ -13,11 +13,32 @@
               {{- block.settings.title | escape -}}
             </h1>
           {%- when 'question' -%}
-            <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" {{ block.shopify_attributes }}>
+            <div
+              class="faq__item"
+              itemscope
+              itemprop="mainEntity"
+              itemtype="https://schema.org/Question"
+              {{ block.shopify_attributes }}
+            >
               <div class="faq__item-wrapper">
-                <button class="faq__question heading h4" data-action="toggle-collapsible" aria-expanded="false" aria-controls="block-{{ block.id }}" itemprop="name">{{ block.settings.title | escape }} <span class="plus-button plus-button--large"></span></button>
+                <button
+                  class="faq__question heading h4"
+                  data-action="toggle-collapsible"
+                  aria-expanded="false"
+                  aria-controls="block-{{ block.id }}"
+                  itemprop="name"
+                >
+                  {{ block.settings.title | escape }}
+                  <span class="plus-button plus-button--large"></span>
+                </button>
 
-                <div id="block-{{ block.id }}" class="faq__answer-wrapper" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                <div
+                  id="block-{{ block.id }}"
+                  class="faq__answer-wrapper"
+                  itemscope
+                  itemprop="acceptedAnswer"
+                  itemtype="https://schema.org/Answer"
+                >
                   <div class="faq__answer rte" itemprop="text">
                     {{ block.settings.answer }}
                   </div>

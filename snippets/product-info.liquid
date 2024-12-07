@@ -58,16 +58,34 @@
 
           <ul class="social-media__item-list list--unstyled" role="list">
             <li class="social-media__item social-media__item--facebook">
-              <a href="https://www.facebook.com/sharer.php?u={{ share_url }}" target="_blank" rel="noopener" aria-label="{{ 'general.social.facebook_share' | t }}">{%- render 'icon', icon: 'facebook' -%}</a>
+              <a
+                href="https://www.facebook.com/sharer.php?u={{ share_url }}"
+                target="_blank"
+                rel="noopener"
+                aria-label="{{ 'general.social.facebook_share' | t }}"
+              >
+                {%- render 'icon', icon: 'facebook' -%}
+              </a>
             </li>
 
             <li class="social-media__item social-media__item--pinterest">
-              <a href="https://pinterest.com/pin/create/button/?url={{ share_url }}{% if pinterest_image != blank %}&media={{ pinterest_image }}{% endif %}&description={{ pinterest_description }}" target="_blank" rel="noopener" aria-label="{{ 'general.social.pinterest_pin' | t }}">{%- render 'icon', icon: 'pinterest' -%}</a>
+              <a
+                href="https://pinterest.com/pin/create/button/?url={{ share_url }}{% if pinterest_image != blank %}&media={{ pinterest_image }}{% endif %}&description={{ pinterest_description }}"
+                target="_blank"
+                rel="noopener"
+                aria-label="{{ 'general.social.pinterest_pin' | t }}"
+              >
+                {%- render 'icon', icon: 'pinterest' -%}
+              </a>
             </li>
 
-
             <li class="social-media__item">
-              <a href="mailto:?&subject={{ product.title | escape }}&body={{ share_url }}" aria-label="{{ 'general.social.email_share' | t }}">{% render 'icon', icon: 'email' %}</a>
+              <a
+                href="mailto:?&subject={{ product.title | escape }}&body={{ share_url }}"
+                aria-label="{{ 'general.social.email_share' | t }}"
+              >
+                {%- render 'icon', icon: 'email' -%}
+              </a>
             </li>
           </ul>
         </div>
@@ -76,12 +94,12 @@
   </div>
 
   {% comment %}
-  ------------------------------------------------------------------------------
-  Product Data. This must be outputted for all products (including home page).
+    ------------------------------------------------------------------------------
+    Product Data. This must be outputted for all products (including home page).
 
-  IMPORTANT: THIS CODE IS VITAL. DO NOT EDIT IT NOR REMOVE IT. MAKE SURE TO KEEP
-  THE EXACT SAME ATTRIBUTES.
-  ------------------------------------------------------------------------------
+    IMPORTANT: THIS CODE IS VITAL. DO NOT EDIT IT NOR REMOVE IT. MAKE SURE TO KEEP
+    THE EXACT SAME ATTRIBUTES.
+    ------------------------------------------------------------------------------
   {% endcomment %}
 
   {%- assign variant_selector_block = section.blocks | where: 'type', 'variant_selector' | first -%}

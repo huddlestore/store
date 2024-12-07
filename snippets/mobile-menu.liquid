@@ -12,8 +12,16 @@
               {%- if link.links != blank -%}
                 {%- capture panel_id -%}mobile-panel-{{ forloop.index0 }}{%- endcapture -%}
 
-                <button class="mobile-menu__nav-link" data-type="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="{{ panel_id }}" data-action="open-panel">
-                  {{- link.title -}} {%- render 'icon', icon: 'arrow-right' -%}
+                <button
+                  class="mobile-menu__nav-link"
+                  data-type="menuitem"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="{{ panel_id }}"
+                  data-action="open-panel"
+                >
+                  {{- link.title -}}
+                  {%- render 'icon', icon: 'arrow-right' -%}
                 </button>
               {%- else -%}
                 <a href="{{ link.url }}" class="mobile-menu__nav-link" data-type="menuitem">{{ link.title }}</a>
@@ -30,14 +38,18 @@
           {%- if section.settings.navigation_phone_number != blank -%}
             <div class="mobile-menu__help-wrapper">
               {%- render 'icon', icon: 'bi-phone' -%}
-              <a href="https://api.whatsapp.com/send?phone=5531993279771&text=Olá! Vim do site e quero saber um pouco mais sobre os produtos da Huddle Store! 🏀🏈⚾️🏒">{{ section.settings.navigation_phone_number | escape }}</a>
+              <a href="https://api.whatsapp.com/send?phone=5531993279771&text=Olá! Vim do site e quero saber um pouco mais sobre os produtos da Huddle Store! 🏀🏈⚾️🏒">
+                {{- section.settings.navigation_phone_number | escape -}}
+              </a>
             </div>
           {%- endif -%}
 
           {%- if section.settings.navigation_email != blank -%}
             <div class="mobile-menu__help-wrapper">
               {%- render 'icon', icon: 'bi-email' -%}
-              <a href="mailto:{{ section.settings.navigation_email }}">{{ section.settings.navigation_email | escape }}</a>
+              <a href="mailto:{{ section.settings.navigation_email }}">
+                {{- section.settings.navigation_email | escape -}}
+              </a>
             </div>
           {%- endif -%}
         </div>
@@ -47,12 +59,14 @@
 
       {%- if section.settings.show_navigation_social_media and social_media != blank -%}
         <div class="mobile-menu__section mobile-menu__section--loose">
-          <p class="mobile-menu__section-title heading h5" style="margin-bottom: 0.5rem !important;">{{ 'header.navigation.follow_us' | t }}</p>
+          <p class="mobile-menu__section-title heading h5" style="margin-bottom: 0.5rem !important;">
+            {{ 'header.navigation.follow_us' | t }}
+          </p>
 
           {{- social_media -}}
         </div>
       {%- endif -%}
- </div>
+    </div>
 
     {%- comment -%}We now need to loop again (for the second level) to create the nested panel{%- endcomment -%}
 
@@ -62,7 +76,10 @@
 
         <div id="{{ panel_id }}" class="mobile-menu__panel is-nested">
           <div class="mobile-menu__section is-sticky">
-            <button class="mobile-menu__back-button" data-action="close-panel">{% render 'icon', icon: 'arrow-left' %} {{ 'header.navigation.back' | t }}</button>
+            <button class="mobile-menu__back-button" data-action="close-panel">
+              {% render 'icon', icon: 'arrow-left' %}
+              {{ 'header.navigation.back' | t }}
+            </button>
           </div>
 
           <div class="mobile-menu__section">
@@ -85,10 +102,19 @@
 
                   <div class="mobile-menu__nav-list-item">
                     {%- if sub_link.levels == 0 -%}
-                      <a href="{{ sub_link.url }}" class="mobile-menu__nav-list-toggle text--strong">{{ sub_link.title }}</a>
+                      <a href="{{ sub_link.url }}" class="mobile-menu__nav-list-toggle text--strong">
+                        {{- sub_link.title -}}
+                      </a>
                     {%- else -%}
-                      <button class="mobile-menu__nav-list-toggle text--strong" aria-controls="{{ mobile_list_id }}" aria-expanded="false" data-action="toggle-collapsible" data-close-siblings="false">
-                        {{- sub_link.title -}} {% render 'icon', icon: 'arrow-bottom' %}
+                      <button
+                        class="mobile-menu__nav-list-toggle text--strong"
+                        aria-controls="{{ mobile_list_id }}"
+                        aria-expanded="false"
+                        data-action="toggle-collapsible"
+                        data-close-siblings="false"
+                      >
+                        {{- sub_link.title -}}
+                        {% render 'icon', icon: 'arrow-bottom' %}
                       </button>
 
                       <div id="{{ mobile_list_id }}" class="mobile-menu__nav-collapsible">
@@ -96,7 +122,9 @@
                           <ul class="mobile-menu__nav" data-type="menu" role="list">
                             {%- for sub_sub_link in sub_link.links -%}
                               <li class="mobile-menu__nav-item">
-                                <a href="{{ sub_sub_link.url }}" class="mobile-menu__nav-link" data-type="menuitem">{{ sub_sub_link.title }}</a>
+                                <a href="{{ sub_sub_link.url }}" class="mobile-menu__nav-link" data-type="menuitem">
+                                  {{- sub_sub_link.title -}}
+                                </a>
                               </li>
                             {%- endfor -%}
                           </ul>
@@ -107,7 +135,7 @@
                 {%- endfor -%}
               </div>
 
-              {%- assign mega_menu_block = nil -%}
+              {%- assign mega_menu_block = null -%}
 
               {%- for block in section.blocks -%}
                 {%- assign downcase_block_menu_item = block.settings.menu_item | downcase | strip -%}
@@ -180,11 +208,21 @@
                     {%- if sub_link.links != blank -%}
                       {%- capture panel_id -%}mobile-panel-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}{%- endcapture -%}
 
-                      <button class="mobile-menu__nav-link" data-type="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="{{ panel_id }}" data-action="open-panel">
-                        {{- sub_link.title -}} {%- render 'icon', icon: 'arrow-right' -%}
+                      <button
+                        class="mobile-menu__nav-link"
+                        data-type="menuitem"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-controls="{{ panel_id }}"
+                        data-action="open-panel"
+                      >
+                        {{- sub_link.title -}}
+                        {%- render 'icon', icon: 'arrow-right' -%}
                       </button>
                     {%- else -%}
-                      <a href="{{ sub_link.url }}" class="mobile-menu__nav-link" data-type="menuitem">{{ sub_link.title }}</a>
+                      <a href="{{ sub_link.url }}" class="mobile-menu__nav-link" data-type="menuitem">
+                        {{- sub_link.title -}}
+                      </a>
                     {%- endif -%}
                   </li>
                 {%- endfor -%}
@@ -208,7 +246,10 @@
 
               <div id="{{ panel_id }}" class="mobile-menu__panel is-nested">
                 <div class="mobile-menu__section is-sticky">
-                  <button class="mobile-menu__back-button" data-action="close-panel">{% render 'icon', icon: 'arrow-left' %} {{ 'header.navigation.back' | t }}</button>
+                  <button class="mobile-menu__back-button" data-action="close-panel">
+                    {% render 'icon', icon: 'arrow-left' %}
+                    {{ 'header.navigation.back' | t }}
+                  </button>
                 </div>
 
                 <div class="mobile-menu__section">
@@ -219,7 +260,9 @@
 
                     {%- for sub_sub_link in sub_link.links -%}
                       <li class="mobile-menu__nav-item">
-                        <a href="{{ sub_sub_link.url }}" class="mobile-menu__nav-link" data-type="menuitem">{{ sub_sub_link.title }}</a>
+                        <a href="{{ sub_sub_link.url }}" class="mobile-menu__nav-link" data-type="menuitem">
+                          {{- sub_sub_link.title -}}
+                        </a>
                       </li>
                     {%- endfor -%}
                   </ul>
