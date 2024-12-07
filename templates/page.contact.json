@@ -1,1 +1,30 @@
-{"sections":{"main":{"type":"main-page","settings":{}},"contact-form":{"type":"contact-form","settings":{"form_heading":"","show_store_info":false,"store_heading":"Encontre-nos","store_info":""}},"text_with_icons_HAgYkg":{"type":"text-with-icons","blocks":{"item_9NYVnh":{"type":"item","settings":{"icon":"bi-delivery","title":"Envio para todo o Brasil","content":"<p>Entregas via Correios com código de rastreio.<\/p>"}},"item_8j39RY":{"type":"item","settings":{"icon":"bi-returns","title":"Compra garantida","content":"<p>Garantia de entrega ou dinheiro de volta.<\/p>"}},"item_W3CqJY":{"type":"item","settings":{"icon":"bi-customer-support","title":"Suporte de alta qualidade","content":"<p>Atendimento rápido e humanizado por nossa equipe.<\/p>"}},"item_3gW3AB":{"type":"item","settings":{"icon":"bi-secure-payment","title":"Pagamentos seguros","content":"<p>Conteúdo breve sobre a sua loja<\/p>"}}},"block_order":["item_9NYVnh","item_8j39RY","item_W3CqJY","item_3gW3AB"],"settings":{"stack_mobile":false}}},"order":["main","contact-form","text_with_icons_HAgYkg"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "contact-form": {
+      "type": "contact-form",
+      "settings": {
+        "form_heading": "",
+        "show_store_info": false,
+        "store_heading": "Encontre-nos",
+        "store_info": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "contact-form"
+  ]
+}
