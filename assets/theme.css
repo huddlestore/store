@@ -3857,7 +3857,6 @@ button.product-form__add-button.button.button--primary {
 @media screen and (min-width: 641px) and (max-width: 999px) {
   .featured-collection {
     margin: 0 calc(-1 * var(--desktop-container-gutter));
-    background-image: none !important;
   }
 
   .featured-collection__header {

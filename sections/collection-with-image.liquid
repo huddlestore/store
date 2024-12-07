@@ -5,12 +5,27 @@
 }
 {%- endcapture -%}
 
-<section class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
+<section
+  class="section"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-collection"
+  data-section-settings="{{ section_settings }}"
+>
   <div class="container container--flush">
     {%- assign collection = section.settings.collection -%}
 
-    <div class="featured-collection lazyload" {% if section.settings.image %}data-bgset="{{ section.settings.image | img_url: '1000x' }} [--lap]"{% endif %}>
-      <header class="featured-collection__header lazyload" {% if section.settings.image %}data-bgset="{{ section.settings.image | img_url: '1000x' }} [--tablet]"{% endif %}>
+    <div
+      class="featured-collection lazyload"
+      {% if section.settings.image %}
+        data-bgset="{{ section.settings.image | img_url: '1000x' }} [--lap]"
+      {% endif %}
+    >
+      <header
+        class="featured-collection__header lazyload"
+        {% if section.settings.image %}
+          data-bgset="{{ section.settings.image | img_url: '1000x' }} [--tablet]"
+        {% endif %}
+      >
         {%- if section.settings.title != blank -%}
           <h2 class="featured-collection__title heading h2">{{ section.settings.title | escape }}</h2>
         {%- endif -%}
@@ -20,7 +35,12 @@
         {%- endif -%}
 
         {%- if section.settings.button_text != blank -%}
-          <a href="{{ section.settings.button_link | default: collection.url | default: '#' }}" class="featured-collection__cta button button--floating">{{ section.settings.button_text | escape }}</a>
+          <a
+            href="{{ section.settings.button_link | default: collection.url | default: '#' }}"
+            class="featured-collection__cta button button--floating"
+          >
+            {{- section.settings.button_text | escape -}}
+          </a>
         {%- endif -%}
       </header>
 
@@ -32,7 +52,11 @@
 
               {%- unless collection == blank -%}
                 {%- for product in collection.products limit: section.settings.products_count -%}
-                  {%- render 'product-item', product: product, grid_classes: grid_classes, show_add_to_cart: section.settings.show_quick_buy -%}
+                  {%- render 'product-item',
+                    product: product,
+                    grid_classes: grid_classes,
+                    show_add_to_cart: section.settings.show_quick_buy
+                  -%}
                 {%- endfor -%}
               {%- else -%}
                 {%- for i in (1..section.settings.products_count) -%}
@@ -49,7 +73,7 @@
 
 <style>
   #shopify-section-{{ section.id }} .featured-collection {
-    background: linear-gradient({{ section.settings.background_deg}}deg, {{ section.settings.background }}, {{ section.settings.background2 }}) !important;
+    background: linear-gradient({{ section.settings.background_deg}}deg, {{ section.settings.background }}, {{ section.settings.background2 }});
   }
 
   #shopify-section-{{ section.id }} .featured-collection__header {
@@ -93,27 +117,27 @@
       "info": "Recomenda-se imagem de 1000 x 400px .png com fundo transparente (Oculto no celular)"
     },
     {
-          "type": "color",
-          "id": "background",
-          "label": "Background 1",
-          "default": "#000000"
-        },
-        {
-          "type": "color",
-          "id": "background2",
-          "label": "Background 2",
-          "default": "#f3f4f4"
-        },
-        {
-          "type": "range",
-          "id": "background_deg",
-          "label": "Inclinação do Degrade",
-          "min": 0,
-          "max": 360,
-          "step": 5,
-          "unit": "deg",
-          "default": 150
-        },
+      "type": "color",
+      "id": "background",
+      "label": "Background 1",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "background2",
+      "label": "Background 2",
+      "default": "#f3f4f4"
+    },
+    {
+      "type": "range",
+      "id": "background_deg",
+      "label": "Inclinação do Degrade",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "deg",
+      "default": 150
+    },
     {
       "type": "color",
       "id": "text_color",
