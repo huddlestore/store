@@ -1,7 +1,7 @@
 {%- capture icon_class -%}icon icon--{{ icon }} {{ class }}{%- endcapture -%}
 
 {%- case icon -%}
-  {%- comment -%} SOCIAL MEDIA {%- endcomment -%}
+    {%- comment -%} SOCIAL MEDIA {%- endcomment -%}
 
   {%- when 'facebook' -%}
     <svg focusable="false" class="{{ icon_class }}" viewBox="0 0 30 30">
@@ -68,7 +68,7 @@
       <path d="M15 30c8.2842712 0 15-6.7157288 15-15 0-8.28427125-6.7157288-15-15-15C6.71572875 0 0 6.71572875 0 15c0 8.2842712 6.71572875 15 15 15zm-1.8733929-11.3828571c0 .9610714-.78 1.74-1.7416071 1.74-.9621429 0-1.74214286-.7789286-1.74214286-1.74 0-.9610715.77999996-1.74 1.74214286-1.74.9616071.0005357 1.7416071.7789285 1.7416071 1.74zm-3.48374996-6.735v2.5773214c3.24107146.0332143 5.87142856 2.6603571 5.90464286 5.8976786h2.5805357c-.0332143-4.6660715-3.8132143-8.4417858-8.48517856-8.475zm0-1.8042858C15.3107143 10.1025 19.9028571 14.6817857 19.9194643 20.3571429H22.5C22.4839286 13.2691071 16.7383929 7.52464286 9.64285714 7.5v2.5778571z" fill="currentColor" fill-rule="evenodd"></path>
     </svg>
 
-  {%- comment -%} UI {%- endcomment -%}
+    {%- comment -%} UI {%- endcomment -%}
 
   {%- when 'arrow-left' -%}
     <svg focusable="false" class="{{ icon_class }}" viewBox="0 0 8 12" role="presentation">
@@ -85,8 +85,6 @@
       <path stroke="currentColor" stroke-width="2" d="M10 2L6 6 2 2" fill="none" stroke-linecap="square"></path>
     </svg>
 
-  
-
   {%- when 'tail-right' -%}
     <svg focusable="false" class="{{ icon_class }}" viewBox="0 0 24 24" role="presentation">
       <path fill="currentColor" d="M22.707 11.293L15 3.586 13.586 5l6 6H2c-.553 0-1 .448-1 1s.447 1 1 1h17.586l-6 6L15 20.414l7.707-7.707c.391-.391.391-1.023 0-1.414z"></path>
@@ -99,8 +97,9 @@
 
   {%- when 'search' -%}
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 27px;top: 2px;position: relative;">
-      <path d="m20.56 18.44-4.67-4.67a7 7 0 1 0-2.12 2.12l4.67 4.67a1.5 1.5 0 0 0 2.12 0 1.49 1.49 0 0 0 0-2.12ZM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5Z" 
-        fill="var(--header-text-color)" class="fill-464646"></path></svg>
+      <path d="m20.56 18.44-4.67-4.67a7 7 0 1 0-2.12 2.12l4.67 4.67a1.5 1.5 0 0 0 2.12 0 1.49 1.49 0 0 0 0-2.12ZM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5Z"
+        fill="var(--header-text-color)" class="fill-464646"></path>
+    </svg>
 
   {%- when 'hamburger' -%}
     <svg focusable="false" class="{{ icon_class }}" viewBox="0 0 20 14" role="presentation">
@@ -108,11 +107,10 @@
     </svg>
 
   {%- when 'hamburger-mobile' -%}
-
-  <svg xmlns="http://www.w3.org/2000/svg" class="{{ icon_class }}" width="30" height="16" viewBox="0 0 30 16">
-        <rect width="30" height="1.5"></rect>
-        <rect y="7" width="20" height="1.5"></rect>
-        <rect y="14" width="30" height="1.5"></rect>
+    <svg xmlns="http://www.w3.org/2000/svg" class="{{ icon_class }}" width="30" height="16" viewBox="0 0 30 16">
+      <rect width="30" height="1.5"></rect>
+      <rect y="7" width="20" height="1.5"></rect>
+      <rect y="14" width="30" height="1.5"></rect>
     </svg>
 
   {%- when 'cart' -%}
@@ -258,7 +256,6 @@
       <path fill="currentColor" d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path>
     </svg>
 
-
   {%- when 'check-2' -%}
     <svg focusable="false" class="{{ icon_class }}" viewBox="0 0 13 11" role="presentation">
       <path d="M1 4.166456L5.317719 9 12 1" stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd"></path>
@@ -301,7 +298,7 @@
       <path d="M896 320l-313.5-40.781L448 0 313.469 279.219 0 320l230.469 208.875L171 831.938l277-148.812 277.062 148.812L665.5 528.875z" fill-rule="nonzero" fill="url(#rating-star-gradient-half)"></path>
     </svg>
 
-  {%- comment -%} ICONS FOR COMPLYING WITH MEDIA API. COLORS OF THOSE ARE STANDARDIZED BY SHOPIFY {%- endcomment -%}
+    {%- comment -%} ICONS FOR COMPLYING WITH MEDIA API. COLORS OF THOSE ARE STANDARDIZED BY SHOPIFY {%- endcomment -%}
 
   {%- when 'media-model-badge' -%}
     <svg focusable="false" viewBox="0 0 26 26" role="presentation">
@@ -322,7 +319,7 @@
       <path fill-rule="evenodd" clip-rule="evenodd" d="M9.718 6.72a1 1 0 00-1.518.855v10.736a1 1 0 001.562.827l8.35-5.677a1 1 0 00-.044-1.682l-8.35-5.06z" fill="{{ settings.text_color }}" fill-opacity=".6"></path>
     </svg>
 
-  {%- comment -%} ICONS FOR STORE PICKUP {%- endcomment -%}
+    {%- comment -%} ICONS FOR STORE PICKUP {%- endcomment -%}
 
   {% when 'store-availability-in-stock' %}
     <svg focusable="false" class="{{ icon_class }}" viewBox="0 0 18 14" role="presentation">
@@ -334,7 +331,7 @@
       <path fill-rule="evenodd" clip-rule="evenodd" d="M12 10l-2 2-4-4-4 4-2-2 4-4-4-4 2-2 4 4 4-4 2 2-4 4 4 4z" fill="#FD1A20"></path>
     </svg>
 
-  {%- comment -%} TEXT WITH ICONS SECTION {%- endcomment -%}
+    {%- comment -%} TEXT WITH ICONS SECTION {%- endcomment -%}
 
   {%- when 'bi-add-to-cart' -%}
     <svg focusable="false" viewBox="0 0 22 24" role="presentation">
@@ -377,7 +374,7 @@
         <path d="M8 8h8m-8 4h5" stroke="{{ settings.accent_color }}"></path>
       </g>
     </svg>
-  
+
   {%- when 'bi-customer-support' -%}
     <svg focusable="false" viewBox="0 0 24 24" role="presentation">
       <g stroke-width="{{ stroke_width | default: 2 }}" fill="none" fill-rule="evenodd" stroke-linecap="square">

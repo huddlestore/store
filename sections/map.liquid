@@ -10,7 +10,12 @@
 }
 {% endcapture %}
 
-<section class="section" data-section-id="{{ section.id }}" data-section-type="map" data-section-settings='{{ section_settings | escape }}'>
+<section
+  class="section"
+  data-section-id="{{ section.id }}"
+  data-section-type="map"
+  data-section-settings="{{ section_settings | escape }}"
+>
   <div class="container">
     {%- if section.settings.title != blank -%}
       <header class="section__header">
@@ -23,7 +28,12 @@
         {%- for block in section.blocks -%}
           <div class="map__store-item" data-store-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
             {%- if section.blocks.size > 1 -%}
-              <button class="map__store-name heading h4" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="block-{{ block.id }}" data-action="toggle-store">
+              <button
+                class="map__store-name heading h4"
+                aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                aria-controls="block-{{ block.id }}"
+                data-action="toggle-store"
+              >
                 {{- block.settings.title | escape -}}
 
                 <span class="map__icon-container">
@@ -36,8 +46,14 @@
               </span>
             {%- endif -%}
 
-            <div class="map__store-collapsible" id="block-{{ block.id }}" {% if forloop.first %}style="height: auto"{% endif %}>
-              <div  class="map__store-inner">
+            <div
+              class="map__store-collapsible"
+              id="block-{{ block.id }}"
+              {% if forloop.first %}
+                style="height: auto"
+              {% endif %}
+            >
+              <div class="map__store-inner">
                 {%- if block.settings.address != blank -%}
                   <div class="map__store-address rte">
                     {{- block.settings.address -}}
@@ -51,12 +67,22 @@
                 {%- endif -%}
 
                 {%- if section.settings.map_link_label != blank and block.settings.map_address != blank -%}
-                  <a href="https://maps.google.com?daddr={{ block.settings.map_address | escape }}" target="_blank" rel="nofollow noopener" class="map__direction-link button button--primary">
+                  <a
+                    href="https://maps.google.com?daddr={{ block.settings.map_address | escape }}"
+                    target="_blank"
+                    rel="nofollow noopener"
+                    class="map__direction-link button button--primary"
+                  >
                     {{- section.settings.map_link_label | escape -}}
                   </a>
                 {%- endif -%}
 
-                <div class="map__map-container map__map-container--mobile hidden-tablet-and-up lazyload" {% if section.settings.image %}data-bg="{{ section.settings.image | img_url: '600x' }}"{% endif %}>
+                <div
+                  class="map__map-container map__map-container--mobile hidden-tablet-and-up lazyload"
+                  {% if section.settings.image %}
+                    data-bg="{{ section.settings.image | img_url: '600x' }}"
+                  {% endif %}
+                >
                   {%- if section.settings.image == blank and section.settings.api_key == blank -%}
                     {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
                   {%- endif -%}
@@ -71,7 +97,12 @@
         {%- endfor -%}
       </div>
 
-      <div class="map__map-container map__map-container--desktop hidden-phone lazyload" {% if section.settings.image %}data-bg="{{ section.settings.image | img_url: '1200x' }}"{% endif %}>
+      <div
+        class="map__map-container map__map-container--desktop hidden-phone lazyload"
+        {% if section.settings.image %}
+          data-bg="{{ section.settings.image | img_url: '1200x' }}"
+        {% endif %}
+      >
         {%- if section.settings.image == blank and section.settings.api_key == blank -%}
           {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--inverted' }}
         {%- endif -%}
