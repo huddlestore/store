@@ -1,28 +1,26 @@
 {%- comment -%}We start by creating a lot of useful variables !{%- endcomment -%}
 
 <style>
-  .price-range__input-group {
-		display: inline-flex !important;
-}
-.price-range__input.input-prefix {
-		margin-right: 10px !important;
-}
-.span.price-range__delimiter.text--small {
-		margin-right: 10px !important;
-}
+  .price-range__input-group  {
+    display: inline-flex !important;
+  }
+  .price-range__input.input-prefix  {
+    margin-right: 10px !important;
+  }
+  .span.price-range__delimiter.text--small  {
+    margin-right: 10px !important;
+  }
 
-.input.input-prefix__field {
-		 border-radius: 4px !important;
-		border: 1px solid #808080 !important;
-}
+  .input.input-prefix__field  {
+    border-radius: 4px !important;
+    border: 1px solid #808080 !important;
+  }
 </style>
 
-{% if collection.sort_by == 'best-selling' %}
-<br><br><center><h4>Ops Algo de Errado por Aqui<br><br></h4></center>
-{% else %}
-
 {%- assign color_label = 'color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve,szín,barva' | split: ',' -%}
-{%- assign items_per_page = cart.attributes.collection_products_per_page | default: section.settings.default_products_per_page -%}
+{%- assign items_per_page = cart.attributes.collection_products_per_page
+  | default: section.settings.default_products_per_page
+-%}
 {%- assign quick_links_menu = section.settings.quick_links -%}
 
 {%- if quick_links_menu.links.size > 0 or section.settings.show_filters and collection.filters != empty -%}
@@ -59,13 +57,18 @@
 }
 {%- endcapture -%}
 
-<section data-section-id="{{ section.id }}" data-section-type="collection" data-section-settings='{{ section_settings }}'>
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="collection"
+  data-section-settings="{{ section_settings }}"
+>
   <div class="container container--flush">
     <div class="page__sub-header">
       <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb">
         <ol class="breadcrumb__list" role="list">
           <li class="breadcrumb__item">
-            <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+            <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+            {%- render 'icon', icon: 'arrow-right' -%}
           </li>
 
           <li class="breadcrumb__item">
@@ -81,11 +84,15 @@
       </nav>
     </div>
 
-    <div {% if has_filters %}class="layout"{% endif %}>
+    <div
+      {% if has_filters %}
+        class="layout"
+      {% endif %}
+    >
       {%- comment -%}
-      --------------------------------------------------------------------------------------
-      FILTER BAR (DESKTOP)
-      --------------------------------------------------------------------------------------
+        --------------------------------------------------------------------------------------
+        FILTER BAR (DESKTOP)
+        --------------------------------------------------------------------------------------
       {%- endcomment -%}
 
       {%- if has_filters -%}
@@ -101,39 +108,105 @@
                       {%- if link.links.size > 0 -%}
                         {%- capture link_id -%}filter-{% increment link_id %}{%- endcapture -%}
 
-                        <button type="button" class="collection__filter-link link link--primary {% if link.active or link.child_active %}is-active{% endif %}" data-action="toggle-collapsible" aria-controls="{{ link_id }}" aria-expanded="{% if link.active or link.child_active %}true{% else %}false{% endif %}">
-                          {{ link.title }} {% if link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ link.object.products_count }}){% endif %} {%- render 'icon', icon: 'arrow-bottom' -%}
+                        <button
+                          type="button"
+                          class="collection__filter-link link link--primary {% if link.active or link.child_active %}is-active{% endif %}"
+                          data-action="toggle-collapsible"
+                          aria-controls="{{ link_id }}"
+                          aria-expanded="{% if link.active or link.child_active %}true{% else %}false{% endif %}"
+                        >
+                          {{ link.title }}
+                          {% if link.type == 'collection_link' and section.settings.quick_links_show_products_count -%}
+                            ({{ link.object.products_count }})
+                          {%- endif %}
+                          {%- render 'icon', icon: 'arrow-bottom' -%}
                         </button>
 
-                        <div id="{{ link_id }}" class="collection__filter-collapsible" {% if link.active or link.child_active %}aria-hidden="false" style="height: auto;"{% else %}aria-hidden="true"{% endif %}>
+                        <div
+                          id="{{ link_id }}"
+                          class="collection__filter-collapsible"
+                          {% if link.active or link.child_active %}
+                            aria-hidden="false" style="height: auto;"
+                          {% else %}
+                            aria-hidden="true"
+                          {% endif %}
+                        >
                           <ul class="collection__filter-linklist" role="list">
                             {%- for sub_link in link.links -%}
                               <li>
                                 {%- if sub_link.links.size > 0 -%}
                                   {%- capture link_id -%}filter-{% increment link_id %}{%- endcapture -%}
 
-                                  <button type="button" class="collection__filter-link link link--primary {% if sub_link.active or sub_link.child_active %}is-active{% endif %}" data-action="toggle-collapsible" aria-controls="{{ link_id }}" aria-expanded="{% if sub_link.active or sub_link.child_active %}true{% else %}false{% endif %}">
-                                    {{ sub_link.title }} {% if sub_link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ sub_link.object.products_count }}){% endif %} {%- render 'icon', icon: 'arrow-bottom' -%}
+                                  <button
+                                    type="button"
+                                    class="collection__filter-link link link--primary {% if sub_link.active or sub_link.child_active %}is-active{% endif %}"
+                                    data-action="toggle-collapsible"
+                                    aria-controls="{{ link_id }}"
+                                    aria-expanded="{% if sub_link.active or sub_link.child_active %}true{% else %}false{% endif %}"
+                                  >
+                                    {{ sub_link.title }}
+                                    {% if sub_link.type == 'collection_link'
+                                      and section.settings.quick_links_show_products_count
+                                    -%}
+                                      ({{ sub_link.object.products_count }})
+                                    {%- endif %}
+                                    {%- render 'icon', icon: 'arrow-bottom' -%}
                                   </button>
 
-                                  <div id="{{ link_id }}" class="collection__filter-collapsible" {% if sub_link.active or sub_link.child_active %}aria-hidden="false" style="height: auto;"{% else %}aria-hidden="true"{% endif %}>
+                                  <div
+                                    id="{{ link_id }}"
+                                    class="collection__filter-collapsible"
+                                    {% if sub_link.active or sub_link.child_active %}
+                                      aria-hidden="false" style="height: auto;"
+                                    {% else %}
+                                      aria-hidden="true"
+                                    {% endif %}
+                                  >
                                     <ul class="collection__filter-linklist" role="list">
                                       {%- for sub_sub_link in sub_link.links -%}
                                         <li>
-                                          <a href="{{ sub_sub_link.url }}" class="collection__filter-link link link--primary {% if sub_sub_link.active %}is-active{% endif %}">{{ sub_sub_link.title }} {% if sub_sub_link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ sub_sub_link.object.products_count }}){% endif %}</a>
+                                          <a
+                                            href="{{ sub_sub_link.url }}"
+                                            class="collection__filter-link link link--primary {% if sub_sub_link.active %}is-active{% endif %}"
+                                          >
+                                            {{- sub_sub_link.title }}
+                                            {% if sub_sub_link.type == 'collection_link'
+                                              and section.settings.quick_links_show_products_count
+                                            -%}
+                                              ({{ sub_sub_link.object.products_count }})
+                                            {%- endif -%}
+                                          </a>
                                         </li>
                                       {%- endfor -%}
                                     </ul>
                                   </div>
                                 {%- else -%}
-                                  <a href="{{ sub_link.url }}" class="collection__filter-link link link--primary {% if sub_link.active %}is-active{% endif %}">{{ sub_link.title }} {% if sub_link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ sub_link.object.products_count }}){% endif %}</a>
+                                  <a
+                                    href="{{ sub_link.url }}"
+                                    class="collection__filter-link link link--primary {% if sub_link.active %}is-active{% endif %}"
+                                  >
+                                    {{- sub_link.title }}
+                                    {% if sub_link.type == 'collection_link'
+                                      and section.settings.quick_links_show_products_count
+                                    -%}
+                                      ({{ sub_link.object.products_count }})
+                                    {%- endif -%}
+                                  </a>
                                 {%- endif -%}
                               </li>
                             {%- endfor -%}
                           </ul>
                         </div>
                       {%- else -%}
-                        <a href="{{ link.url }}" class="collection__filter-link link link--primary {% if link.active %}is-active{% endif %}">{{ link.title }} {% if link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ link.object.products_count }}){% endif %}</a>
+                        <a
+                          href="{{ link.url }}"
+                          class="collection__filter-link link link--primary {% if link.active %}is-active{% endif %}"
+                        >
+                          {{- link.title }}
+                          {% if link.type == 'collection_link' and section.settings.quick_links_show_products_count -%}
+                            ({{ link.object.products_count }})
+                          {%- endif -%}
+                        </a>
                       {%- endif -%}
                     </li>
                   {%- endfor -%}
@@ -146,7 +219,11 @@
                 <input type="hidden" name="sort_by" value="{{ sort_by }}">
 
                 {%- if collection.current_type != blank or collection.current_vendor != blank -%}
-                  <input type="hidden" name="q" value="{{ collection.current_vendor | default: collection.current_type | escape }}">
+                  <input
+                    type="hidden"
+                    name="q"
+                    value="{{ collection.current_vendor | default: collection.current_type | escape }}"
+                  >
                 {%- endif -%}
 
                 <p class="card__title--small heading">{{ 'collection.filter.all' | t }}</p>
@@ -159,27 +236,46 @@
                       {%- for filter_value in filter.active_values -%}
                         {%- assign active_filter_values = active_filter_values | plus: 1 -%}
 
-                        <label for="{{ filter_value.param_name }}-{{ filter_value.value | handle }}" class="collection__active-filter-item">
+                        <label
+                          for="{{ filter_value.param_name }}-{{ filter_value.value | handle }}"
+                          class="collection__active-filter-item"
+                        >
                           <span class="collection__active-filter-cross">{% render 'icon', icon: 'close' %}</span>
                           {{- filter_value.label -}}
                         </label>
                       {%- endfor -%}
                     {%- elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value -%}
-                      <button type="button" class="collection__active-filter-item" data-action="clear-filters" data-url="{{ filter.url_to_remove | escape }}">
+                      <button
+                        type="button"
+                        class="collection__active-filter-item"
+                        data-action="clear-filters"
+                        data-url="{{ filter.url_to_remove | escape }}"
+                      >
                         <span class="collection__active-filter-cross">{% render 'icon', icon: 'close' %}</span>
-                        {{- filter.min_value.value | default: 0 | money_without_trailing_zeros }} - {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros -}}
+                        {{- filter.min_value.value | default: 0 | money_without_trailing_zeros }} -
+                        {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros -}}
                       </button>
                     {%- endif -%}
                   {%- endfor -%}
 
                   {%- if active_filter_values > 0 -%}
-                    <button type="button" class="collection__clear-filter button button--small button--transparent button--full" data-action="clear-filters" data-url="{{ collection.url }}?sort_by={{ sort_by }}">{{ 'collection.filter.clear_all' | t }}</button>
+                    <button
+                      type="button"
+                      class="collection__clear-filter button button--small button--transparent button--full"
+                      data-action="clear-filters"
+                      data-url="{{ collection.url }}?sort_by={{ sort_by }}"
+                    >
+                      {{ 'collection.filter.clear_all' | t }}
+                    </button>
                   {%- endif -%}
                 </div>
 
                 <div class="collection__filter-group-list">
                   {%- for filter in collection.filters -%}
-                    {%- if template.suffix == 'brand' and filter.param_name == 'filter.p.vendor' and filter.values.size == 1 -%}
+                    {%- if template.suffix == 'brand'
+                      and filter.param_name == 'filter.p.vendor'
+                      and filter.values.size == 1
+                    -%}
                       {%- continue -%}
                     {%- endif -%}
 
@@ -192,34 +288,79 @@
                       {%- assign show_color_swatch = false -%}
                     {%- endif -%}
 
-                    {%- if section.settings.open_group_filters_mode == 'all_open' or section.settings.open_group_filters_mode == 'first_open' and forloop.first -%}
+                    {%- if section.settings.open_group_filters_mode == 'all_open'
+                      or section.settings.open_group_filters_mode == 'first_open'
+                      and forloop.first
+                    -%}
                       {%- assign is_filter_expanded = true -%}
                     {%- endif -%}
 
                     <div class="collection__filter-group">
-                      <button type="button" class="collection__filter-group-name link link--secondary text--strong" data-action="toggle-collapsible" aria-controls="{{ filter.param_name | handle | escape }}" data-close-siblings="false" data-collapsible-force-overflow="true" {% if is_filter_expanded %}aria-expanded="true"{% else %}aria-expanded="false"{% endif %}>
+                      <button
+                        type="button"
+                        class="collection__filter-group-name link link--secondary text--strong"
+                        data-action="toggle-collapsible"
+                        aria-controls="{{ filter.param_name | handle | escape }}"
+                        data-close-siblings="false"
+                        data-collapsible-force-overflow="true"
+                        {% if is_filter_expanded %}
+                          aria-expanded="true"
+                        {% else %}
+                          aria-expanded="false"
+                        {% endif %}
+                      >
                         {{- filter.label -}}
                         {%- render 'icon', icon: 'arrow-bottom' -%}
                       </button>
 
-                      <div id="{{ filter.param_name | handle | escape }}" class="collection__filter-collapsible" {% if is_filter_expanded %}aria-hidden="false" style="height: auto; overflow: visible"{% else %}aria-hidden="true"{% endif %}>
+                      <div
+                        id="{{ filter.param_name | handle | escape }}"
+                        class="collection__filter-collapsible"
+                        {% if is_filter_expanded %}
+                          aria-hidden="false" style="height: auto; overflow: visible"
+                        {% else %}
+                          aria-hidden="true"
+                        {% endif %}
+                      >
                         {%- case filter.type -%}
                           {%- when 'list' -%}
                             {%- if show_color_swatch -%}
                               <div class="collection__filter-color-list">
                                 <div class="color-swatch-list color-swatch-list--large">
-                                  {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+                                  {%- assign color_swatch_config = settings.color_swatch_config
+                                    | newline_to_br
+                                    | split: '<br />'
+                                  -%}
 
                                   {%- for filter_value in filter.values -%}
                                     {%- capture color_id -%}filter-color-{% increment color_index %}{%- endcapture -%}
 
                                     {%- assign downcased_value = filter_value.label | downcase -%}
 
-                                    <div class="color-swatch {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}" data-tooltip="{{ filter_value.label | escape }}">
-                                      <input class="color-swatch__radio" type="checkbox" name="{{ filter.param_name }}" id="{{ filter_value.param_name }}-{{ filter_value.value | handle }}" value="{{ filter_value.value }}" {% if filter_value.active %}checked{% endif %}>
+                                    <div
+                                      class="color-swatch {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}"
+                                      data-tooltip="{{ filter_value.label | escape }}"
+                                    >
+                                      <input
+                                        class="color-swatch__radio"
+                                        type="checkbox"
+                                        name="{{ filter.param_name }}"
+                                        id="{{ filter_value.param_name }}-{{ filter_value.value | handle }}"
+                                        value="{{ filter_value.value }}"
+                                        {% if filter_value.active %}
+                                          checked
+                                        {% endif %}
+                                      >
 
-                                      <label for="{{ filter_value.param_name }}-{{ filter_value.value | handle }}" class="color-swatch__item {% if filter_value.active %}is-selected{% endif %}" aria-label="{{ filter_value.label | escape }}">
-                                        <span class="color-swatch__item" style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: downcased_value %}"></span>
+                                      <label
+                                        for="{{ filter_value.param_name }}-{{ filter_value.value | handle }}"
+                                        class="color-swatch__item {% if filter_value.active %}is-selected{% endif %}"
+                                        aria-label="{{ filter_value.label | escape }}"
+                                      >
+                                        <span
+                                          class="color-swatch__item"
+                                          style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: downcased_value %}"
+                                        ></span>
                                       </label>
                                     </div>
                                   {%- endfor -%}
@@ -230,11 +371,25 @@
                                 {%- for filter_value in filter.values -%}
                                   <li class="collection__filter-checkbox">
                                     <div class="checkbox-wrapper">
-                                      <input type="checkbox" class="checkbox" id="{{ filter_value.param_name }}-{{ filter_value.value | handle }}" name="{{ filter.param_name }}" value="{{ filter_value.value }}" {% if filter_value.active %}checked="checked"{% endif %}>
+                                      <input
+                                        type="checkbox"
+                                        class="checkbox"
+                                        id="{{ filter_value.param_name }}-{{ filter_value.value | handle }}"
+                                        name="{{ filter.param_name }}"
+                                        value="{{ filter_value.value }}"
+                                        {% if filter_value.active %}
+                                          checked="checked"
+                                        {% endif %}
+                                      >
                                       {% render 'icon', icon: 'check' %}
                                     </div>
 
-                                    <label for="{{ filter_value.param_name }}-{{ filter_value.value | handle }}">{{ filter_value.label }} {% if section.settings.quick_links_show_products_count %}({{ filter_value.count }}){% endif %}</label>
+                                    <label for="{{ filter_value.param_name }}-{{ filter_value.value | handle }}">
+                                      {{- filter_value.label }}
+                                      {% if section.settings.quick_links_show_products_count -%}
+                                        ({{ filter_value.count }})
+                                      {%- endif -%}
+                                    </label>
                                   </li>
                                 {%- endfor -%}
                               </ul>
@@ -243,28 +398,76 @@
                           {%- when 'price_range' -%}
                             <price-range class="price-range">
                               {%- assign min_value = filter.min_value.value | default: 0.0 | divided_by: 100.0 -%}
-                              {%- assign max_value = filter.max_value.value | default: filter.range_max | divided_by: 100.0 -%}
+                              {%- assign max_value = filter.max_value.value
+                                | default: filter.range_max
+                                | divided_by: 100.0
+                              -%}
                               {%- assign range_max = filter.range_max | divided_by: 100.0 | ceil -%}
 
                               {% assign lower_bound_progress = min_value | divided_by: range_max | times: 100.0 %}
                               {% assign higher_bound_progress = max_value | divided_by: range_max | times: 100.0 %}
 
-                              <div class="price-range__range-group range-group" style="--range-min: {{ lower_bound_progress }}%; --range-max: {{ higher_bound_progress }}%">
-                                <input type="range" aria-label="{{ 'collection.filter.price_filter_from' | t }}" class="range" min="0" max="{{ range_max | ceil }}" value="{{ min_value | ceil }}">
-                                <input type="range" aria-label="{{ 'collection.filter.price_filter_to' | t }}" class="range" min="0" max="{{ range_max | ceil }}" value="{{ max_value | ceil }}">
+                              <div
+                                class="price-range__range-group range-group"
+                                style="--range-min: {{ lower_bound_progress }}%; --range-max: {{ higher_bound_progress }}%"
+                              >
+                                <input
+                                  type="range"
+                                  aria-label="{{ 'collection.filter.price_filter_from' | t }}"
+                                  class="range"
+                                  min="0"
+                                  max="{{ range_max | ceil }}"
+                                  value="{{ min_value | ceil }}"
+                                >
+                                <input
+                                  type="range"
+                                  aria-label="{{ 'collection.filter.price_filter_to' | t }}"
+                                  class="range"
+                                  min="0"
+                                  max="{{ range_max | ceil }}"
+                                  value="{{ max_value | ceil }}"
+                                >
                               </div>
 
                               <div class="price-range__input-group" style="display: inline-flex !important;">
                                 <div class="price-range__input input-prefix" style="margin-right: 10px !important;">
                                   <span class="input-prefix__value">{{ cart.currency.symbol }}</span>
-                                  <input aria-label="{{ 'collection.filter.price_filter_from' | t }}" class="input-prefix__field" style="border-radius: 4px !important;border: 1px solid #808080 !important;" type="number" inputmode="numeric" {% if filter.min_value.value %}value="{{ min_value | ceil }}"{% endif %} name="{{ filter.min_value.param_name }}" min="0" max="{{ max_value | ceil }}" placeholder="0">
+                                  <input
+                                    aria-label="{{ 'collection.filter.price_filter_from' | t }}"
+                                    class="input-prefix__field"
+                                    style="border-radius: 4px !important;border: 1px solid #808080 !important;"
+                                    type="number"
+                                    inputmode="numeric"
+                                    {% if filter.min_value.value %}
+                                      value="{{ min_value | ceil }}"
+                                    {% endif %}
+                                    name="{{ filter.min_value.param_name }}"
+                                    min="0"
+                                    max="{{ max_value | ceil }}"
+                                    placeholder="0"
+                                  >
                                 </div>
 
-                                <span class="price-range__delimiter text--small" style="margin-right: 10px !important;">&nbsp - &nbsp</span>
+                                <span class="price-range__delimiter text--small" style="margin-right: 10px !important;"
+                                  >&nbsp - &nbsp</span
+                                >
 
                                 <div class="price-range__input input-prefix">
                                   <span class="input-prefix__value">{{ cart.currency.symbol }}</span>
-                                  <input aria-label="{{ 'collection.filter.price_filter_to' | t }}" class="input-prefix__field" style="border-radius: 4px !important;border: 1px solid #808080 !important;" type="number" inputmode="numeric" {% if filter.max_value.value %}value="{{ max_value | ceil }}"{% endif %} name="{{ filter.max_value.param_name }}" min="{{ min_value | ceil }}" max="{{ range_max | ceil }}" placeholder="{{ range_max | ceil }}">
+                                  <input
+                                    aria-label="{{ 'collection.filter.price_filter_to' | t }}"
+                                    class="input-prefix__field"
+                                    style="border-radius: 4px !important;border: 1px solid #808080 !important;"
+                                    type="number"
+                                    inputmode="numeric"
+                                    {% if filter.max_value.value %}
+                                      value="{{ max_value | ceil }}"
+                                    {% endif %}
+                                    name="{{ filter.max_value.param_name }}"
+                                    min="{{ min_value | ceil }}"
+                                    max="{{ range_max | ceil }}"
+                                    placeholder="{{ range_max | ceil }}"
+                                  >
                                 </div>
                               </div>
                             </price-range>
@@ -275,7 +478,9 @@
                 </div>
 
                 <noscript>
-                  <button type="submit" class="button button--secondary button--full" style="margin-top: 10px">{{ 'collection.filter.view_results' | t }}</button>
+                  <button type="submit" class="button button--secondary button--full" style="margin-top: 10px">
+                    {{ 'collection.filter.view_results' | t }}
+                  </button>
                 </noscript>
               </form>
             {%- endif -%}
@@ -284,31 +489,53 @@
       {%- endif -%}
 
       {%- paginate collection.products by items_per_page -%}
-        <div {% if has_filters %}class="layout__section"{% endif %}>
+        <div
+          {% if has_filters %}
+            class="layout__section"
+          {% endif %}
+        >
           <div class="collection">
             {%- unless collection.template_suffix == 'brand' -%}
-              {%- if section.settings.show_collection_image and collection.image and collection.all_products_count > 0 -%}
+              {%- if section.settings.show_collection_image
+                and collection.image
+                and collection.all_products_count > 0
+              -%}
                 {%- if section.settings.collection_image_size == 'preserve_ratio' -%}
                   {%- capture supported_sizes -%}{%- render 'image-size', sizes: '400,500,600,700,800,900,1000, 1200, 1400, 1600', image: collection.image -%}{%- endcapture -%}
                   {%- assign image_url = collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
                   <div class="collection__image-wrapper collection__image-wrapper--preserve-ratio">
-                    <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: collection.image.aspect_ratio }}%">
-                      <img class="lazyload image--fade-in" data-src="{{ image_url }}" data-sizes="auto" data-widths="[{{ supported_sizes }}]" alt="{{ collection.image.alt | escape }}">
+                    <div
+                      class="aspect-ratio"
+                      style="padding-bottom: {{ 100.0 | divided_by: collection.image.aspect_ratio }}%"
+                    >
+                      <img
+                        class="lazyload image--fade-in"
+                        data-src="{{ image_url }}"
+                        data-sizes="auto"
+                        data-widths="[{{ supported_sizes }}]"
+                        alt="{{ collection.image.alt | escape }}"
+                      >
                     </div>
                   </div>
                 {%- else -%}
-                  <div class="collection__image-wrapper collection__image-wrapper--{{ section.settings.collection_image_size }}" style="background-image: url({{ collection.image | img_url: '1x1' }})">
-                    <div class="collection__image lazyload image--fade-in" data-bgset="{{ collection.image | img_url: '600x' }} 600w, {{ collection.image | img_url: '800x' }} 800w, {{ collection.image | img_url: '1000x' }} 1000w, {{ collection.image | img_url: '1200x' }} 1200w, {{ collection.image | img_url: '1500x' }} 1500w"></div>
+                  <div
+                    class="collection__image-wrapper collection__image-wrapper--{{ section.settings.collection_image_size }}"
+                    style="background-image: url({{ collection.image | img_url: '1x1' }})"
+                  >
+                    <div
+                      class="collection__image lazyload image--fade-in"
+                      data-bgset="{{ collection.image | img_url: '600x' }} 600w, {{ collection.image | img_url: '800x' }} 800w, {{ collection.image | img_url: '1000x' }} 1000w, {{ collection.image | img_url: '1200x' }} 1200w, {{ collection.image | img_url: '1500x' }} 1500w"
+                    ></div>
                   </div>
                 {%- endif -%}
               {%- endif -%}
             {%- endunless -%}
 
             {%- comment -%}
-            --------------------------------------------------------------------------------------
-            TOP PART (COLLECTION INFO + TOOLBAR)
-            --------------------------------------------------------------------------------------
+              --------------------------------------------------------------------------------------
+              TOP PART (COLLECTION INFO + TOOLBAR)
+              --------------------------------------------------------------------------------------
             {%- endcomment -%}
 
             {%- if collection.all_products_count == 0 -%}
@@ -317,29 +544,45 @@
                 <p class="empty-state__description">{{ 'collection.general.empty' | t }}</p>
 
                 <div class="empty-state__button-container">
-                  <a href="{{ routes.root_url }}" class="empty-state__button button button--primary">{{ 'collection.general.empty_button' | t }}</a>
+                  <a href="{{ routes.root_url }}" class="empty-state__button button button--primary">
+                    {{- 'collection.general.empty_button' | t -}}
+                  </a>
                 </div>
               </div>
             {%- else -%}
               <div class="collection__dynamic-part card {% if collection.products_count == 0 %}clearfix{% endif %}">
                 <header class="card__header {% unless collection.template_suffix == 'brand' %}card__header--tight{% endunless %}">
                   {%- comment -%}
-                  IMPLEMENTATION NOTE: unfortunately I was forced to add a lot of extra div (collection__meta, collection__meta-inner, collection__header-inner,...)
-                                       to be able to accommodate with the brand related layout which make things more complicated...
+                    IMPLEMENTATION NOTE: unfortunately I was forced to add a lot of extra div (collection__meta, collection__meta-inner, collection__header-inner,...)
+                                         to be able to accommodate with the brand related layout which make things more complicated...
                   {%- endcomment -%}
 
                   <div class="collection__header {% if collection.template_suffix == 'brand' %}collection__header--brand{% endif %}">
-                    {%- if section.settings.show_collection_image and collection.image and collection.all_products_count > 0 and collection.template_suffix == 'brand' -%}
+                    {%- if section.settings.show_collection_image
+                      and collection.image
+                      and collection.all_products_count > 0
+                      and collection.template_suffix == 'brand'
+                    -%}
                       <div class="collection__brand-logo-wrapper hidden-pocket">
-                        <div class="collection__brand-logo-image lazyload image--fade-in" data-bg="{{ collection.image | img_url: '250x' }}"></div>
+                        <div
+                          class="collection__brand-logo-image lazyload image--fade-in"
+                          data-bg="{{ collection.image | img_url: '250x' }}"
+                        ></div>
                       </div>
                     {%- endif -%}
 
                     <div class="collection__header-inner">
                       <div class="collection__meta">
-                        {%- if section.settings.show_collection_image and collection.image and collection.all_products_count > 0 and collection.template_suffix == 'brand' -%}
+                        {%- if section.settings.show_collection_image
+                          and collection.image
+                          and collection.all_products_count > 0
+                          and collection.template_suffix == 'brand'
+                        -%}
                           <div class="collection__brand-logo-wrapper hidden-lap-and-up">
-                            <div class="collection__brand-logo-image lazyload image--fade-in" data-bg="{{ collection.image | img_url: '250x' }}"></div>
+                            <div
+                              class="collection__brand-logo-image lazyload image--fade-in"
+                              data-bg="{{ collection.image | img_url: '250x' }}"
+                            ></div>
                           </div>
                         {%- endif -%}
 
@@ -353,10 +596,20 @@
                           </h1>
 
                           {%- assign offset = paginate.current_offset | plus: 1 -%}
-                          {%- assign page_size = paginate.current_offset | plus: paginate.page_size | at_most: paginate.items -%}
+                          {%- assign page_size = paginate.current_offset
+                            | plus: paginate.page_size
+                            | at_most: paginate.items
+                          -%}
 
-                          <p class="collection__products-count text--small hidden-lap-and-up">{{ 'collection.general.products_count' | t: count: collection.all_products_count }}</p>
-                          <p class="collection__products-count text--small hidden-pocket hidden-desk">{{ 'collection.general.showing_count' | t: offset: offset, page_size: page_size, count: paginate.items }}</p>
+                          <p class="collection__products-count text--small hidden-lap-and-up">
+                            {{ 'collection.general.products_count' | t: count: collection.all_products_count }}
+                          </p>
+                          <p class="collection__products-count text--small hidden-pocket hidden-desk">
+                            {{
+                              'collection.general.showing_count'
+                              | t: offset: offset, page_size: page_size, count: paginate.items
+                            }}
+                          </p>
                         </div>
                       </div>
 
@@ -367,7 +620,10 @@
                           {%- assign allow_collapse_description = true -%}
                         {%- endif -%}
 
-                        <div class="collection__description {% if allow_collapse_description %}expandable-content{% endif %}" aria-expanded="false">
+                        <div
+                          class="collection__description {% if allow_collapse_description %}expandable-content{% endif %}"
+                          aria-expanded="false"
+                        >
                           <div class="rte">
                             {{ collection.description }}
                           </div>
@@ -375,7 +631,13 @@
                           {%- if allow_collapse_description -%}
                             <button class="expandable-content__toggle">
                               <span class="expandable-content__toggle-icon"></span>
-                              <span class="expandable-content__toggle-text" data-view-more="{{ 'collection.general.view_more' | t | escape }}" data-view-less="{{ 'collection.general.view_less' | t | escape }}">{{- 'collection.general.view_more' | t -}}</span>
+                              <span
+                                class="expandable-content__toggle-text"
+                                data-view-more="{{ 'collection.general.view_more' | t | escape }}"
+                                data-view-less="{{ 'collection.general.view_less' | t | escape }}"
+                              >
+                                {{- 'collection.general.view_more' | t -}}
+                              </span>
                             </button>
                           {%- endif -%}
                         </div>
@@ -387,22 +649,49 @@
                 <div>
                   <div class="collection__toolbar {% if collection.description != blank or collection.template_suffix == 'brand' %}collection__toolbar--bordered{% endif %}">
                     {%- if has_filters -%}
-                      <button class="collection__toolbar-item collection__toolbar-item--filter hidden-lap-and-up" data-action="open-drawer" aria-haspopup="true" aria-expanded="false" aria-controls="mobile-collection-filters">
-                        <span class="collection__filter-icon {% if active_filters_count > 0 %}collection__filter-icon--active{% endif %}">{%- render 'icon', icon: 'filter' -%}</span>
-                        {{ 'collection.filter.title' | t }}{% if active_filters_count > 0 %}&nbsp;({{ active_filters_count }}){% endif %}
+                      <button
+                        class="collection__toolbar-item collection__toolbar-item--filter hidden-lap-and-up"
+                        data-action="open-drawer"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-controls="mobile-collection-filters"
+                      >
+                        <span class="collection__filter-icon {% if active_filters_count > 0 %}collection__filter-icon--active{% endif %}">
+                          {%- render 'icon', icon: 'filter' -%}
+                        </span>
+                        {{ 'collection.filter.title' | t -}}
+                        {%- if active_filters_count > 0 %}&nbsp;({{ active_filters_count }}){% endif %}
                       </button>
                     {%- endif -%}
 
                     <div class="collection__toolbar-item collection__toolbar-item--count hidden-pocket">
                       {%- assign offset = paginate.current_offset | plus: 1 -%}
-                      {%- assign page_size = paginate.current_offset | plus: paginate.page_size | at_most: paginate.items -%}
+                      {%- assign page_size = paginate.current_offset
+                        | plus: paginate.page_size
+                        | at_most: paginate.items
+                      -%}
 
-                      <span class="collection__showing-count hidden-pocket hidden-lap">{{ 'collection.general.showing_count' | t: offset: offset, page_size: page_size, count: paginate.items }}</span>
+                      <span class="collection__showing-count hidden-pocket hidden-lap">
+                        {{-
+                          'collection.general.showing_count'
+                          | t: offset: offset, page_size: page_size, count: paginate.items
+                        -}}
+                      </span>
 
                       <div class="value-picker-wrapper">
-                        <button class="value-picker-button" aria-haspopup="true" aria-expanded="false" aria-controls="display-by-selector" data-action="open-value-picker">
-                          <span class="hidden-phone">{{ 'collection.general.display' | t }}: {{ 'collection.general.page_size' | t: page_size: paginate.page_size }}</span><!--
-                          -->{%- render 'icon', icon: 'arrow-bottom' -%}
+                        <button
+                          class="value-picker-button"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          aria-controls="display-by-selector"
+                          data-action="open-value-picker"
+                        >
+                          <span class="hidden-phone">
+                            {{- 'collection.general.display' | t }}:
+                            {{ 'collection.general.page_size' | t: page_size: paginate.page_size -}}
+                          </span>
+                          <!--  -->
+                          {%- render 'icon', icon: 'arrow-bottom' -%}
                         </button>
 
                         <div id="display-by-selector" class="value-picker" aria-hidden="true">
@@ -410,14 +699,44 @@
 
                           <div class="value-picker__inner">
                             <header class="value-picker__header">
-                              <span class="value-picker__title text--strong">{{ 'collection.general.display' | t }}</span>
-                              <button class="value-picker__close" data-action="close-value-picker" aria-controls="display-by-selector" aria-label="{{ 'general.accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+                              <span class="value-picker__title text--strong">
+                                {{- 'collection.general.display' | t -}}
+                              </span>
+                              <button
+                                class="value-picker__close"
+                                data-action="close-value-picker"
+                                aria-controls="display-by-selector"
+                                aria-label="{{ 'general.accessibility.close' | t }}"
+                              >
+                                {% render 'icon', icon: 'close' %}
+                              </button>
                             </header>
 
                             <div class="value-picker__choice-list">
-                              <button class="value-picker__choice-item link {% if items_per_page == 24 %}is-selected{% endif %}" data-action="select-value" data-value="24">{{ 'collection.general.page_size' | t: page_size: 24 }} {% render 'icon', icon: 'check-2' %}</button>
-                              <button class="value-picker__choice-item link {% if items_per_page == 36 %}is-selected{% endif %}" data-action="select-value" data-value="36">{{ 'collection.general.page_size' | t: page_size: 36 }} {% render 'icon', icon: 'check-2' %}</button>
-                              <button class="value-picker__choice-item link {% if items_per_page == 48 %}is-selected{% endif %}" data-action="select-value" data-value="48">{{ 'collection.general.page_size' | t: page_size: 48 }} {% render 'icon', icon: 'check-2' %}</button>
+                              <button
+                                class="value-picker__choice-item link {% if items_per_page == 24 %}is-selected{% endif %}"
+                                data-action="select-value"
+                                data-value="24"
+                              >
+                                {{ 'collection.general.page_size' | t: page_size: 24 }}
+                                {% render 'icon', icon: 'check-2' %}
+                              </button>
+                              <button
+                                class="value-picker__choice-item link {% if items_per_page == 36 %}is-selected{% endif %}"
+                                data-action="select-value"
+                                data-value="36"
+                              >
+                                {{ 'collection.general.page_size' | t: page_size: 36 }}
+                                {% render 'icon', icon: 'check-2' %}
+                              </button>
+                              <button
+                                class="value-picker__choice-item link {% if items_per_page == 48 %}is-selected{% endif %}"
+                                data-action="select-value"
+                                data-value="48"
+                              >
+                                {{ 'collection.general.page_size' | t: page_size: 48 }}
+                                {% render 'icon', icon: 'check-2' %}
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -435,10 +754,20 @@
                       {%- endfor -%}
 
                       <div class="value-picker-wrapper">
-                        <button class="value-picker-button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-by-selector" data-action="open-value-picker">
-                          <span class="hidden-tablet-and-up">{{ 'collection.sorting.title' | t }}</span><!--
-                          --><span class="hidden-phone">{{ 'collection.sorting.title' | t }}: {{ collection_sort_by_name }}</span><!--
-                          -->{%- render 'icon', icon: 'arrow-bottom' -%}
+                        <button
+                          class="value-picker-button"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          aria-controls="sort-by-selector"
+                          data-action="open-value-picker"
+                        >
+                          <span class="hidden-tablet-and-up">{{ 'collection.sorting.title' | t }}</span>
+                          <!--  -->
+                          <span class="hidden-phone">
+                            {{- 'collection.sorting.title' | t }}: {{ collection_sort_by_name -}}
+                          </span>
+                          <!--  -->
+                          {%- render 'icon', icon: 'arrow-bottom' -%}
                         </button>
 
                         <div id="sort-by-selector" class="value-picker" aria-hidden="true">
@@ -447,12 +776,26 @@
                           <div class="value-picker__inner">
                             <header class="value-picker__header">
                               <span class="value-picker__title text--strong">{{ 'collection.sorting.title' | t }}</span>
-                              <button class="value-picker__close" data-action="close-value-picker" aria-controls="sort-by-selector" aria-label="{{ 'general.accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+                              <button
+                                class="value-picker__close"
+                                data-action="close-value-picker"
+                                aria-controls="sort-by-selector"
+                                aria-label="{{ 'general.accessibility.close' | t }}"
+                              >
+                                {% render 'icon', icon: 'close' %}
+                              </button>
                             </header>
 
                             <div class="value-picker__choice-list">
                               {%- for option in collection.sort_options -%}
-                                <button class="value-picker__choice-item link {% if option.value == collection_sort_by %}is-selected{% endif %}" data-action="select-value" data-value="{{ option.value }}">{{ option.name }} {% render 'icon', icon: 'check-2' %}</button>
+                                <button
+                                  class="value-picker__choice-item link {% if option.value == collection_sort_by %}is-selected{% endif %}"
+                                  data-action="select-value"
+                                  data-value="{{ option.value }}"
+                                >
+                                  {{ option.name }}
+                                  {% render 'icon', icon: 'check-2' %}
+                                </button>
                               {%- endfor -%}
                             </div>
                           </div>
@@ -464,19 +807,51 @@
                       <span class="collection__layout-label hidden-phone">{{ 'collection.layout.title' | t }}</span>
 
                       {%- if section.settings.default_view_layout == 'grid' -%}
-                        <button type="button" class="collection__layout-button {% if view_mode == 'grid' %}is-selected{% endif %} link touch-area" aria-label="{{ 'collection.layout.grid' | t }}" data-action="change-layout" data-layout-mode="grid">{% render 'icon', icon: 'grid' %}</button>
-                        <button type="button" class="collection__layout-button {% if view_mode == 'list' %}is-selected{% endif %} link touch-area" aria-label="{{ 'collection.layout.list' | t }}" data-action="change-layout" data-layout-mode="list">{% render 'icon', icon: 'list' %}</button>
+                        <button
+                          type="button"
+                          class="collection__layout-button {% if view_mode == 'grid' %}is-selected{% endif %} link touch-area"
+                          aria-label="{{ 'collection.layout.grid' | t }}"
+                          data-action="change-layout"
+                          data-layout-mode="grid"
+                        >
+                          {% render 'icon', icon: 'grid' %}
+                        </button>
+                        <button
+                          type="button"
+                          class="collection__layout-button {% if view_mode == 'list' %}is-selected{% endif %} link touch-area"
+                          aria-label="{{ 'collection.layout.list' | t }}"
+                          data-action="change-layout"
+                          data-layout-mode="list"
+                        >
+                          {% render 'icon', icon: 'list' %}
+                        </button>
                       {%- else -%}
-                        <button type="button" class="collection__layout-button {% if view_mode == 'list' %}is-selected{% endif %} link touch-area" aria-label="{{ 'collection.layout.list' | t }}" data-action="change-layout" data-layout-mode="list">{% render 'icon', icon: 'list' %}</button>
-                        <button type="button" class="collection__layout-button {% if view_mode == 'grid' %}is-selected{% endif %} link touch-area" aria-label="{{ 'collection.layout.grid' | t }}" data-action="change-layout" data-layout-mode="grid">{% render 'icon', icon: 'grid' %}</button>
+                        <button
+                          type="button"
+                          class="collection__layout-button {% if view_mode == 'list' %}is-selected{% endif %} link touch-area"
+                          aria-label="{{ 'collection.layout.list' | t }}"
+                          data-action="change-layout"
+                          data-layout-mode="list"
+                        >
+                          {% render 'icon', icon: 'list' %}
+                        </button>
+                        <button
+                          type="button"
+                          class="collection__layout-button {% if view_mode == 'grid' %}is-selected{% endif %} link touch-area"
+                          aria-label="{{ 'collection.layout.grid' | t }}"
+                          data-action="change-layout"
+                          data-layout-mode="grid"
+                        >
+                          {% render 'icon', icon: 'grid' %}
+                        </button>
                       {%- endif -%}
                     </div>
                   </div>
 
                   {%- comment -%}
-                  --------------------------------------------------------------------------------------
-                  MOBILE FILTERS
-                  --------------------------------------------------------------------------------------
+                    --------------------------------------------------------------------------------------
+                    MOBILE FILTERS
+                    --------------------------------------------------------------------------------------
                   {%- endcomment -%}
 
                   {%- if has_filters and active_filters_count > 0 -%}
@@ -485,32 +860,56 @@
                         {%- for filter in collection.filters -%}
                           {%- if filter.type == 'list' -%}
                             {%- for active_filter_value in filter.active_values -%}
-                              <button class="collection__mobile-active-filter-item" data-action="clear-filters" data-url="{{ active_filter_value.url_to_remove | escape }}">
-                                <span class="collection__mobile-active-filter-cross">{% render 'icon', icon: 'close' %}</span>
+                              <button
+                                class="collection__mobile-active-filter-item"
+                                data-action="clear-filters"
+                                data-url="{{ active_filter_value.url_to_remove | escape }}"
+                              >
+                                <span class="collection__mobile-active-filter-cross">
+                                  {%- render 'icon', icon: 'close' -%}
+                                </span>
                                 {{- active_filter_value.label -}}
                               </button>
                             {%- endfor -%}
-                          {%- elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value -%}
-                            <button class="collection__mobile-active-filter-item" data-action="clear-filters" data-url="{{ filter.url_to_remove | escape }}">
-                              <span class="collection__mobile-active-filter-cross">{% render 'icon', icon: 'close' %}</span>
-                              {{- filter.min_value.value | default: 0 | money_without_trailing_zeros }} - {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros -}}
+                          {%- elsif filter.type == 'price_range'
+                            and filter.min_value.value
+                            or filter.max_value.value
+                          -%}
+                            <button
+                              class="collection__mobile-active-filter-item"
+                              data-action="clear-filters"
+                              data-url="{{ filter.url_to_remove | escape }}"
+                            >
+                              <span class="collection__mobile-active-filter-cross">
+                                {%- render 'icon', icon: 'close' -%}
+                              </span>
+                              {{- filter.min_value.value | default: 0 | money_without_trailing_zeros }} -
+                              {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros -}}
                             </button>
                           {%- endif -%}
                         {%- endfor -%}
 
                         {%- if active_filters_count > 1 -%}
-                          <button class="collection__mobile-active-clear" data-action="clear-filters" data-url="{{ collection.url }}?sort_by={{ sort_by }}">{{ 'collection.filter.clear_all' | t }}</button>
+                          <button
+                            class="collection__mobile-active-clear"
+                            data-action="clear-filters"
+                            data-url="{{ collection.url }}?sort_by={{ sort_by }}"
+                          >
+                            {{ 'collection.filter.clear_all' | t }}
+                          </button>
                         {%- endif -%}
                       </div>
 
-                      <span class="collection__mobile-active-filters-results">{{ 'collection.general.results_count' | t: count: collection.products_count }}</span>
+                      <span class="collection__mobile-active-filters-results">
+                        {{- 'collection.general.results_count' | t: count: collection.products_count -}}
+                      </span>
                     </div>
                   {%- endif -%}
 
                   {%- comment -%}
-                  --------------------------------------------------------------------------------------
-                  COLLECTION PRODUCTS
-                  --------------------------------------------------------------------------------------
+                    --------------------------------------------------------------------------------------
+                    COLLECTION PRODUCTS
+                    --------------------------------------------------------------------------------------
                   {%- endcomment -%}
 
                   {%- if collection.products_count == 0 -%}
@@ -518,7 +917,13 @@
                       <p class="empty-state__description">{{ 'collection.general.no_results' | t }}</p>
 
                       <div class="empty-state__button-container">
-                        <button class="empty-state__button button button--primary" data-action="clear-filters" data-url="{{ collection.url }}?sort_by={{ sort_by }}">{{ 'collection.filter.clear_all' | t }}</button>
+                        <button
+                          class="empty-state__button button button--primary"
+                          data-action="clear-filters"
+                          data-url="{{ collection.url }}?sort_by={{ sort_by }}"
+                        >
+                          {{ 'collection.filter.clear_all' | t }}
+                        </button>
                       </div>
                     </div>
                   {%- else -%}
@@ -551,20 +956,46 @@
         <div class="collection-drawer">
           <header class="collection-drawer__header">
             <div>
-              <button class="collection-drawer__close" data-action="close-drawer" title="{{ 'general.accessibility.close' | t | escape }}">
+              <button
+                class="collection-drawer__close"
+                data-action="close-drawer"
+                title="{{ 'general.accessibility.close' | t | escape }}"
+              >
                 {%- render 'icon', icon: 'close' -%}
               </button>
-              <span class="collection-drawer__title heading h3">{{ 'collection.filter.all' | t }} <span class="collection-drawer__filter-count" {% if active_filters_count == 0 %}style="display: none"{% endif %}>({{ active_filters_count }})</span></span>
+              <span class="collection-drawer__title heading h3">
+                {{- 'collection.filter.all' | t }}
+                <span
+                  class="collection-drawer__filter-count"
+                  {% if active_filters_count == 0 %}
+                    style="display: none"
+                  {% endif %}
+                  >({{ active_filters_count }})</span
+                ></span
+              >
             </div>
 
-            <button class="button button--transparent button--extra-small" data-action="clear-filters" data-url="{{ collection.url }}?sort_by={{ sort_by }}" {% if active_filters_count == 0 %}style="display: none"{% endif %}>{{ 'collection.filter.clear' | t }}</button>
+            <button
+              class="button button--transparent button--extra-small"
+              data-action="clear-filters"
+              data-url="{{ collection.url }}?sort_by={{ sort_by }}"
+              {% if active_filters_count == 0 %}
+                style="display: none"
+              {% endif %}
+            >
+              {{ 'collection.filter.clear' | t }}
+            </button>
           </header>
 
           <form id="mobile-collection-filters-form" class="collection-drawer__inner">
             <input type="hidden" name="sort_by" value="{{ sort_by }}">
 
             {%- if collection.current_type != blank or collection.current_vendor != blank -%}
-              <input type="hidden" name="q" value="{{ collection.current_vendor | default: collection.current_type | escape }}">
+              <input
+                type="hidden"
+                name="q"
+                value="{{ collection.current_vendor | default: collection.current_type | escape }}"
+              >
             {%- endif -%}
 
             {%- if quick_links_menu.links.size > 0 -%}
@@ -573,7 +1004,14 @@
               <p class="collection-drawer__section-title">{{ quick_links_menu.title }}</p>
 
               <div class="collection__filter-group">
-                <button type="button" class="collection__filter-group-name text--strong" aria-expanded="false" aria-controls="{{ link_id }}" data-action="toggle-collapsible" data-close-siblings="false">
+                <button
+                  type="button"
+                  class="collection__filter-group-name text--strong"
+                  aria-expanded="false"
+                  aria-controls="{{ link_id }}"
+                  data-action="toggle-collapsible"
+                  data-close-siblings="false"
+                >
                   {{- 'collection.filter.select_category' | t -}}
                   {%- render 'icon', icon: 'arrow-bottom' -%}
                 </button>
@@ -585,8 +1023,20 @@
                         {%- if link.links.size > 0 -%}
                           {%- capture link_id -%}filter-{% increment link_id %}{%- endcapture -%}
 
-                          <button type="button" class="collection__filter-link link link--primary {% if link.active or link.child_active %}is-active{% endif %}" data-action="toggle-collapsible" aria-controls="{{ link_id }}" aria-expanded="false">
-                            {{ link.title }} {% if link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ link.object.products_count }}){% endif %} {%- render 'icon', icon: 'arrow-bottom' -%}
+                          <button
+                            type="button"
+                            class="collection__filter-link link link--primary {% if link.active or link.child_active %}is-active{% endif %}"
+                            data-action="toggle-collapsible"
+                            aria-controls="{{ link_id }}"
+                            aria-expanded="false"
+                          >
+                            {{ link.title }}
+                            {% if link.type == 'collection_link'
+                              and section.settings.quick_links_show_products_count
+                            -%}
+                              ({{ link.object.products_count }})
+                            {%- endif %}
+                            {%- render 'icon', icon: 'arrow-bottom' -%}
                           </button>
 
                           <div id="{{ link_id }}" class="collection__filter-collapsible" aria-hidden="true">
@@ -596,28 +1046,78 @@
                                   {%- if sub_link.links.size > 0 -%}
                                     {%- capture link_id -%}filter-{% increment link_id %}{%- endcapture -%}
 
-                                    <button type="button" class="collection__filter-link link link--primary {% if sub_link.active or sub_link.child_active %}is-active{% endif %}" data-action="toggle-collapsible" aria-controls="{{ link_id }}" aria-expanded="{% if sub_link.active or sub_link.child_active %}true{% else %}false{% endif %}">
-                                      {{ sub_link.title }} {% if sub_link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ sub_link.object.products_count }}){% endif %} {%- render 'icon', icon: 'arrow-bottom' -%}
+                                    <button
+                                      type="button"
+                                      class="collection__filter-link link link--primary {% if sub_link.active or sub_link.child_active %}is-active{% endif %}"
+                                      data-action="toggle-collapsible"
+                                      aria-controls="{{ link_id }}"
+                                      aria-expanded="{% if sub_link.active or sub_link.child_active %}true{% else %}false{% endif %}"
+                                    >
+                                      {{ sub_link.title }}
+                                      {% if sub_link.type == 'collection_link'
+                                        and section.settings.quick_links_show_products_count
+                                      -%}
+                                        ({{ sub_link.object.products_count }})
+                                      {%- endif %}
+                                      {%- render 'icon', icon: 'arrow-bottom' -%}
                                     </button>
 
-                                    <div id="{{ link_id }}" class="collection__filter-collapsible" {% if sub_link.active or sub_link.child_active %}aria-hidden="false" style="height: auto; overflow: visible"{% else %}aria-hidden="true"{% endif %}>
+                                    <div
+                                      id="{{ link_id }}"
+                                      class="collection__filter-collapsible"
+                                      {% if sub_link.active or sub_link.child_active %}
+                                        aria-hidden="false" style="height: auto; overflow: visible"
+                                      {% else %}
+                                        aria-hidden="true"
+                                      {% endif %}
+                                    >
                                       <ul class="collection__filter-linklist" role="list">
                                         {%- for sub_sub_link in sub_link.links -%}
                                           <li>
-                                            <a href="{{ sub_sub_link.url }}" class="collection__filter-link link link--primary {% if sub_sub_link.active %}is-active{% endif %}">{{ sub_sub_link.title }} {% if sub_sub_link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ sub_sub_link.object.products_count }}){% endif %}</a>
+                                            <a
+                                              href="{{ sub_sub_link.url }}"
+                                              class="collection__filter-link link link--primary {% if sub_sub_link.active %}is-active{% endif %}"
+                                            >
+                                              {{- sub_sub_link.title }}
+                                              {% if sub_sub_link.type == 'collection_link'
+                                                and section.settings.quick_links_show_products_count
+                                              -%}
+                                                ({{ sub_sub_link.object.products_count }})
+                                              {%- endif -%}
+                                            </a>
                                           </li>
                                         {%- endfor -%}
                                       </ul>
                                     </div>
                                   {%- else -%}
-                                    <a href="{{ sub_link.url }}" class="collection__filter-link link link--primary {% if sub_link.active %}is-active{% endif %}">{{ sub_link.title }} {% if sub_link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ sub_link.object.products_count }}){% endif %}</a>
+                                    <a
+                                      href="{{ sub_link.url }}"
+                                      class="collection__filter-link link link--primary {% if sub_link.active %}is-active{% endif %}"
+                                    >
+                                      {{- sub_link.title }}
+                                      {% if sub_link.type == 'collection_link'
+                                        and section.settings.quick_links_show_products_count
+                                      -%}
+                                        ({{ sub_link.object.products_count }})
+                                      {%- endif -%}
+                                    </a>
                                   {%- endif -%}
                                 </li>
                               {%- endfor -%}
                             </ul>
                           </div>
                         {%- else -%}
-                          <a href="{{ link.url }}" class="collection__filter-link link link--primary {% if link.active or link.child_active %}is-active{% endif %}">{{ link.title }} {% if link.type == 'collection_link' and section.settings.quick_links_show_products_count %}({{ link.object.products_count }}){% endif %}</a>
+                          <a
+                            href="{{ link.url }}"
+                            class="collection__filter-link link link--primary {% if link.active or link.child_active %}is-active{% endif %}"
+                          >
+                            {{- link.title }}
+                            {% if link.type == 'collection_link'
+                              and section.settings.quick_links_show_products_count
+                            -%}
+                              ({{ link.object.products_count }})
+                            {%- endif -%}
+                          </a>
                         {%- endif -%}
                       </li>
                     {%- endfor -%}
@@ -630,7 +1130,10 @@
               <p class="collection-drawer__section-title">{{ 'collection.filter.all' | t }}</p>
 
               {%- for filter in collection.filters -%}
-                {%- if template.suffix == 'brand' and filter.param_name == 'filter.p.vendor' and filter.values.size == 1 -%}
+                {%- if template.suffix == 'brand'
+                  and filter.param_name == 'filter.p.vendor'
+                  and filter.values.size == 1
+                -%}
                   {%- continue -%}
                 {%- endif -%}
 
@@ -643,37 +1146,72 @@
                 {%- endif -%}
 
                 <div class="collection__filter-group">
-                  <button type="button" class="collection__filter-group-name link link--secondary text--strong" data-action="toggle-collapsible" aria-controls="mobile-{{ filter.param_name | handle | escape }}" data-close-siblings="false" data-collapsible-force-overflow="true" aria-expanded="false">
+                  <button
+                    type="button"
+                    class="collection__filter-group-name link link--secondary text--strong"
+                    data-action="toggle-collapsible"
+                    aria-controls="mobile-{{ filter.param_name | handle | escape }}"
+                    data-close-siblings="false"
+                    data-collapsible-force-overflow="true"
+                    aria-expanded="false"
+                  >
                     <div>
                       {{- filter.label -}}
 
                       {%- if filter.type == 'list' and filter.active_values.size > 0 -%}
-                        <span class="collection__filter-item-active">{{ filter.active_values | map: 'label' | join: ', ' }}</span>
+                        <span class="collection__filter-item-active">
+                          {{- filter.active_values | map: 'label' | join: ', ' -}}
+                        </span>
                       {%- elsif filter.type == 'price_range' and filter.min_value.value or filter.max_value.value -%}
-                        <span class="collection__filter-item-active">{{ filter.min_value.value | default: 0 | money_without_trailing_zeros }} - {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros }}</span>
+                        <span class="collection__filter-item-active">
+                          {{- filter.min_value.value | default: 0 | money_without_trailing_zeros }} -
+                          {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros -}}
+                        </span>
                       {%- endif -%}
                     </div>
 
                     {%- render 'icon', icon: 'arrow-bottom' -%}
                   </button>
 
-                  <div id="mobile-{{ filter.param_name | handle | escape }}" class="collection__filter-collapsible" aria-hidden="true">
+                  <div
+                    id="mobile-{{ filter.param_name | handle | escape }}"
+                    class="collection__filter-collapsible"
+                    aria-hidden="true"
+                  >
                     {%- case filter.type -%}
                       {%- when 'list' -%}
                         {%- if show_color_swatch -%}
                           <div class="collection__filter-color-list">
                             <div class="color-swatch-list color-swatch-list--stack">
-                              {%- assign color_swatch_config = settings.color_swatch_config | newline_to_br | split: '<br />' -%}
+                              {%- assign color_swatch_config = settings.color_swatch_config
+                                | newline_to_br
+                                | split: '<br />'
+                              -%}
 
                               {%- for filter_value in filter.values -%}
                                 {%- capture color_id -%}filter-color-{% increment color_index %}{%- endcapture -%}
                                 {%- assign downcased_value = filter_value.label | downcase -%}
 
                                 <div class="color-swatch {% if downcased_value == 'white' or downcased_value == 'blanc' %}color-swatch--white{% endif %}">
-                                  <input class="color-swatch__radio" type="checkbox" name="{{ filter.param_name }}" id="mobile-{{ filter_value.param_name }}-{{ filter_value.value | handle }}" value="{{ filter_value.value }}" {% if filter_value.active %}checked{% endif %}>
+                                  <input
+                                    class="color-swatch__radio"
+                                    type="checkbox"
+                                    name="{{ filter.param_name }}"
+                                    id="mobile-{{ filter_value.param_name }}-{{ filter_value.value | handle }}"
+                                    value="{{ filter_value.value }}"
+                                    {% if filter_value.active %}
+                                      checked
+                                    {% endif %}
+                                  >
 
-                                  <label for="mobile-{{ filter_value.param_name }}-{{ filter_value.value | handle }}" class="color-swatch__button color-swatch__button--labelled {% if filter_value.active %}is-selected{% endif %}">
-                                    <span class="color-swatch__item" style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: downcased_value %}"></span>
+                                  <label
+                                    for="mobile-{{ filter_value.param_name }}-{{ filter_value.value | handle }}"
+                                    class="color-swatch__button color-swatch__button--labelled {% if filter_value.active %}is-selected{% endif %}"
+                                  >
+                                    <span
+                                      class="color-swatch__item"
+                                      style="{% render 'color-swatch-style', color_swatch_config: color_swatch_config, value: downcased_value %}"
+                                    ></span>
                                     <span class="color-swatch__label">{{ filter_value.label }}</span>
                                   </label>
                                 </div>
@@ -685,11 +1223,25 @@
                             {%- for filter_value in filter.values -%}
                               <li class="collection__filter-checkbox">
                                 <div class="checkbox-wrapper">
-                                  <input type="checkbox" class="checkbox" id="mobile-{{ filter_value.param_name }}-{{ filter_value.value | handle }}" name="{{ filter.param_name }}" value="{{ filter_value.value }}" {% if filter_value.active %}checked="checked"{% endif %}>
+                                  <input
+                                    type="checkbox"
+                                    class="checkbox"
+                                    id="mobile-{{ filter_value.param_name }}-{{ filter_value.value | handle }}"
+                                    name="{{ filter.param_name }}"
+                                    value="{{ filter_value.value }}"
+                                    {% if filter_value.active %}
+                                      checked="checked"
+                                    {% endif %}
+                                  >
                                   {% render 'icon', icon: 'check' %}
                                 </div>
 
-                                <label for="mobile-{{ filter_value.param_name }}-{{ filter_value.value | handle }}">{{ filter_value.label }} {% if section.settings.quick_links_show_products_count %}({{ filter_value.count }}){% endif %}</label>
+                                <label for="mobile-{{ filter_value.param_name }}-{{ filter_value.value | handle }}">
+                                  {{- filter_value.label }}
+                                  {% if section.settings.quick_links_show_products_count -%}
+                                    ({{ filter_value.count }})
+                                  {%- endif -%}
+                                </label>
                               </li>
                             {%- endfor -%}
                           </ul>
@@ -698,28 +1250,72 @@
                       {%- when 'price_range' -%}
                         <price-range class="price-range">
                           {%- assign min_value = filter.min_value.value | default: 0.0 | divided_by: 100.0 -%}
-                          {%- assign max_value = filter.max_value.value | default: filter.range_max | divided_by: 100.0 -%}
+                          {%- assign max_value = filter.max_value.value
+                            | default: filter.range_max
+                            | divided_by: 100.0
+                          -%}
                           {%- assign range_max = filter.range_max | divided_by: 100.0 | ceil -%}
 
                           {% assign lower_bound_progress = min_value | divided_by: range_max | times: 100.0 %}
                           {% assign higher_bound_progress = max_value | divided_by: range_max | times: 100.0 %}
 
-                          <div class="price-range__range-group range-group" style="--range-min: {{ lower_bound_progress }}%; --range-max: {{ higher_bound_progress }}%">
-                            <input type="range" aria-label="{{ 'collection.filter.price_filter_from' | t }}" class="range" min="0" max="{{ range_max | ceil }}" value="{{ min_value | ceil }}">
-                            <input type="range" aria-label="{{ 'collection.filter.price_filter_to' | t }}" class="range" min="0" max="{{ range_max | ceil }}" value="{{ max_value | ceil }}">
+                          <div
+                            class="price-range__range-group range-group"
+                            style="--range-min: {{ lower_bound_progress }}%; --range-max: {{ higher_bound_progress }}%"
+                          >
+                            <input
+                              type="range"
+                              aria-label="{{ 'collection.filter.price_filter_from' | t }}"
+                              class="range"
+                              min="0"
+                              max="{{ range_max | ceil }}"
+                              value="{{ min_value | ceil }}"
+                            >
+                            <input
+                              type="range"
+                              aria-label="{{ 'collection.filter.price_filter_to' | t }}"
+                              class="range"
+                              min="0"
+                              max="{{ range_max | ceil }}"
+                              value="{{ max_value | ceil }}"
+                            >
                           </div>
 
                           <div class="price-range__input-group">
                             <div class="price-range__input input-prefix">
                               <span class="input-prefix__value">{{ cart.currency.symbol }}</span>
-                              <input aria-label="{{ 'collection.filter.price_filter_from' | t }}" class="input-prefix__field" type="number" inputmode="numeric" {% if filter.min_value.value %}value="{{ min_value | ceil }}"{% endif %} name="{{ filter.min_value.param_name }}" min="0" max="{{ max_value | ceil }}" placeholder="0">
+                              <input
+                                aria-label="{{ 'collection.filter.price_filter_from' | t }}"
+                                class="input-prefix__field"
+                                type="number"
+                                inputmode="numeric"
+                                {% if filter.min_value.value %}
+                                  value="{{ min_value | ceil }}"
+                                {% endif %}
+                                name="{{ filter.min_value.param_name }}"
+                                min="0"
+                                max="{{ max_value | ceil }}"
+                                placeholder="0"
+                              >
                             </div>
 
                             <span class="price-range__delimiter text--small">-</span>
 
                             <div class="price-range__input input-prefix">
                               <span class="input-prefix__value">{{ cart.currency.symbol }}</span>
-                              <input aria-label="{{ 'collection.filter.price_filter_to' | t }}" class="input-prefix__field" type="number" inputmode="numeric" {% if filter.max_value.value %}value="{{ max_value | ceil }}"{% endif %} name="{{ filter.max_value.param_name }}" min="{{ min_value | ceil }}" max="{{ range_max | ceil }}" placeholder="{{ range_max | ceil }}">
+                              <input
+                                aria-label="{{ 'collection.filter.price_filter_to' | t }}"
+                                class="input-prefix__field"
+                                type="number"
+                                inputmode="numeric"
+                                {% if filter.max_value.value %}
+                                  value="{{ max_value | ceil }}"
+                                {% endif %}
+                                name="{{ filter.max_value.param_name }}"
+                                min="{{ min_value | ceil }}"
+                                max="{{ range_max | ceil }}"
+                                placeholder="{{ range_max | ceil }}"
+                              >
                             </div>
                           </div>
                         </price-range>
@@ -731,7 +1327,9 @@
           </form>
 
           <div class="collection-drawer__footer">
-            <button type="button" class="button button--primary button--small button--full" data-action="close-drawer">{{ 'collection.filter.view_results' | t }}</button>
+            <button type="button" class="button button--primary button--small button--full" data-action="close-drawer">
+              {{ 'collection.filter.view_results' | t }}
+            </button>
           </div>
         </div>
       </div>
@@ -739,14 +1337,18 @@
   {%- endif -%}
 
   {%- comment -%}
-  --------------------------------------------------------------------------------------
-  QUICK VIEW CONTAINER
-  --------------------------------------------------------------------------------------
+    --------------------------------------------------------------------------------------
+    QUICK VIEW CONTAINER
+    --------------------------------------------------------------------------------------
   {%- endcomment -%}
 
   <div id="modal-quick-view-{{ section.id }}" class="modal" aria-hidden="true">
     <div class="modal__dialog modal__dialog--stretch" role="dialog">
-      <button class="modal__close link" data-action="close-modal" title="{{ 'general.accessibility.close' | t | escape }}">
+      <button
+        class="modal__close link"
+        data-action="close-modal"
+        title="{{ 'general.accessibility.close' | t | escape }}"
+      >
         {%- render 'icon', icon: 'close' -%}
       </button>
 
@@ -758,7 +1360,6 @@
     </div>
   </div>
 </section>
-{%- endif -%}
 {% schema %}
 {
   "name": "Coleção",
