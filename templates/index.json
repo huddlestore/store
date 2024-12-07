@@ -119,9 +119,7 @@
         "template--19713056342324__97fc96f0-35f5-4718-9e13-604014972028-1688051597c78dc01b-3"
       ],
       "disabled": true,
-      "settings": {
-        "stack_mobile": false
-      }
+      "settings": { "stack_mobile": false }
     },
     "ce725fcc-39b8-4059-99ad-a9927966bb2c": {
       "type": "featured-collection",
@@ -267,9 +265,7 @@
           }
         }
       },
-      "block_order": [
-        "image_rR8kDU"
-      ],
+      "block_order": ["image_rR8kDU"],
       "settings": {
         "edge_to_edge": false,
         "section_size": "preserve_ratio",
@@ -466,9 +462,7 @@
       "custom_css": [
         ".promo-block__image-wrapper--cover {background-position: top !important;}"
       ],
-      "settings": {
-        "section_size": "medium"
-      }
+      "settings": { "section_size": "medium" }
     }
   },
   "order": [

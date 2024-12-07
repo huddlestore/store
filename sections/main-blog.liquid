@@ -11,21 +11,13 @@
             </li>
 
             {%- for tag in blog.all_tags -%}
-              <li class="page__tag-item link {% if current_tags contains tag %}is-selected{% endif %}">
-                {{ tag | link_to_tag: tag }}
-              </li>
+              <li class="page__tag-item link {% if current_tags contains tag %}is-selected{% endif %}">{{ tag | link_to_tag: tag }}</li>
             {%- endfor -%}
           </ul>
 
           <div class="page__action-list hidden-lap-and-up">
             <div class="value-picker-wrapper">
-              <button
-                class="value-picker-button"
-                aria-haspopup="true"
-                aria-expanded="false"
-                aria-controls="blog-tag-selector"
-                data-action="open-value-picker"
-              >
+              <button class="value-picker-button" aria-haspopup="true" aria-expanded="false" aria-controls="blog-tag-selector" data-action="open-value-picker">
                 {%- if current_tags == blank -%}
                   {{- 'blog.general.all_tag' | t -}}
                 {%- else -%}
@@ -41,33 +33,14 @@
                 <div class="value-picker__inner">
                   <header class="value-picker__header">
                     <span class="value-picker__title text--strong">{{ 'blog.general.categories' | t }}</span>
-                    <button
-                      class="value-picker__close"
-                      data-action="close-value-picker"
-                      aria-controls="blog-tag-selector"
-                      aria-label="{{ 'general.accessibility.close' | t }}"
-                    >
-                      {% render 'icon', icon: 'close' %}
-                    </button>
+                    <button class="value-picker__close" data-action="close-value-picker" aria-controls="blog-tag-selector" aria-label="{{ 'general.accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
                   </header>
 
                   <div class="value-picker__choice-list">
-                    <a
-                      href="/blogs/{{ blog.handle }}"
-                      class="value-picker__choice-item {% if current_tags == blank %}is-selected{% endif %}"
-                    >
-                      {{- 'blog.general.all_tag' | t }}
-                      {% render 'icon', icon: 'check-2' -%}
-                    </a>
+                    <a href="/blogs/{{ blog.handle }}" class="value-picker__choice-item {% if current_tags == blank %}is-selected{% endif %}">{{ 'blog.general.all_tag' | t }} {% render 'icon', icon: 'check-2' %}</a>
 
                     {%- for tag in blog.all_tags -%}
-                      <a
-                        href="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}"
-                        class="value-picker__choice-item {% if current_tags contains tag %}is-selected{% endif %}"
-                      >
-                        {{- tag }}
-                        {% render 'icon', icon: 'check-2' -%}
-                      </a>
+                      <a href="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}" class="value-picker__choice-item {% if current_tags contains tag %}is-selected{% endif %}">{{ tag }} {% render 'icon', icon: 'check-2' %}</a>
                     {%- endfor -%}
                   </div>
                 </div>
@@ -85,9 +58,7 @@
           <p class="empty-state__description">{{ 'blog.general.empty' | t }}</p>
 
           <div class="empty-state__button-container">
-            <a href="{{ routes.root_url }}" class="empty-state__button button button--primary">
-              {{- 'blog.general.empty_button' | t -}}
-            </a>
+            <a href="{{ routes.root_url }}" class="empty-state__button button button--primary">{{ 'blog.general.empty_button' | t }}</a>
           </div>
         </div>
       {%- else -%}
@@ -124,11 +95,7 @@
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'newsletter' -%}
-                <div
-                  class="blog-sidebar__item blog-sidebar__item--newsletter"
-                  id="block-{{ block.id }}"
-                  {{ block.shopify_attributes }}
-                >
+                <div class="blog-sidebar__item blog-sidebar__item--newsletter" id="block-{{ block.id }}" {{ block.shopify_attributes }}>
                   <style>
                     #block-{{ block.id }} {
                       background: {{ block.settings.background }};
@@ -154,30 +121,17 @@
                         <p class="alert alert--success">{{ 'home_page.newsletter.success' | t }}</p>
                       {%- else -%}
                         {%- if form.errors -%}
-                          <p class="alert alert--error">{{ form.errors.messages.email }}</p>
+                          <p class="alert alert--error">{{ form.errors.messages['email'] }}</p>
                         {%- endif -%}
 
                         <input type="hidden" name="contact[tags]" value="newsletter">
 
                         <div class="form__input-wrapper form__input-wrapper--labelled">
-                          <input
-                            type="email"
-                            name="contact[email]"
-                            class="form__field form__field--text form__field--borderless"
-                            aria-label="{{ 'home_page.newsletter.input' | t }}"
-                            required
-                          >
-                          <label for="newsletter[contact][email]" class="form__floating-label">
-                            {{- 'home_page.newsletter.input' | t -}}
-                          </label>
+                          <input type="email" name="contact[email]" class="form__field form__field--text form__field--borderless" aria-label="{{ 'home_page.newsletter.input' | t }}" required>
+                          <label for="newsletter[contact][email]" class="form__floating-label">{{ 'home_page.newsletter.input' | t }}</label>
                         </div>
 
-                        <button
-                          type="submit"
-                          class="form__submit form__submit--tight button button--primary button--full"
-                        >
-                          {{ 'home_page.newsletter.submit' | t }}
-                        </button>
+                        <button type="submit" class="form__submit form__submit--tight button button--primary button--full">{{ 'home_page.newsletter.submit' | t }}</button>
                       {%- endif -%}
                     {%- endform -%}
 
@@ -188,19 +142,12 @@
                 </div>
 
               {%- when 'featured_posts' -%}
-                <div
-                  class="blog-sidebar__item blog-sidebar__item--posts"
-                  id="block-{{ block.id }}"
-                  {{ block.shopify_attributes }}
-                >
+                <div class="blog-sidebar__item blog-sidebar__item--posts" id="block-{{ block.id }}" {{ block.shopify_attributes }}>
                   {%- if block.settings.title != blank -%}
                     <p class="blog-sidebar__block-title heading h3">{{ block.settings.title | escape }}</p>
                   {%- endif -%}
 
-                  <ol
-                    class="blog-sidebar__post-list {% if block.settings.show_ranking %}blog-sidebar__post-list--ranked{% endif %}"
-                    role="list"
-                  >
+                  <ol class="blog-sidebar__post-list {% if block.settings.show_ranking %}blog-sidebar__post-list--ranked{% endif %}" role="list">
                     {%- assign show_placeholder = true -%}
 
                     {%- for i in (1..5) -%}
@@ -212,33 +159,22 @@
                           {%- if article.image -%}
                             <a href="{{ article.url }}" class="blog-sidebar__post-image-wrapper">
                               <div class="blog-sidebar__post-image-overflow">
-                                <img
-                                  src="{{ article.image | img_url: '100x80', crop: 'center', scale: 2 }}"
-                                  alt="{{ article.image.alt | escape }}"
-                                  class="blog-sidebar__post-image"
-                                >
+                                <img src="{{ article.image | img_url: '100x80', crop: 'center', scale: 2 }}" alt="{{ article.image.alt | escape }}" class="blog-sidebar__post-image">
                               </div>
                             </a>
                           {%- endif -%}
 
                           <div class="blog-sidebar__post-info">
-                            <a class="blog-sidebar__post-title text--strong link" href="{{ article.url }}">
-                              {{- article.title -}}
-                            </a>
+                            <a class="blog-sidebar__post-title text--strong link" href="{{ article.url }}">{{ article.title }}</a>
 
-                            {%- if block.settings.show_date
-                              or block.settings.show_category
-                              and article.tags.size > 0
-                            -%}
+                            {%- if block.settings.show_date or block.settings.show_category and article.tags.size > 0 -%}
                               <div class="blog-sidebar__post-meta">
                                 {%- if block.settings.show_category and article.tags.size > 0 -%}
                                   <span class="blog-sidebar__post-meta-item">{{ article.tags.first }}</span>
                                 {%- endif -%}
 
                                 {%- if block.settings.show_date -%}
-                                  <span class="blog-sidebar__post-meta-item">
-                                    {{- article.published_at | date: format: 'short_month_day_year' -}}
-                                  </span>
+                                  <span class="blog-sidebar__post-meta-item">{{ article.published_at | date: format: 'short_month_day_year' }}</span>
                                 {%- endif -%}
                               </div>
                             {%- endif -%}
@@ -256,31 +192,22 @@
                             <a href="#" class="blog-sidebar__post-image-wrapper">
                               <div class="blog-sidebar__post-image-overflow">
                                 {%- capture placeholder -%}{% cycle 'lifestyle-1', 'lifestyle-2' %}{%- endcapture -%}
-                                {{
-                                  placeholder
-                                  | placeholder_svg_tag: 'blog-sidebar__post-placeholder placeholder-svg'
-                                }}
+                                {{ placeholder | placeholder_svg_tag: 'blog-sidebar__post-placeholder placeholder-svg' }}
                               </div>
                             </a>
                           {%- endif -%}
 
                           <div class="blog-sidebar__post-info">
-                            <a class="blog-sidebar__post-title text--strong" href="#">
-                              {{- 'home_page.onboarding.article_title' | t -}}
-                            </a>
+                            <a class="blog-sidebar__post-title text--strong" href="#">{{ 'home_page.onboarding.article_title' | t }}</a>
 
                             {%- if block.settings.show_date or block.settings.show_category -%}
                               <div class="blog-sidebar__post-meta">
                                 {%- if block.settings.show_category -%}
-                                  <span class="blog-sidebar__post-meta-item">
-                                    {{- 'home_page.onboarding.article_category' | t -}}
-                                  </span>
+                                  <span class="blog-sidebar__post-meta-item">{{ 'home_page.onboarding.article_category' | t }}</span>
                                 {%- endif -%}
 
                                 {%- if block.settings.show_date -%}
-                                  <span class="blog-sidebar__post-meta-item">
-                                    {{- 'now' | date: format: 'short_month_day_year' -}}
-                                  </span>
+                                  <span class="blog-sidebar__post-meta-item">{{ 'now' | date: format: 'short_month_day_year' }}</span>
                                 {%- endif -%}
                               </div>
                             {%- endif -%}
@@ -292,11 +219,7 @@
                 </div>
 
               {%- when 'rich_text' -%}
-                <div
-                  class="blog-sidebar__item blog-sidebar__item--text"
-                  id="block-{{ block.id }}"
-                  {{ block.shopify_attributes }}
-                >
+                <div class="blog-sidebar__item blog-sidebar__item--text" id="block-{{ block.id }}" {{ block.shopify_attributes }}>
                   {%- if block.settings.title != blank -%}
                     <p class="blog-sidebar__block-title heading h3">{{ block.settings.title | escape }}</p>
                   {%- endif -%}
@@ -309,11 +232,7 @@
                 </div>
 
               {%- when 'featured_products' -%}
-                <div
-                  class="blog-sidebar__item blog-sidebar__item--products"
-                  id="block-{{ block.id }}"
-                  {{ block.shopify_attributes }}
-                >
+                <div class="blog-sidebar__item blog-sidebar__item--products" id="block-{{ block.id }}" {{ block.shopify_attributes }}>
                   {%- if block.settings.title != blank -%}
                     <p class="blog-sidebar__block-title heading h3">{{ block.settings.title | escape }}</p>
                   {%- endif -%}
@@ -340,11 +259,7 @@
                 </div>
 
               {%- when 'links' -%}
-                <div
-                  class="blog-sidebar__item blog-sidebar__item--menu"
-                  id="block-{{ block.id }}"
-                  {{ block.shopify_attributes }}
-                >
+                <div class="blog-sidebar__item blog-sidebar__item--menu" id="block-{{ block.id }}" {{ block.shopify_attributes }}>
                   {%- assign menu = linklists[block.settings.menu] -%}
 
                   {%- unless menu.empty? -%}
@@ -361,11 +276,7 @@
                 </div>
 
               {%- when 'social_media' -%}
-                <div
-                  class="blog-sidebar__item blog-sidebar__item--social"
-                  id="block-{{ block.id }}"
-                  {{ block.shopify_attributes }}
-                >
+                <div class="blog-sidebar__item blog-sidebar__item--social" id="block-{{ block.id }}" {{ block.shopify_attributes }}>
                   {%- if block.settings.title != blank -%}
                     <p class="blog-sidebar__block-title heading h3">{{ block.settings.title | escape }}</p>
                   {%- endif -%}

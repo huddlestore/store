@@ -5,10 +5,7 @@
         <h2 class="section__title heading h3">{{ section.settings.title | escape }}</h2>
 
         {%- if section.settings.link_title != blank and section.settings.link != blank -%}
-          <a href="{{ section.settings.link }}" class="section__action-link link">
-            {{- section.settings.link_title | escape }}
-            {% render 'icon', icon: 'tail-right' -%}
-          </a>
+          <a href="{{ section.settings.link }}" class="section__action-link link">{{ section.settings.link_title | escape }} {% render 'icon', icon: 'tail-right' %}</a>
         {%- endif -%}
       </header>
     {%- endif -%}
@@ -19,30 +16,16 @@
           {%- for block in section.blocks -%}
             {%- assign collection = block.settings.collection -%}
 
-            <a
-              href="{{ block.settings.link | default: collection.url | default: '#' }}"
-              class="collection-item"
-              data-collection-index="{{ forloop.index0 }}"
-              {{ block.shopify_attributes }}
-            >
+            <a href="{{ block.settings.link | default: collection.url | default: '#' }}" class="collection-item" data-collection-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
               {%- unless collection == blank -%}
-                {%- assign collection_image = block.settings.image
-                  | default: collection.image
-                  | default: collection.products.first.featured_image
-                -%}
+                {%- assign collection_image = block.settings.image | default: collection.image | default: collection.products.first.featured_image -%}
 
                 <div class="collection-item__image-wrapper {% if section.settings.round_images %}collection-item__image-wrapper--rounded{% endif %}">
                   {%- capture supported_sizes -%}{%- render 'image-size', sizes: '300,400,500,600,700,800', image: collection_image -%}{%- endcapture -%}
                   {%- assign image_url = collection_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
                   <div class="aspect-ratio" style="padding-bottom: 100%">
-                    <img
-                      class="lazyload image--fade-in"
-                      data-src="{{ image_url }}"
-                      data-widths="[{{ supported_sizes }}]"
-                      data-sizes="auto"
-                      alt="{{ collection_image.alt | escape }}"
-                    >
+                    <img class="lazyload image--fade-in" data-src="{{ image_url }}" data-widths="[{{ supported_sizes }}]" data-sizes="auto" alt="{{ collection_image.alt | escape }}">
 
                     <noscript>
                       <img src="{{ collection_image | img_url: '450x' }}" alt="{{ collection_image.alt | escape }}">
@@ -51,10 +34,7 @@
                 </div>
 
                 {%- if section.settings.show_collection_title -%}
-                  <span class="collection-item__title text--strong">
-                    {{- collection.title }}
-                    {% render 'icon', icon: 'tail-right' -%}
-                  </span>
+                  <span class="collection-item__title text--strong">{{ collection.title }} {% render 'icon', icon: 'tail-right' %}</span>
                 {%- endif -%}
               {%- else -%}
                 <div class="collection-item__image-wrapper {% if section.settings.round_images %}collection-item__image-wrapper--rounded{% endif %}">
@@ -63,10 +43,7 @@
                 </div>
 
                 {%- if section.settings.show_collection_title -%}
-                  <span class="collection-item__title text--strong">
-                    {{- 'home_page.onboarding.collection_title' | t }}
-                    {% render 'icon', icon: 'tail-right' -%}
-                  </span>
+                  <span class="collection-item__title text--strong">{{ 'home_page.onboarding.collection_title' | t }} {% render 'icon', icon: 'tail-right' %}</span>
                 {%- endif -%}
               {%- endunless -%}
             </a>

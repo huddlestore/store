@@ -7,18 +7,12 @@
 
       {%- case block.type -%}
         {%- when 'separator' -%}
-          <h2 class="team__section-title heading h3" {{ block.shopify_attributes }}>
-            {{ block.settings.title | escape }}
-          </h2>
+          <h2 class="team__section-title heading h3" {{ block.shopify_attributes }}>{{ block.settings.title | escape }}</h2>
 
         {%- when 'member' -%}
           <div class="team__block-item team__member" {{ block.shopify_attributes }}>
             {%- if block.settings.image -%}
-              <img
-                src="{{ block.settings.image | img_url: '250x250', crop: 'center' }}"
-                alt="{{ block.settings.image.alt | escape }}"
-                class="team__member-pic {% if section.settings.round_image %}team__member-pic--rounded{% endif %}"
-              >
+              <img src="{{ block.settings.image | img_url: '250x250', crop: 'center' }}" alt="{{ block.settings.image.alt | escape }}" class="team__member-pic {% if section.settings.round_image %}team__member-pic--rounded{% endif %}">
             {%- endif -%}
 
             {%- if block.settings.title != blank -%}
@@ -30,9 +24,7 @@
             {%- endif -%}
 
             {%- if block.settings.link != blank and block.settings.link_title != blank -%}
-              <a href="{{ block.settings.link }}" class="team__member-link link link--accented">
-                {{- block.settings.link_title -}}
-              </a>
+              <a href="{{ block.settings.link }}" class="team__member-link link link--accented">{{ block.settings.link_title }}</a>
             {%- endif -%}
           </div>
 
@@ -56,9 +48,7 @@
             {%- endif -%}
 
             {%- if block.settings.button_text != blank -%}
-              <a href="{{ block.settings.button_link }}" class="button button--primary button--small">
-                {{- block.settings.button_text | escape -}}
-              </a>
+              <a href="{{ block.settings.button_link }}" class="button button--primary button--small">{{ block.settings.button_text | escape }}</a>
             {%- endif -%}
           </div>
       {%- endcase -%}

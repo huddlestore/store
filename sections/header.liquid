@@ -7,9 +7,9 @@
 {%- endcapture -%}
 
 <style>
-  :root {
-       --nav-estilo: {{ section.settings.nav_estilo}};
-  }
+:root {
+     --nav-estilo: {{ section.settings.nav_estilo}};
+}
 </style>
 {%- assign navigation_menu_handle = section.settings.navigation_menu | default: 'main-menu' -%}
 {%- assign navigation_menu = linklists[navigation_menu_handle] -%}
@@ -17,29 +17,19 @@
 {%- assign navigation_mobile_menu_handle = section.settings.navigation_mobile_menu | default: navigation_menu_handle -%}
 {%- assign navigation_mobile_menu = linklists[navigation_mobile_menu_handle] -%}
 
-<section data-section-id="{{ section.id }}" data-section-type="header" data-section-settings="{{ section_settings }}">
-  <header
-    class="header header--{{ section.settings.desktop_navigation_layout }} {% unless section.settings.show_condensed_search %}header--search-expanded{% endunless %}"
-    role="banner"
-  >
+<section data-section-id="{{ section.id }}" data-section-type="header" data-section-settings='{{ section_settings }}'>
+  <header class="header header--{{ section.settings.desktop_navigation_layout }} {% unless section.settings.show_condensed_search %}header--search-expanded{% endunless %}" role="banner">
     <div class="container">
       <div class="header__inner">
         {%- comment -%}
-          --------------------------------------------------------------------------------------
-          MOBILE NAV
-          --------------------------------------------------------------------------------------
+        --------------------------------------------------------------------------------------
+        MOBILE NAV
+        --------------------------------------------------------------------------------------
         {%- endcomment -%}
 
         {%- if navigation_menu.links.size > 0 -%}
           <nav class="header__mobile-nav hidden-lap-and-up">
-            <button
-              class="header__mobile-nav-toggle icon-state touch-area"
-              data-action="toggle-menu"
-              aria-expanded="false"
-              aria-haspopup="true"
-              aria-controls="mobile-menu"
-              aria-label="{{ 'header.navigation.open_menu' | t }}"
-            >
+            <button class="header__mobile-nav-toggle icon-state touch-area" data-action="toggle-menu" aria-expanded="false" aria-haspopup="true" aria-controls="mobile-menu" aria-label="{{ 'header.navigation.open_menu' | t }}">
               <span class="icon-state__primary">{%- render 'icon', icon: 'hamburger-mobile' -%}</span>
               <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
             </button>
@@ -56,17 +46,8 @@
 
         {%- if section.settings.desktop_navigation_layout == 'condensed' and navigation_menu.links.size > 0 -%}
           <nav class="header__desktop-nav hidden-pocket">
-            <button
-              class="header__desktop-nav-toggle"
-              data-action="toggle-menu"
-              aria-expanded="false"
-              aria-haspopup="true"
-              aria-label="{{ 'header.navigation.open_menu' | t }}"
-            >
-              <span>
-                {%- render 'icon', icon: 'hamburger' -%}
-                <span class="header__desktop-nav-text">{{- 'header.navigation.menu' | t -}}</span></span
-              >
+            <button class="header__desktop-nav-toggle" data-action="toggle-menu" aria-expanded="false" aria-haspopup="true" aria-label="{{ 'header.navigation.open_menu' | t }}">
+              <span>{%- render 'icon', icon: 'hamburger' -%} <span class="header__desktop-nav-text">{{- 'header.navigation.menu' | t -}}</span></span>
             </button>
 
             {%- render 'desktop-menu', menu: navigation_menu, index: 'desktop-menu-0' -%}
@@ -74,9 +55,9 @@
         {%- endif -%}
 
         {%- comment -%}
-          --------------------------------------------------------------------------------------
-          LOGO COMPONENT
-          --------------------------------------------------------------------------------------
+        --------------------------------------------------------------------------------------
+        LOGO COMPONENT
+        --------------------------------------------------------------------------------------
         {%- endcomment -%}
 
         {%- capture header_logo -%}
@@ -103,258 +84,236 @@
         {%- endif -%}
 
         {%- comment -%}
-          --------------------------------------------------------------------------------------
-          SEARCH COMPONENT
-          --------------------------------------------------------------------------------------
+        --------------------------------------------------------------------------------------
+        SEARCH COMPONENT
+        --------------------------------------------------------------------------------------
         {%- endcomment -%}
 
-        {% if section.settings.buscar_botao %}
-          <div class="header__search-bar-wrapper {% unless section.settings.show_condensed_search %}is-visible{% endunless %}">
-            <form action="{{ routes.search_url }}" method="get" role="search" class="search-bar">
-              {%- assign search_menu = linklists[section.settings.search_menu] -%}
+ {% if section.settings.buscar_botao %}
+        
+        <div class="header__search-bar-wrapper {% unless section.settings.show_condensed_search %}is-visible{% endunless %}">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search-bar">
+            {%- assign search_menu = linklists[section.settings.search_menu] -%}
 
-              <div class="search-bar__top-wrapper">
-                <div class="search-bar__top">
-                  <input type="hidden" name="type" value="product">
-                  <input type="hidden" name="options[prefix]" value="last">
-                  <input
-                    type="hidden"
-                    name="options[unavailable_products]"
-                    value="{{ settings.search_unavailable_products }}"
-                  >
+            <div class="search-bar__top-wrapper">
+              <div class="search-bar__top">
+                <input type="hidden" name="type" value="product">
+                <input type="hidden" name="options[prefix]" value="last">
+                <input type="hidden" name="options[unavailable_products]" value="{{ settings.search_unavailable_products }}">
 
-                  <div class="search-bar__input-wrapper">
-                    <input
-                      class="search-bar__input"
-                      type="text"
-                      name="q"
-                      autocomplete="off"
-                      autocorrect="off"
-                      aria-label="{{ 'header.search.input_placeholder' | t }}"
-                      placeholder="{{ 'header.search.input_placeholder' | t }}"
-                    >
-                    <button type="button" class="search-bar__input-clear hidden-lap-and-up" data-action="clear-input">
-                      <span class="visually-hidden">{{ 'header.search.clear' | t }}</span>
-                      {% render 'icon', icon: 'close' %}
-                    </button>
-                  </div>
-
-                  {%- comment -%}The type detection is sometimes a bit inaccurate as it returns empty type, so we do an additional logic{%- endcomment -%}
-
-                  {%- assign has_at_least_one_type = false -%}
-                  {%- for product_type in shop.types -%}
-                    {%- if product_type != blank -%}
-                      {%- assign has_at_least_one_type = true -%}
-                      {%- break -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-
-                  {%- if section.settings.show_search_filter and has_at_least_one_type -%}
-                    <div class="search-bar__filter">
-                      <label for="search-product-type" class="search-bar__filter-label">
-                        <span class="search-bar__filter-active">{{ 'header.search.all_categories' | t }}</span>
-                        {%- render 'icon', icon: 'arrow-bottom' -%}
-                      </label>
-
-                      <select id="search-product-type">
-                        <option value="" selected="selected">{{ 'header.search.all_categories' | t }}</option>
-
-                        {%- for product_type in shop.types -%}
-                          {%- if product_type != blank -%}
-                            <option value="{{ product_type | escape }}">{{ product_type | escape }}</option>
-                          {%- endif -%}
-                        {%- endfor -%}
-                      </select>
-                    </div>
-                  {%- endif -%}
-
-                  <button type="submit" class="search-bar__submit" aria-label="{{ 'header.search.submit' | t }}">
-                    Buscar
+                <div class="search-bar__input-wrapper">
+                  <input class="search-bar__input" type="text" name="q" autocomplete="off" autocorrect="off" aria-label="{{ 'header.search.input_placeholder' | t }}" placeholder="{{ 'header.search.input_placeholder' | t }}">
+                  <button type="button" class="search-bar__input-clear hidden-lap-and-up" data-action="clear-input">
+                    <span class="visually-hidden">{{ 'header.search.clear' | t }}</span>
+                    {% render 'icon', icon: 'close' %}
                   </button>
                 </div>
 
-                <button type="button" class="search-bar__close-button hidden-tablet-and-up" data-action="unfix-search">
-                  <span class="search-bar__close-text">{{ 'header.search.close_search' | t }}</span>
-                </button>
-              </div>
+                {%- comment -%}The type detection is sometimes a bit inaccurate as it returns empty type, so we do an additional logic{%- endcomment -%}
 
-              <div class="search-bar__inner">
-                <div class="search-bar__results" aria-hidden="true">
-                  <div class="skeleton-container">
-                    {%- for i in (1..3) -%}
-                      <div class="search-bar__result-item search-bar__result-item--skeleton">
-                        <div class="search-bar__image-container">
-                          <div class="aspect-ratio aspect-ratio--square">
-                            <div class="skeleton-image"></div>
-                          </div>
-                        </div>
+                {%- assign has_at_least_one_type = false -%}
+                {%- for product_type in shop.types -%}
+                  {%- if product_type != blank -%}
+                    {%- assign has_at_least_one_type = true -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
 
-                        <div class="search-bar__item-info">
-                          <div class="skeleton-paragraph">
-                            <div class="skeleton-text"></div>
-                            <div class="skeleton-text"></div>
-                          </div>
-                        </div>
-                      </div>
-                    {%- endfor -%}
-                  </div>
+                {%- if section.settings.show_search_filter and has_at_least_one_type -%}
+                  <div class="search-bar__filter">
+                    <label for="search-product-type" class="search-bar__filter-label">
+                      <span class="search-bar__filter-active">{{ 'header.search.all_categories' | t }}</span> {%- render 'icon', icon: 'arrow-bottom' -%}
+                    </label>
 
-                  <div class="search-bar__results-inner">
-                    {%- comment -%}Placeholder div for real results{%- endcomment -%}
-                  </div>
-                </div>
+                    <select id="search-product-type">
+                      <option value="" selected="selected">{{ 'header.search.all_categories' | t }}</option>
 
-                {%- if search_menu.links.size > 0 -%}
-                  <div class="search-bar__menu-wrapper" aria-hidden="true">
-                    {%- if section.settings.show_search_menu_title -%}
-                      <p class="search-bar__menu-title heading">{{ search_menu.title }}</p>
-                    {%- endif -%}
-
-                    <ul class="search-bar__menu-linklist list--unstyled" role="list">
-                      {%- for link in search_menu.links -%}
-                        <li>
-                          <a href="{{ link.url }}" class="search-bar__menu-link">{{ link.title }}</a>
-                        </li>
+                      {%- for product_type in shop.types -%}
+                        {%- if product_type != blank -%}
+                          <option value="{{ product_type | escape }}">{{ product_type | escape }}</option>
+                        {%- endif -%}
                       {%- endfor -%}
-                    </ul>
+                    </select>
                   </div>
                 {%- endif -%}
-              </div>
-            </form>
-          </div>
-        {% else %}
-          {% if section.settings.buscar_icon %}
-            <style>
-              .search-bar__submit {
-                width: 36px !important;
-              }
-            </style>
 
-            <div class="header__search-bar-wrapper {% unless section.settings.show_condensed_search %}is-visible{% endunless %}">
-              <form action="{{ routes.search_url }}" method="get" role="search" class="search-bar">
-                {%- assign search_menu = linklists[section.settings.search_menu] -%}
+                 
+                <button type="submit" class="search-bar__submit" aria-label="{{ 'header.search.submit' | t }}"> Buscar </button>
+              </div> 
+                                        
+             
 
-                <div class="search-bar__top-wrapper">
-                  <div class="search-bar__top">
-                    <input type="hidden" name="type" value="product">
-                    <input type="hidden" name="options[prefix]" value="last">
-                    <input
-                      type="hidden"
-                      name="options[unavailable_products]"
-                      value="{{ settings.search_unavailable_products }}"
-                    >
+              <button type="button" class="search-bar__close-button hidden-tablet-and-up" data-action="unfix-search">
+                <span class="search-bar__close-text">{{ 'header.search.close_search' | t }}</span>
+              </button>
+            </div>
 
-                    <div class="search-bar__input-wrapper">
-                      <input
-                        class="search-bar__input"
-                        type="text"
-                        name="q"
-                        autocomplete="off"
-                        autocorrect="off"
-                        aria-label="{{ 'header.search.input_placeholder' | t }}"
-                        placeholder="{{ 'header.search.input_placeholder' | t }}"
-                      >
-                      <button type="button" class="search-bar__input-clear hidden-lap-and-up" data-action="clear-input">
-                        <span class="visually-hidden">{{ 'header.search.clear' | t }}</span>
-                        {% render 'icon', icon: 'close' %}
-                      </button>
-                    </div>
-
-                    {%- comment -%}The type detection is sometimes a bit inaccurate as it returns empty type, so we do an additional logic{%- endcomment -%}
-
-                    {%- assign has_at_least_one_type = false -%}
-                    {%- for product_type in shop.types -%}
-                      {%- if product_type != blank -%}
-                        {%- assign has_at_least_one_type = true -%}
-                        {%- break -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-
-                    {%- if section.settings.show_search_filter and has_at_least_one_type -%}
-                      <div class="search-bar__filter">
-                        <label for="search-product-type" class="search-bar__filter-label">
-                          <span class="search-bar__filter-active">{{ 'header.search.all_categories' | t }}</span>
-                          {%- render 'icon', icon: 'arrow-bottom' -%}
-                        </label>
-
-                        <select id="search-product-type">
-                          <option value="" selected="selected">{{ 'header.search.all_categories' | t }}</option>
-
-                          {%- for product_type in shop.types -%}
-                            {%- if product_type != blank -%}
-                              <option value="{{ product_type | escape }}">{{ product_type | escape }}</option>
-                            {%- endif -%}
-                          {%- endfor -%}
-                        </select>
+            <div class="search-bar__inner">
+              <div class="search-bar__results" aria-hidden="true">
+                <div class="skeleton-container">
+                  {%- for i in (1..3) -%}
+                    <div class="search-bar__result-item search-bar__result-item--skeleton">
+                      <div class="search-bar__image-container">
+                        <div class="aspect-ratio aspect-ratio--square">
+                          <div class="skeleton-image"></div>
+                        </div>
                       </div>
-                    {%- endif -%}
 
-                    <button type="submit" class="search-bar__submit" aria-label="{{ 'header.search.submit' | t }}">
-                      {%- render 'icon', icon: 'search' -%}
-                      {%- render 'icon', icon: 'search-loader' -%}
-                    </button>
-                  </div>
+                      <div class="search-bar__item-info">
+                        <div class="skeleton-paragraph">
+                          <div class="skeleton-text"></div>
+                          <div class="skeleton-text"></div>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                </div>
 
-                  <button
-                    type="button"
-                    class="search-bar__close-button hidden-tablet-and-up"
-                    data-action="unfix-search"
-                  >
-                    <span class="search-bar__close-text">{{ 'header.search.close_search' | t }}</span>
+                <div class="search-bar__results-inner">
+                  {%- comment -%}Placeholder div for real results{%- endcomment -%}
+                </div>
+              </div>
+
+              {%- if search_menu.links.size > 0 -%}
+                <div class="search-bar__menu-wrapper" aria-hidden="true">
+                  {%- if section.settings.show_search_menu_title -%}
+                    <p class="search-bar__menu-title heading">{{ search_menu.title }}</p>
+                  {%- endif -%}
+
+                  <ul class="search-bar__menu-linklist list--unstyled" role="list">
+                    {%- for link in search_menu.links -%}
+                      <li>
+                        <a href="{{ link.url }}" class="search-bar__menu-link">{{ link.title }}</a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            </div>
+          </form>
+        </div>
+{% else %}
+
+        {% if section.settings.buscar_icon %}
+
+<style>
+
+  .search-bar__submit {
+    width: 36px !important;
+  }
+</style>
+
+        
+        <div class="header__search-bar-wrapper {% unless section.settings.show_condensed_search %}is-visible{% endunless %}">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search-bar">
+            {%- assign search_menu = linklists[section.settings.search_menu] -%}
+
+            <div class="search-bar__top-wrapper">
+              <div class="search-bar__top">
+                <input type="hidden" name="type" value="product">
+                <input type="hidden" name="options[prefix]" value="last">
+                <input type="hidden" name="options[unavailable_products]" value="{{ settings.search_unavailable_products }}">
+
+                <div class="search-bar__input-wrapper">
+                  <input class="search-bar__input" type="text" name="q" autocomplete="off" autocorrect="off" aria-label="{{ 'header.search.input_placeholder' | t }}" placeholder="{{ 'header.search.input_placeholder' | t }}">
+                  <button type="button" class="search-bar__input-clear hidden-lap-and-up" data-action="clear-input">
+                    <span class="visually-hidden">{{ 'header.search.clear' | t }}</span>
+                    {% render 'icon', icon: 'close' %}
                   </button>
                 </div>
 
-                <div class="search-bar__inner">
-                  <div class="search-bar__results" aria-hidden="true">
-                    <div class="skeleton-container">
-                      {%- for i in (1..3) -%}
-                        <div class="search-bar__result-item search-bar__result-item--skeleton">
-                          <div class="search-bar__image-container">
-                            <div class="aspect-ratio aspect-ratio--square">
-                              <div class="skeleton-image"></div>
-                            </div>
-                          </div>
+                {%- comment -%}The type detection is sometimes a bit inaccurate as it returns empty type, so we do an additional logic{%- endcomment -%}
 
-                          <div class="search-bar__item-info">
-                            <div class="skeleton-paragraph">
-                              <div class="skeleton-text"></div>
-                              <div class="skeleton-text"></div>
-                            </div>
-                          </div>
-                        </div>
-                      {%- endfor -%}
-                    </div>
-
-                    <div class="search-bar__results-inner">
-                      {%- comment -%}Placeholder div for real results{%- endcomment -%}
-                    </div>
-                  </div>
-
-                  {%- if search_menu.links.size > 0 -%}
-                    <div class="search-bar__menu-wrapper" aria-hidden="true">
-                      {%- if section.settings.show_search_menu_title -%}
-                        <p class="search-bar__menu-title heading">{{ search_menu.title }}</p>
-                      {%- endif -%}
-
-                      <ul class="search-bar__menu-linklist list--unstyled" role="list">
-                        {%- for link in search_menu.links -%}
-                          <li>
-                            <a href="{{ link.url }}" class="search-bar__menu-link">{{ link.title }}</a>
-                          </li>
-                        {%- endfor -%}
-                      </ul>
-                    </div>
+                {%- assign has_at_least_one_type = false -%}
+                {%- for product_type in shop.types -%}
+                  {%- if product_type != blank -%}
+                    {%- assign has_at_least_one_type = true -%}
+                    {%- break -%}
                   {%- endif -%}
-                </div>
-              </form>
-            </div>
-          {% endif -%}
-        {%- endif %}
+                {%- endfor -%}
 
+                {%- if section.settings.show_search_filter and has_at_least_one_type -%}
+                  <div class="search-bar__filter">
+                    <label for="search-product-type" class="search-bar__filter-label">
+                      <span class="search-bar__filter-active">{{ 'header.search.all_categories' | t }}</span> {%- render 'icon', icon: 'arrow-bottom' -%}
+                    </label>
+
+                    <select id="search-product-type">
+                      <option value="" selected="selected">{{ 'header.search.all_categories' | t }}</option>
+
+                      {%- for product_type in shop.types -%}
+                        {%- if product_type != blank -%}
+                          <option value="{{ product_type | escape }}">{{ product_type | escape }}</option>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </select>
+                  </div>
+                {%- endif -%}
+
+<button type="submit" class="search-bar__submit" aria-label="{{ 'header.search.submit' | t }}">
+                  {%- render 'icon', icon: 'search' -%}
+                  {%- render 'icon', icon: 'search-loader' -%}
+                </button>
+          
+                </div> 
+                                        
+             
+
+              <button type="button" class="search-bar__close-button hidden-tablet-and-up" data-action="unfix-search">
+                <span class="search-bar__close-text">{{ 'header.search.close_search' | t }}</span>
+              </button>
+            </div>
+
+            <div class="search-bar__inner">
+              <div class="search-bar__results" aria-hidden="true">
+                <div class="skeleton-container">
+                  {%- for i in (1..3) -%}
+                    <div class="search-bar__result-item search-bar__result-item--skeleton">
+                      <div class="search-bar__image-container">
+                        <div class="aspect-ratio aspect-ratio--square">
+                          <div class="skeleton-image"></div>
+                        </div>
+                      </div>
+
+                      <div class="search-bar__item-info">
+                        <div class="skeleton-paragraph">
+                          <div class="skeleton-text"></div>
+                          <div class="skeleton-text"></div>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                </div>
+
+                <div class="search-bar__results-inner">
+                  {%- comment -%}Placeholder div for real results{%- endcomment -%}
+                </div>
+              </div>
+
+              {%- if search_menu.links.size > 0 -%}
+                <div class="search-bar__menu-wrapper" aria-hidden="true">
+                  {%- if section.settings.show_search_menu_title -%}
+                    <p class="search-bar__menu-title heading">{{ search_menu.title }}</p>
+                  {%- endif -%}
+
+                  <ul class="search-bar__menu-linklist list--unstyled" role="list">
+                    {%- for link in search_menu.links -%}
+                      <li>
+                        <a href="{{ link.url }}" class="search-bar__menu-link">{{ link.title }}</a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            </div>
+          </form>
+        </div>
+{% endif %}{% endif %}
+   
         {%- comment -%}
-          --------------------------------------------------------------------------------------
-          HEADER ACTIONS
-          --------------------------------------------------------------------------------------
+        --------------------------------------------------------------------------------------
+        HEADER ACTIONS
+        --------------------------------------------------------------------------------------
         {%- endcomment -%}
 
         {%- if section.settings.show_currency_selector and shop.enabled_currencies.size > 1 -%}
@@ -373,14 +332,8 @@
                 <input type="hidden" name="locale_code" value="{{ form.current_locale.iso_code }}">
 
                 <div class="header__action-item-content">
-                  <button
-                    class="header__action-item-link"
-                    data-action="toggle-popover"
-                    aria-controls="desktop-locale-selector"
-                    aria-expanded="false"
-                  >
-                    <span class="locale-selector__value">{{ form.current_locale.endonym_name | capitalize }}</span>
-                    {% render 'icon', icon: 'arrow-bottom' %}
+                  <button class="header__action-item-link" data-action="toggle-popover" aria-controls="desktop-locale-selector" aria-expanded="false">
+                    <span class="locale-selector__value">{{ form.current_locale.endonym_name | capitalize }}</span> {% render 'icon', icon: 'arrow-bottom' %}
                   </button>
 
                   <div id="desktop-locale-selector" class="popover popover--locale" aria-hidden="true">
@@ -390,15 +343,7 @@
                       <ul class="popover__linklist" role="list">
                         {%- for locale in form.available_locales -%}
                           <li class="popover__linklist-item">
-                            <button
-                              type="submit"
-                              name="locale_code"
-                              class="popover__link-item"
-                              value="{{ locale.iso_code }}"
-                              {% if locale.iso_code == form.current_locale.iso_code %}
-                                aria-current="true"
-                              {% endif %}
-                            >
+                            <button type="submit" name="locale_code" class="popover__link-item" value="{{ locale.iso_code }}" {% if locale.iso_code == form.current_locale.iso_code %}aria-current="true"{% endif %}>
                               {{- locale.endonym_name | capitalize -}}
                             </button>
                           </li>
@@ -406,8 +351,8 @@
                       </ul>
                     </div>
                   </div>
-                </div>
-              {%- endform -%}
+                
+              </div>{%- endform -%}
             </div>
           {%- endif -%}
 
@@ -418,17 +363,8 @@
                 <input type="hidden" name="currency_code" value="{{ form.current_currency.iso_code }}">
 
                 <div class="header__action-item-content">
-                  <button
-                    class="header__action-item-link"
-                    data-action="toggle-popover"
-                    aria-controls="desktop-currency-selector"
-                    aria-expanded="false"
-                  >
-                    <span class="currency-selector__value">
-                      {{- form.current_currency.iso_code }}
-                      {% if form.current_currency.symbol %}{{ form.current_currency.symbol }}{% endif -%}
-                    </span>
-                    {% render 'icon', icon: 'arrow-bottom' %}
+                  <button class="header__action-item-link" data-action="toggle-popover" aria-controls="desktop-currency-selector" aria-expanded="false">
+                    <span class="currency-selector__value">{{ form.current_currency.iso_code }} {% if form.current_currency.symbol %}{{ form.current_currency.symbol }}{% endif %}</span> {% render 'icon', icon: 'arrow-bottom' %}
                   </button>
 
                   <div id="desktop-currency-selector" class="popover popover--currency" aria-hidden="true">
@@ -438,139 +374,67 @@
                       <ul class="popover__linklist" role="list">
                         {%- for currency in form.available_currencies -%}
                           <li class="popover__linklist-item">
-                            <button
-                              type="submit"
-                              name="currency_code"
-                              class="popover__link-item"
-                              value="{{ currency.iso_code }}"
-                              {% if currency.iso_code == form.current_currency.iso_code %}
-                                aria-current="true"
-                              {% endif %}
-                            >
-                              {{ currency.iso_code }}
-                              {% if currency.symbol %}{{ currency.symbol }}{% endif %}
+                            <button type="submit" name="currency_code" class="popover__link-item" value="{{ currency.iso_code }}" {% if currency.iso_code == form.current_currency.iso_code %}aria-current="true"{% endif %}>
+                              {{ currency.iso_code }} {% if currency.symbol %}{{ currency.symbol }}{% endif %}
                             </button>
                           </li>
                         {%- endfor -%}
                       </ul>
                     </div>
                   </div>
-                </div>
-              {%- endform -%}
+                
+              </div>{%- endform -%}
             </div>
           {%- endif -%}
 
           {%- if section.settings.show_condensed_search -%}
             <div class="header__action-item hidden-tablet-and-up">
-              <a
-                class="header__action-item-link"
-                style=" margin-bottom: -4px;"
-                href="{{ routes.search_url }}"
-                data-action="toggle-search"
-                aria-expanded="false"
-                aria-label="{{ 'header.search.open_search' | t }}"
-              >
-                {%- render 'icon', icon: 'search' -%}
-              </a>
+              <a class="header__action-item-link" style=" margin-bottom: -4px;" href="{{ routes.search_url }}" data-action="toggle-search" aria-expanded="false" aria-label="{{ 'header.search.open_search' | t }}">{% render 'icon', icon: 'search' %}</a>
             </div>
           {%- endif -%}
 
           {%- if false -%}
             <style>
-              @media (max-width: 800px) {
-                svg.icon-account-mobile {
-                  display: none !important;
-                }
+              @media (max-width: 800px){
+              svg.icon-account-mobile{
+              display:none !important;
               }
-            </style>
-            <svg
-              viewBox="0 0 100 100"
-              xml:space="preserve"
-              xmlns="http://www.w3.org/2000/svg"
-              enable-background="new 0 0 100 100"
-              class="icon-account-mobile"
-              style="margin-right: -18px; width: 21px; margin-left: 20px; margin-bottom: -10px;"
-            >
-              <path d="M72.6 60.5c6.9-6.2 11.2-15.2 11.2-25.2 0-18.8-15.3-34.1-34.1-34.1-18.7 0-34 15.3-34 34 0 10 4.3 19 11.2 25.3-15 6.3-25.5 21-25.5 38.2h11c0-16.4 13.1-29.8 29.4-30.4 2.5.6 5.2.9 7.9.9s5.4-.3 7.9-.9c16.4.5 29.6 14 29.6 30.4h11c0-17.2-10.6-32-25.6-38.2zM26.7 35.2c0-12.7 10.3-23 23-23s23 10.3 23 23-10.3 23-23 23-23-10.3-23-23z" fill="var(--header-text-color)" class="fill-000000"></path>
-            </svg>
-
-            <div class="header__action-item header__action-item--account">
+              }
+              </style>
+          <svg viewBox="0 0 100 100" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 100 100" class="icon-account-mobile" style="margin-right: -18px; width: 21px; margin-left: 20px; margin-bottom: -10px;"><path d="M72.6 60.5c6.9-6.2 11.2-15.2 11.2-25.2 0-18.8-15.3-34.1-34.1-34.1-18.7 0-34 15.3-34 34 0 10 4.3 19 11.2 25.3-15 6.3-25.5 21-25.5 38.2h11c0-16.4 13.1-29.8 29.4-30.4 2.5.6 5.2.9 7.9.9s5.4-.3 7.9-.9c16.4.5 29.6 14 29.6 30.4h11c0-17.2-10.6-32-25.6-38.2zM26.7 35.2c0-12.7 10.3-23 23-23s23 10.3 23 23-10.3 23-23 23-23-10.3-23-23z" fill="var(--header-text-color)" class="fill-000000"></path></svg>
+                
+          <div class="header__action-item header__action-item--account">
+              
               {%- if customer -%}
-                <span class="header__action-item-title hidden-pocket hidden-lap">
-                  {{- 'header.general.welcome' | t: first_name: customer.first_name | truncate: 20 -}}
-                </span>
+                <span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.welcome' | t: first_name: customer.first_name | truncate: 20 }}</span>
               {%- else -%}
                 <span class="header__action-item-title hidden-pocket hidden-lap">{{ 'header.general.login' | t }}</span>
+               
               {%- endif -%}
 
               <div class="header__action-item-content">
-                <a
-                  href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
-                  class="header__action-item-link header__account-icon icon-state hidden-desk"
-                  aria-label="{{ 'header.general.account' | t }}"
-                  aria-controls="account-popover"
-                  aria-expanded="false"
-                  data-action="toggle-popover"
-                  {% if customer %}
-                    data-follow-link="phone"
-                  {% endif %}
-                >
+                <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header__action-item-link header__account-icon icon-state hidden-desk" aria-label="{{ 'header.general.account' | t }}" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover" {% if customer %}data-follow-link="phone"{% endif %}>
                   <span class="icon-state__primary">
-                    <svg
-                      viewBox="0 0 100 100"
-                      xml:space="preserve"
-                      xmlns="http://www.w3.org/2000/svg"
-                      enable-background="new 0 0 100 100"
-                      style="width: 21px;height: 20px;top: 4px;position: relative;"
-                    >
-                      <path d="M72.6 60.5c6.9-6.2 11.2-15.2 11.2-25.2 0-18.8-15.3-34.1-34.1-34.1-18.7 0-34 15.3-34 34 0 10 4.3 19 11.2 25.3-15 6.3-25.5 21-25.5 38.2h11c0-16.4 13.1-29.8 29.4-30.4 2.5.6 5.2.9 7.9.9s5.4-.3 7.9-.9c16.4.5 29.6 14 29.6 30.4h11c0-17.2-10.6-32-25.6-38.2zM26.7 35.2c0-12.7 10.3-23 23-23s23 10.3 23 23-10.3 23-23 23-23-10.3-23-23z" fill="var(--header-text-color)" class="fill-000000"></path>
-                    </svg>
-                  </span>
-                  <span class="icon-state__secondary">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      x="0px"
-                      y="0px"
-                      width="27"
-                      height="27"
-                      viewBox="0,0,256,256"
-                      style="fill:#000000;top: 5px;position: relative;"
-                    >
-                      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M16,3c-7.16797,0 -13,5.83203 -13,13c0,7.16797 5.83203,13 13,13c7.16797,0 13,-5.83203 13,-13c0,-7.16797 -5.83203,-13 -13,-13zM16,5c6.08594,0 11,4.91406 11,11c0,6.08594 -4.91406,11 -11,11c-6.08594,0 -11,-4.91406 -11,-11c0,-6.08594 4.91406,-11 11,-11zM16,8c-2.75,0 -5,2.25 -5,5c0,1.51563 0.70703,2.86328 1.78125,3.78125c-2.25,1.16797 -3.78125,3.51953 -3.78125,6.21875h2c0,-2.77344 2.22656,-5 5,-5c2.77344,0 5,2.22656 5,5h2c0,-2.69922 -1.53125,-5.05078 -3.78125,-6.21875c1.07422,-0.91797 1.78125,-2.26562 1.78125,-3.78125c0,-2.75 -2.25,-5 -5,-5zM16,10c1.66797,0 3,1.33203 3,3c0,1.66797 -1.33203,3 -3,3c-1.66797,0 -3,-1.33203 -3,-3c0,-1.66797 1.33203,-3 3,-3z"></path></g></g>
-                    </svg>
-                  </span>
+
+<svg viewBox="0 0 100 100" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 100 100" style="width: 21px;height: 20px;top: 4px;position: relative;"><path d="M72.6 60.5c6.9-6.2 11.2-15.2 11.2-25.2 0-18.8-15.3-34.1-34.1-34.1-18.7 0-34 15.3-34 34 0 10 4.3 19 11.2 25.3-15 6.3-25.5 21-25.5 38.2h11c0-16.4 13.1-29.8 29.4-30.4 2.5.6 5.2.9 7.9.9s5.4-.3 7.9-.9c16.4.5 29.6 14 29.6 30.4h11c0-17.2-10.6-32-25.6-38.2zM26.7 35.2c0-12.7 10.3-23 23-23s23 10.3 23 23-10.3 23-23 23-23-10.3-23-23z" fill="var(--header-text-color)" class="fill-000000"></path></svg></span>
+                  <span class="icon-state__secondary"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="27" height="27" viewBox="0,0,256,256" style="fill:#000000;top: 5px;position: relative;">
+<g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M16,3c-7.16797,0 -13,5.83203 -13,13c0,7.16797 5.83203,13 13,13c7.16797,0 13,-5.83203 13,-13c0,-7.16797 -5.83203,-13 -13,-13zM16,5c6.08594,0 11,4.91406 11,11c0,6.08594 -4.91406,11 -11,11c-6.08594,0 -11,-4.91406 -11,-11c0,-6.08594 4.91406,-11 11,-11zM16,8c-2.75,0 -5,2.25 -5,5c0,1.51563 0.70703,2.86328 1.78125,3.78125c-2.25,1.16797 -3.78125,3.51953 -3.78125,6.21875h2c0,-2.77344 2.22656,-5 5,-5c2.77344,0 5,2.22656 5,5h2c0,-2.69922 -1.53125,-5.05078 -3.78125,-6.21875c1.07422,-0.91797 1.78125,-2.26562 1.78125,-3.78125c0,-2.75 -2.25,-5 -5,-5zM16,10c1.66797,0 3,1.33203 3,3c0,1.66797 -1.33203,3 -3,3c-1.66797,0 -3,-1.33203 -3,-3c0,-1.66797 1.33203,-3 3,-3z"></path></g></g>
+</svg></span>
                 </a>
 
-                <a
-                  href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
-                  class="header__action-item-link hidden-pocket hidden-lap"
-                  aria-controls="account-popover"
-                  aria-expanded="false"
-                  data-action="toggle-popover"
-                >
-                  {{ 'header.general.account' | t }}
-                  {% render 'icon', icon: 'arrow-bottom' %}
+                <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="header__action-item-link hidden-pocket hidden-lap" aria-controls="account-popover" aria-expanded="false" data-action="toggle-popover">
+                  {{ 'header.general.account' | t }} {% render 'icon', icon: 'arrow-bottom' %}
                 </a>
 
-                <div
-                  id="account-popover"
-                  class="popover {% if customer %}popover--logged{% else %}popover--large popover--unlogged{% endif %}"
-                  aria-hidden="true"
-                >
+                <div id="account-popover" class="popover {% if customer %}popover--logged{% else %}popover--large popover--unlogged{% endif %}" aria-hidden="true">
                   {%- render 'icon', icon: 'nav-triangle-borderless' -%}
 
                   {%- if customer -%}
                     <div class="popover__inner popover__inner--no-padding">
                       <div class="popover__linklist">
-                        <a class="popover__link-item" href="{{ routes.account_url }}">
-                          {{- 'customer.general.orders' | t -}}
-                        </a>
-                        <a class="popover__link-item" href="{{ routes.account_addresses_url }}">
-                          {{- 'customer.general.addresses' | t -}}
-                        </a>
-                        <a class="popover__link-item" href="{{ routes.account_logout_url }}" data-no-instant>
-                          {{- 'customer.general.logout' | t -}}
-                        </a>
+                        <a class="popover__link-item" href="{{ routes.account_url }}">{{ 'customer.general.orders' | t }}</a>
+                        <a class="popover__link-item" href="{{ routes.account_addresses_url }}">{{ 'customer.general.addresses' | t }}</a>
+                        <a class="popover__link-item" href="{{ routes.account_logout_url }}" data-no-instant>{{ 'customer.general.logout' | t }}</a>
                       </div>
                     </div>
                   {%- else -%}
@@ -585,54 +449,21 @@
                             </header>
 
                             <div class="form__input-wrapper form__input-wrapper--labelled">
-                              <input
-                                type="email"
-                                id="login-customer[email]"
-                                class="form__field form__field--text"
-                                name="customer[email]"
-                                required="required"
-                              >
-                              <label for="login-customer[email]" class="form__floating-label">
-                                {{- 'customer.login.email' | t -}}
-                              </label>
+                              <input type="email" id="login-customer[email]" class="form__field form__field--text" name="customer[email]" required="required">
+                              <label for="login-customer[email]" class="form__floating-label">{{ 'customer.login.email' | t }}</label>
                             </div>
 
                             <div class="form__input-wrapper form__input-wrapper--labelled">
-                              <input
-                                type="password"
-                                id="login-customer[password]"
-                                class="form__field form__field--text"
-                                name="customer[password]"
-                                required="required"
-                                autocomplete="current-password"
-                              >
-                              <label for="login-customer[password]" class="form__floating-label">
-                                {{- 'customer.login.password' | t -}}
-                              </label>
+                              <input type="password" id="login-customer[password]" class="form__field form__field--text" name="customer[password]" required="required" autocomplete="current-password">
+                              <label for="login-customer[password]" class="form__floating-label">{{ 'customer.login.password' | t }}</label>
                             </div>
 
-                            <button type="submit" class="form__submit button button--primary button--full">
-                              {{ 'customer.login.submit' | t }}
-                            </button>
+                            <button type="submit" class="form__submit button button--primary button--full">{{ 'customer.login.submit' | t }}</button>
                           {%- endform -%}
 
                           <div class="popover__secondary-action">
-                            <p>
-                              {{ 'customer.login.new_customer' | t }}
-                              <a href="{{ routes.account_register_url }}" class="link link--accented">
-                                {{- 'customer.login.create_your_account' | t -}}
-                              </a>
-                            </p>
-                            <p>
-                              {{ 'customer.login.lost_password' | t }}
-                              <a
-                                href="{{ routes.account_url }}#recover-password"
-                                aria-controls="header-recover-panel"
-                                class="link link--accented"
-                              >
-                                {{- 'customer.login.recover_password' | t -}}
-                              </a>
-                            </p>
+                            <p>{{ 'customer.login.new_customer' | t }} <a href="{{ routes.account_register_url }}" class="link link--accented">{{ 'customer.login.create_your_account' | t }}</a></p>
+                            <p>{{ 'customer.login.lost_password' | t }} <a href="{{ routes.account_url }}#recover-password" aria-controls="header-recover-panel" class="link link--accented">{{ 'customer.login.recover_password' | t }}</a></p>
                           </div>
                         </div>
                       </div>
@@ -642,41 +473,20 @@
                         <div class="popover__inner">
                           {%- form 'recover_customer_password', name: 'recover', class: 'form' -%}
                             <header class="popover__header">
-                              <h2 class="popover__title heading">
-                                {{ 'customer.recover_password.recover_password' | t }}
-                              </h2>
+                              <h2 class="popover__title heading">{{ 'customer.recover_password.recover_password' | t }}</h2>
                               <p class="popover__legend">{{ 'customer.recover_password.description' | t }}</p>
                             </header>
 
                             <div class="form__input-wrapper form__input-wrapper--labelled">
-                              <input
-                                type="email"
-                                id="recover-customer[recover_email]"
-                                class="form__field form__field--text"
-                                name="email"
-                                required="required"
-                              >
-                              <label for="recover-customer[recover_email]" class="form__floating-label">
-                                {{- 'customer.recover_password.email' | t -}}
-                              </label>
+                              <input type="email" id="recover-customer[recover_email]" class="form__field form__field--text" name="email" required="required">
+                              <label for="recover-customer[recover_email]" class="form__floating-label">{{ 'customer.recover_password.email' | t }}</label>
                             </div>
 
-                            <button type="submit" class="form__submit button button--primary button--full">
-                              {{ 'customer.recover_password.submit' | t }}
-                            </button>
+                            <button type="submit" class="form__submit button button--primary button--full">{{ 'customer.recover_password.submit' | t }}</button>
                           {%- endform -%}
 
                           <div class="popover__secondary-action">
-                            <p>
-                              {{ 'customer.recover_password.remembered_your_password' | t }}
-                              <button
-                                data-action="show-popover-panel"
-                                aria-controls="header-login-panel"
-                                class="link link--accented"
-                              >
-                                {{ 'customer.recover_password.back_to_login' | t }}
-                              </button>
-                            </p>
+                            <p>{{ 'customer.recover_password.remembered_your_password' | t }} <button data-action="show-popover-panel" aria-controls="header-login-panel" class="link link--accented">{{ 'customer.recover_password.back_to_login' | t }}</button></p>
                           </div>
                         </div>
                       </div>
@@ -686,88 +496,48 @@
               </div>
             </div>
           {%- endif -%}
+  
 
-          <!-- INICIO RASTREAR MARCOS PONTO DE LOCALIZACAO -->
+   <!-- INICIO RASTREAR MARCOS PONTO DE LOCALIZACAO --> 
           <div class="header__action-item">
-            <a
-              aria-label="Clique para rastrear seu pedido"
-              class="header__action-item-link header__cart-toggle"
-              style="@media screen and (min-width:1280px) {margin-right: 10px;}"
-              href="/pages/{{ section.settings.rastreiopage }}"
-            >
+            <a aria-label="Clique para rastrear seu pedido" class="header__action-item-link header__cart-toggle" style="@media screen and (min-width:1280px) {margin-right: 10px;}" href="/pages/{{ section.settings.rastreiopage }}">
               <div class="header__action-item-content">
                 <div class="header-delivery-icon icon-state">
-                  <span class="icon-state__primary">
-                    {% if section.settings['rastreio-truck'] %}
-                      <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 30px;">
-                        <path d="M9 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM19 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" fill="var(--header-text-color)" class="fill-ffffff" style="fill:transparent"></path><path d="M13 16V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1m8-1a1 1 0 0 1-1 1H9m4-1V8a1 1 0 0 1 1-1h2.586a1 1 0 0 1 .707.293l3.414 3.414a1 1 0 0 1 .293.707V16a1 1 0 0 1-1 1h-1m-6-1a1 1 0 0 0 1 1h1M5 17a2 2 0 1 0 4 0m-4 0a2 2 0 1 1 4 0m6 0a2 2 0 1 0 4 0m-4 0a2 2 0 1 1 4 0" stroke="var(--header-text-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="stroke-374151"></path>
-                      </svg>
+                  <span class="icon-state__primary"> 
+                    {% if section.settings.rastreio-truck %} 
 
-                    {% else %}
-                      {% if section.settings['rastreio-local'] %}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          style="fill:none; width: 30px;margin-top:-2px"
-                        >
-                          <path stroke=" var(--header-accent-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984 0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984"/><path stroke="var(--header-text-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8.444C17 11.537 12 17 12 17s-5-5.463-5-8.556C7 5.352 9.239 3 12 3s5 2.352 5 5.444z"/><circle cx="12" cy="8" r="1" stroke="var(--header-accent-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                        </svg>
-                      {% endif %}
+                  <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 30px;"><path d="M9 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM19 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" fill="var(--header-text-color)" class="fill-ffffff" style="fill:transparent"></path><path d="M13 16V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1m8-1a1 1 0 0 1-1 1H9m4-1V8a1 1 0 0 1 1-1h2.586a1 1 0 0 1 .707.293l3.414 3.414a1 1 0 0 1 .293.707V16a1 1 0 0 1-1 1h-1m-6-1a1 1 0 0 0 1 1h1M5 17a2 2 0 1 0 4 0m-4 0a2 2 0 1 1 4 0m6 0a2 2 0 1 0 4 0m-4 0a2 2 0 1 1 4 0" stroke="var(--header-text-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="stroke-374151"></path></svg> 
+                 
+                      
+                      {% else %}
+                      {% if section.settings.rastreio-local %}
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill:none; width: 30px;margin-top:-2px"><path stroke=" var(--header-accent-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 16.016c1.245.529 2 1.223 2 1.984 0 1.657-3.582 3-8 3s-8-1.343-8-3c0-.76.755-1.456 2-1.984"/><path stroke="var(--header-text-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8.444C17 11.537 12 17 12 17s-5-5.463-5-8.556C7 5.352 9.239 3 12 3s5 2.352 5 5.444z"/><circle cx="12" cy="8" r="1" stroke="var(--header-accent-color)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg> 
+                       {% endif %} 
                     {% endif %}
                   </span>
-                </div>
-                <span
-                  class="hidden-pocket hidden-lap"
-                  style="position: absolute; top: -5px;width: 90%; font-size: 11.5px;font-weight: normal;color: var(--header-accent-color);"
-                  >Onde está meu produto?</span
-                >
+                  </div>
+                <span class="hidden-pocket hidden-lap" style="position: absolute; top: -5px;width: 90%; font-size: 11.5px;font-weight: normal;color: var(--header-accent-color);">Onde está meu produto?</span>
                 <span class="hidden-pocket hidden-lap" style="vertical-align: sub;">Rastrear Pedido</span>
               </div>
             </a>
           </div>
           <!-- FINAL RASTREAR MARCOS -->
-
-          <div class="header__action-item header__action-item--cart">
-            <a
-              class="header__action-item-link header__cart-toggle"
-              href="{{ routes.cart_url }}"
-              {% if settings.cart_type != 'page' and template != 'cart' %}
-                aria-controls="mini-cart" aria-expanded="false" data-action="toggle-mini-cart"
-              {% endif %}
-              data-no-instant
-            >
+          
+          <div class="header__action-item header__action-item--cart" >
+            <a class="header__action-item-link header__cart-toggle" href="{{ routes.cart_url }}" {% if settings.cart_type != 'page' and template != 'cart' %}aria-controls="mini-cart" aria-expanded="false" data-action="toggle-mini-cart"{% endif %} data-no-instant>
               <div class="header__action-item-content">
-                <div class="header__cart-icon icon-state">
-                  <!-- Se der Bug no carrinho, adicionar isso na div anterior: aria-expanded="false" -->
-
-                  <span class="icon-state__primary">
-                    {% if section.settings['carrinho-car'] %}
-                      <svg
-                        enable-background="new 0 0 30 30"
-                        height="28px"
-                        viewBox="0 0 100 100"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        style=""
-                      >
-                        <path d="M9.6 22.2h14.2l11.4 43.7h44.4l10.8-36.7-47.3.4L48.7 50" fill="none" stroke="var(--header-text-color)" stroke-width="8.0662" stroke-miterlimit="10" class="stroke-000000"></path><circle cx="45.3" cy="82.3" r="6" fill="none" stroke="var(--header-text-color)" stroke-width="8.0662" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" class="stroke-000000" style="r: 3;"></circle><circle cx="69.8" cy="82.3" r="6" fill="none" stroke="var(--header-text-color)" stroke-width="8.0662" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" class="stroke-000000" style="r: 3;"></circle>
-                      </svg>
-                    {% else %}
-                      {% if section.settings['carrinho-sacola'] %}
-                        <svg
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 23 23"
-                          width="30"
-                          height="23"
-                        >
-                          <defs><symbol id="t4s-icon-atc">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></symbol></defs><g>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></g>
-                        </svg>
-                      {% endif -%}
-                    {%- endif %}
-                    <span class="header__cart-count">0</span>
+                <div class="header__cart-icon icon-state"> <!--Se der Bug no carrinho, adicionar isso na div anterior: aria-expanded="false" -->
+                 
+          <span class="icon-state__primary">                   
+            {% if section.settings.carrinho-car %}      
+            <svg enable-background="new 0 0 30 30" height="28px" viewBox="0 0 100 100" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" style=""><path d="M9.6 22.2h14.2l11.4 43.7h44.4l10.8-36.7-47.3.4L48.7 50" fill="none" stroke="var(--header-text-color)" stroke-width="8.0662" stroke-miterlimit="10" class="stroke-000000"></path><circle cx="45.3" cy="82.3" r="6" fill="none" stroke="var(--header-text-color)" stroke-width="8.0662" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" class="stroke-000000" style="r: 3;"></circle><circle cx="69.8" cy="82.3" r="6" fill="none" stroke="var(--header-text-color)" stroke-width="8.0662" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" class="stroke-000000" style="r: 3;"></circle></svg>
+              {% else %}
+               {% if section.settings.carrinho-sacola %} 
+            <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23" width="30" height="23"><defs><symbol id="t4s-icon-atc">
+   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></symbol></defs><g>
+   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></g></svg>
+              {% endif %}{% endif %}
+            <span class="header__cart-count">0</span>
                   </span>
 
                   <span class="icon-state__secondary">{%- render 'icon', icon: 'close' -%}</span>
@@ -798,14 +568,7 @@
                 {%- else -%}
                   {%- capture index -%}desktop-menu-0-{{ forloop.index }}{%- endcapture -%}
 
-                  <a
-                    href="{{ link.url }}"
-                    class="nav-bar__link link"
-                    data-type="menuitem"
-                    aria-expanded="false"
-                    aria-controls="{{ index }}"
-                    aria-haspopup="true"
-                  >
+                  <a href="{{ link.url }}" class="nav-bar__link link" data-type="menuitem" aria-expanded="false" aria-controls="{{ index }}" aria-haspopup="true">
                     {{- link.title -}}
                     {%- render 'icon', icon: 'arrow-bottom' -%}
                     {%- render 'icon', icon: 'nav-triangle' -%}
@@ -823,73 +586,70 @@
 </section>
 
 <style>
-    :root {
-      --header-is-sticky: {% if section.settings.enable_sticky_header %}1{% else %}0{% endif %};
-      --header-inline-navigation: {% if section.settings.desktop_navigation_layout == 'inline' %}1{% else %}0{% endif %};
-       --search-border: {{ section.settings.search_border }}px;
+  :root {
+    --header-is-sticky: {% if section.settings.enable_sticky_header %}1{% else %}0{% endif %};
+    --header-inline-navigation: {% if section.settings.desktop_navigation_layout == 'inline' %}1{% else %}0{% endif %};
+     --search-border: {{ section.settings.search_border }}px;
+    
+  }
+.search-bar__top  {
+border-radius: var(--search-border) !important;
+}
 
-    }
-  .search-bar__top  {
-  border-radius: var(--search-border) !important;
+  .search-bar__submit {
+border-radius: var(--search-border) !important;
+}
+  
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    z-index: 5;
+
+    {%- if section.settings.enable_sticky_header -%}
+      position: -webkit-sticky ;
+      position: sticky ;
+      top: 0;
+    z-index: 5;
+    {%- endif -%}
   }
 
-    .search-bar__submit {
-  border-radius: var(--search-border) !important;
-  }
-
-    #shopify-section-{{ section.id }} {
-      position: relative;
-      z-index: 5;
-
-      {%- if section.settings.enable_sticky_header -%}
-        position: -webkit-sticky ;
-        position: sticky ;
-        top: 0;
-      z-index: 5;
-      {%- endif -%}
+  {%- if section.settings.logo -%}
+    .header__logo-image {
+      max-width: {{ section.settings.mobile_logo_max_width }}px !important;
     }
 
-    {%- if section.settings.logo -%}
+    @media screen and (min-width: 641px) {
       .header__logo-image {
-        max-width: {{ section.settings.mobile_logo_max_width }}px !important;
+        max-width: {{ section.settings.logo_max_width }}px !important;
       }
+    }
+  {%- endif -%}
 
-      @media screen and (min-width: 641px) {
-        .header__logo-image {
-          max-width: {{ section.settings.logo_max_width }}px !important;
-        }
-      }
-    {%- endif -%}
+  {%- if settings.header_background == settings.secondary_background -%}
+    .search-bar__top {
+    }
 
-    {%- if settings.header_background == settings.secondary_background -%}
-      .search-bar__top {
+    @media screen and (min-width: 1000px) {
+      /* This allows to reduce the padding if header background is the same as secondary background to avoid space that is too big */
+      .header:not(.header--condensed) {
+        padding-bottom: 0;
       }
-
-      @media screen and (min-width: 1000px) {
-        /* This allows to reduce the padding if header background is the same as secondary background to avoid space that is too big */
-        .header:not(.header--condensed) {
-          padding-bottom: 0;
-        }
+    }
+  {%- else -%}
+    @media screen and (min-width: 1000px) {
+      .search-bar.is-expanded .search-bar__top {
+        box-shadow: 0 -1px var(--border-color) inset;
       }
-    {%- else -%}
-      @media screen and (min-width: 1000px) {
-        .search-bar.is-expanded .search-bar__top {
-          box-shadow: 0 -1px var(--border-color) inset;
-        }
-      }
-    {%- endif -%}
+    }
+  {%- endif -%}
 </style>
-
+               
 <script>
-  document.documentElement.style.setProperty(
-    '--header-height',
-    document.getElementById('shopify-section-{{ section.id }}').clientHeight + 'px'
-  );
+  document.documentElement.style.setProperty('--header-height', document.getElementById('shopify-section-{{ section.id }}').clientHeight + 'px');
 </script>
 
-{%- if section.settings.barra_animada -%}
-  <div class="container-fluid color-line"></div>
-{%- endif -%}
+      {%- if section.settings.barra_animada -%}                     
+<div class="container-fluid color-line"></div>
+   {%- endif -%}
 {% schema %}
 {
   "name": "Cabeçalho",
@@ -902,9 +662,9 @@
       "default": false
     },
     {
-      "type": "header",
-      "content": "Ícone do carrinho"
-    },
+        "type": "header",
+        "content": "Ícone do carrinho"
+      },
     {
       "type": "checkbox",
       "id": "carrinho-car",
@@ -919,17 +679,17 @@
       "default": true
     },
 
-    {
-      "type": "header",
-      "content": "Ícone do rastreio"
-    },
+{
+        "type": "header",
+        "content": "Ícone do rastreio"
+      },
     {
       "type": "checkbox",
       "id": "rastreio-truck",
       "label": "Caminhão",
       "default": true
     },
-
+       
     {
       "type": "checkbox",
       "id": "rastreio-local",
@@ -937,11 +697,11 @@
       "info": "Escolha apenas uma das opções acima",
       "default": false
     },
-
+    
     {
-      "type": "header",
-      "content": "Ícone de busca"
-    },
+        "type": "header",
+        "content": "Ícone de busca"
+      },
     {
       "type": "checkbox",
       "id": "buscar_icon",
@@ -956,7 +716,7 @@
       "default": true
     },
 
-    {
+{
       "type": "range",
       "id": "search_border",
       "min": 0,
@@ -968,18 +728,19 @@
     },
 
     {
-      "type": "checkbox",
-      "id": "barra_animada",
-      "label": "Barra degradê",
-      "info": "Barra degradê abaixo do cabeçalho, edite as cores em configurações",
-      "default": true
-    },
+        "type": "checkbox",
+        "id": "barra_animada",
+        "label": "Barra degradê",
+        "info": "Barra degradê abaixo do cabeçalho, edite as cores em configurações",
+        "default": true
+      },
+       
 
-    {
+      {
       "type": "select",
       "id": "nav_estilo",
       "label": "Estilo de navegação",
-      "info": "Escolha se as palavras no menu de navegação serão apresentadas em letras maiúsculas ou minúsculas",
+  "info":"Escolha se as palavras no menu de navegação serão apresentadas em letras maiúsculas ou minúsculas",
       "options": [
         {
           "value": "uppercase",
@@ -994,7 +755,7 @@
     },
 
     {
-      "type": "text",
+     "type": "text",
       "id": "rastreiopage",
       "label": "URL de rastreamento",
       "default": "rastreamento"
@@ -1004,11 +765,11 @@
       "content": "Logotipo"
     },
     {
-      "type": "color",
-      "id": "mobile_navegacao",
-      "label": "Cor de fundo da navegação em dispositivos móveis",
-      "default": "#1136ff"
-    },
+       "type": "color",
+        "id": "mobile_navegacao",
+        "label": "Cor de fundo da navegação em dispositivos móveis",
+        "default": "#1136ff"
+      },
     {
       "type": "image_picker",
       "id": "logo",

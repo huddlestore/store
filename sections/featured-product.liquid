@@ -20,25 +20,14 @@
 }
 {%- endcapture -%}
 
-<section
-  class="section"
-  data-section-id="{{ section.id }}"
-  data-section-type="product"
-  data-section-settings="{{ section_settings }}"
->
+<section class="section" data-section-id="{{ section.id }}" data-section-type="product" data-section-settings='{{ section_settings }}'>
   <div class="container">
     {%- if section.settings.title != blank -%}
       <header class="section__header">
         <h2 class="section__title heading h3">{{ section.settings.title | escape }}</h2>
 
         {%- if section.settings.link_title != blank -%}
-          <a
-            href="{{ section.settings.link_url | default: product.url | default: '#' }}"
-            class="section__action-link link"
-          >
-            {{- section.settings.link_title }}
-            {% render 'icon', icon: 'tail-right' -%}
-          </a>
+          <a href="{{ section.settings.link_url | default: product.url | default: '#' }}" class="section__action-link link">{{ section.settings.link_title }} {% render 'icon', icon: 'tail-right' %}</a>
         {%- endif -%}
       </header>
     {%- endif -%}
@@ -51,29 +40,23 @@
         {%- render 'product-info', product: product -%}
       {%- else -%}
         {% comment %}
-          ------------------------------------------------------------------------------
-          PLACEHOLDER (FOR ONBOARDING ONLY)
-          ------------------------------------------------------------------------------
+        ------------------------------------------------------------------------------
+        PLACEHOLDER (FOR ONBOARDING ONLY)
+        ------------------------------------------------------------------------------
         {% endcomment %}
 
         <div class="card">
           <div class="card__section">
             <div class="product-gallery">
               <div class="product-gallery__carousel-wrapper">
-                <div
-                  class="product-gallery__carousel {% if section.settings.enable_image_zoom %}product-gallery__carousel--zoomable{% endif %}"
-                  data-image-count="1"
-                >
+                <div class="product-gallery__carousel {% if section.settings.enable_image_zoom %}product-gallery__carousel--zoomable{% endif %}" data-image-count="1">
                   <div class="product-gallery__carousel-item is-selected">
                     {{ 'product-1' | placeholder_svg_tag }}
                   </div>
                 </div>
 
                 {%- if section.settings.enable_image_zoom -%}
-                  <button class="product-gallery__zoom-notice link">
-                    {% render 'icon', icon: 'zoom' %}
-                    {{ 'product.general.zoom' | t }}
-                  </button>
+                  <button class="product-gallery__zoom-notice link">{% render 'icon', icon: 'zoom' %} {{ 'product.general.zoom' | t }}</button>
                 {%- endif -%}
               </div>
             </div>
@@ -103,9 +86,7 @@
                       {%- if block.settings.show_vendor or block.settings.show_sku -%}
                         <div class="product-meta__reference">
                           {%- if block.settings.show_vendor -%}
-                            <a class="product-meta__vendor link link--accented" href="#">
-                              {{- 'home_page.onboarding.vendor_title' | t -}}
-                            </a>
+                            <a class="product-meta__vendor link link--accented" href="#">{{ 'home_page.onboarding.vendor_title' | t }}</a>
                           {%- endif -%}
 
                           {%- if block.settings.show_sku -%}
@@ -131,6 +112,8 @@
                   {%- when 'variant_selector' -%}
                     <div class="product-form__info-list">
                       <div class="product-form__info-item">
+                        
+
                         <div class="product-form__info-content">
                           <div class="price-list">
                             <span class="price">{{ 4000 | money }}</span>
@@ -140,44 +123,23 @@
 
                       {%- if block.settings.show_inventory_quantity -%}
                         <div class="product-form__info-item">
+                          
+
                           <div class="product-form__info-content">
-                            <span class="product-form__inventory inventory inventory--high">
-                              {{- 'product.form.in_stock' | t -}}
-                            </span>
+                            <span class="product-form__inventory inventory inventory--high">{{ 'product.form.in_stock' | t }}</span>
                           </div>
                         </div>
                       {%- endif -%}
 
                       {%- if block.settings.show_quantity_selector -%}
                         <div class="product-form__info-item product-form__info-item--quantity">
+                         
+
                           <div class="product-form__info-content">
                             <div class="quantity-selector quantity-selector--product">
-                              <button
-                                type="button"
-                                class="quantity-selector__button"
-                                data-action="decrease-picker-quantity"
-                                aria-label="{{ 'cart.items.decrease_quantity' | t }}"
-                                title="{{ 'cart.items.decrease_quantity' | t }}"
-                              >
-                                {% render 'icon', icon: 'minus' %}
-                              </button>
-                              <input
-                                name="quantity"
-                                aria-label="{{ 'product.form.quantity' | t }}"
-                                class="quantity-selector__value"
-                                inputmode="numeric"
-                                value="1"
-                                size="3"
-                              >
-                              <button
-                                type="button"
-                                class="quantity-selector__button"
-                                data-action="increase-picker-quantity"
-                                aria-label="{{ 'cart.items.increase_quantity' | t }}"
-                                title="{{ 'cart.items.increase_quantity' | t }}"
-                              >
-                                {% render 'icon', icon: 'plus' %}
-                              </button>
+                              <button type="button" class="quantity-selector__button" data-action="decrease-picker-quantity" aria-label="{{ 'cart.items.decrease_quantity' | t }}" title="{{ 'cart.items.decrease_quantity' | t }}">{% render 'icon', icon: 'minus' %}</button>
+                              <input name="quantity" aria-label="{{ 'product.form.quantity' | t }}" class="quantity-selector__value" inputmode="numeric" value="1" size="3">
+                              <button type="button" class="quantity-selector__button" data-action="increase-picker-quantity" aria-label="{{ 'cart.items.increase_quantity' | t }}" title="{{ 'cart.items.increase_quantity' | t }}">{% render 'icon', icon: 'plus' %}</button>
                             </div>
                           </div>
                         </div>
@@ -186,9 +148,7 @@
 
                   {%- when 'buy_buttons' -%}
                     <div class="product-form__payment-container">
-                      <button type="submit" class="product-form__add-button button button--primary">
-                        {{ 'product.form.add_to_cart' | t }}
-                      </button>
+                      <button type="submit" class="product-form__add-button button button--primary">{{ 'product.form.add_to_cart' | t }}</button>
 
                       {%- if section.settings.show_payment_button -%}
                         {{ form | payment_button }}

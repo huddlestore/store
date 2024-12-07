@@ -16,15 +16,11 @@
       <div class="card">
         <header class="card__section card__section--tight">
           {%- if search.types contains 'page' and search.types contains 'article' -%}
-            <h1 class="card__title heading h1">
-              {{ 'search.general.pages_and_articles_with_terms' | t: terms: filtered_terms }}
-            </h1>
+            <h1 class="card__title heading h1">{{ 'search.general.pages_and_articles_with_terms' | t: terms: filtered_terms }}</h1>
           {%- elsif search.types contains 'page' -%}
             <h1 class="card__title heading h1">{{ 'search.general.pages_with_terms' | t: terms: filtered_terms }}</h1>
           {%- else -%}
-            <h1 class="card__title heading h1">
-              {{ 'search.general.articles_with_terms' | t: terms: filtered_terms }}
-            </h1>
+            <h1 class="card__title heading h1">{{ 'search.general.articles_with_terms' | t: terms: filtered_terms }}</h1>
           {%- endif -%}
         </header>
 

@@ -23,8 +23,5 @@
       }
     }
   },
-  "order": [
-    "main",
-    "contact-form"
-  ]
+  "order": ["main", "contact-form"]
 }

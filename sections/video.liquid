@@ -11,27 +11,13 @@
             {%- capture supported_sizes -%}{%- render 'image-size', sizes: '300,400,500,600,700,800,900,1000,1200', image: section.settings.image -%}{%- endcapture -%}
             {%- assign image_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
-            <img
-              class="video-wrapper__image lazyload image--fade-in"
-              data-src="{{ image_url }}"
-              data-widths="[{{ supported_sizes }}]"
-              data-sizes="auto"
-              alt="{{ section.settings.image.alt | escape }}"
-            >
+            <img class="video-wrapper__image lazyload image--fade-in" data-src="{{ image_url }}" data-widths="[{{ supported_sizes }}]" data-sizes="auto" alt="{{ section.settings.image.alt | escape }}">
 
             <noscript>
-              <img
-                class="video-wrapper__image"
-                src="{{ section.settings.image | img_url: '800x' }}"
-                alt="{{ section.settings.image.alt | escape }}"
-              >
+              <img class="video-wrapper__image" src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.image.alt | escape }}">
             </noscript>
           {%- elsif bsectionlock.settings.video_url.type == 'youtube' -%}
-            <img
-              class="video-wrapper__image lazyload image--fade-in"
-              data-src="https://img.youtube.com/vi/{{ section.settings.video_url.id }}/maxresdefault.jpg"
-              alt=""
-            >
+            <img class="video-wrapper__image lazyload image--fade-in" data-src="https://img.youtube.com/vi/{{ section.settings.video_url.id }}/maxresdefault.jpg" alt="">
           {%- else -%}
             <div class="placeholder-background">
               {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -42,21 +28,15 @@
         </div>
 
         {% if section.settings.video_url.type == 'youtube' %}
-          <iframe
-            data-src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?autoplay=1&showinfo=0&controls=1&rel=0&modestbranding=1"
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
+          <iframe data-src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?autoplay=1&showinfo=0&controls=1&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
         {% elsif section.settings.video_url.type == 'vimeo' %}
-          <iframe
-            data-src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&portrait=0&byline=0&color={{ settings.accent_color | remove_first: '#' }}"
-            frameborder="0"
-          ></iframe>
+          <iframe data-src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&portrait=0&byline=0&color={{ settings.accent_color | remove_first: '#' }}" frameborder="0"></iframe>
         {% endif %}
       </div>
     </div>
   </div>
 </section>
+
 
 {% schema %}
 {

@@ -5,23 +5,14 @@
         <h2 class="section__title heading h3">{{ section.settings.title | escape }}</h2>
 
         {%- if section.settings.link_title != blank and section.settings.link != blank -%}
-          <a href="{{ section.settings.link }}" class="section__action-link link">
-            {{- section.settings.link_title | escape }}
-            {% render 'icon', icon: 'tail-right' -%}
-          </a>
+          <a href="{{ section.settings.link }}" class="section__action-link link">{{ section.settings.link_title | escape }} {% render 'icon', icon: 'tail-right' %}</a>
         {%- endif -%}
       </header>
     {%- endif -%}
 
     <div class="quick-links">
       {%- for block in section.blocks -%}
-        <a
-          {% if block.settings.link %}
-            href="{{ block.settings.link }}"
-          {% endif %}
-          class="quick-links__link"
-          {{ block.shopify_attributes }}
-        >
+        <a {% if block.settings.link %}href="{{ block.settings.link }}"{% endif %} class="quick-links__link" {{ block.shopify_attributes }}>
           {%- if block.settings.image -%}
             {%- assign max_height_mobile = 40 -%}
             {%- assign max_height_desktop = 70 -%}
@@ -30,19 +21,13 @@
 
             {%- if block.settings.image.aspect_ratio < 1.5 -%}
               {%- if block.settings.image.height < max_height_desktop -%}
-                {%- assign max_width_desktop = block.settings.image.width
-                  | times: block.settings.image.aspect_ratio
-                  | round
-                -%}
+                {%- assign max_width_desktop = block.settings.image.width | times: block.settings.image.aspect_ratio | round -%}
               {%- else -%}
                 {%- assign max_width_desktop = max_height_desktop | times: block.settings.image.aspect_ratio | round -%}
               {%- endif -%}
 
               {%- if block.settings.image.height < max_height_mobile -%}
-                {%- assign max_width_mobile = block.settings.image.width
-                  | times: block.settings.image.aspect_ratio
-                  | round
-                -%}
+                {%- assign max_width_mobile = block.settings.image.width | times: block.settings.image.aspect_ratio | round -%}
               {%- else -%}
                 {%- assign max_width_mobile = max_height_mobile | times: block.settings.image.aspect_ratio | round -%}
               {%- endif -%}
@@ -53,21 +38,11 @@
 
             <div id="block-{{ block.id }}" class="quick-links__image-container">
               <div class="quick-links__image-ie-fix">
-                <div
-                  class="aspect-ratio"
-                  style="padding-bottom: {{ 100.0 | divided_by: block.settings.image.aspect_ratio }}%"
-                >
-                  <img
-                    class="lazyload image--fade-in"
-                    data-src="{{ block.settings.image | img_url: '280x' }}"
-                    alt="{{ block.settings.image.alt | escape }}"
-                  >
+                <div class="aspect-ratio" style="padding-bottom: {{ 100.0 | divided_by: block.settings.image.aspect_ratio }}%">
+                  <img class="lazyload image--fade-in" data-src="{{ block.settings.image | img_url: '280x' }}" alt="{{ block.settings.image.alt | escape }}">
 
                   <noscript>
-                    <img
-                      src="{{ block.settings.image | img_url: '280x' }}"
-                      alt="{{ block.settings.image.alt | escape }}"
-                    >
+                    <img src="{{ block.settings.image | img_url: '280x' }}" alt="{{ block.settings.image.alt | escape }}">
                   </noscript>
                 </div>
               </div>

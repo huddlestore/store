@@ -16,18 +16,11 @@
 }
 {%- endcapture -%}
 
-<section
-  class="section"
-  data-section-id="{{ section.id }}"
-  data-section-type="product-recommendations"
-  data-section-settings="{{ section_settings }}"
->
+<section class="section" data-section-id="{{ section.id }}" data-section-type="product-recommendations" data-section-settings='{{ section_settings }}'>
   <div class="container">
     {%- if section.settings.heading != blank -%}
       <header class="section__header">
-        <h2 class="section__title heading h3" style="border-bottom: none !important">
-          {{ section.settings.heading | escape }}
-        </h2>
+        <h2 class="section__title heading h3" style="border-bottom: none !important">{{ section.settings.heading | escape }}</h2>
       </header>
     {%- endif -%}
 
@@ -37,17 +30,13 @@
           <div class="scroller__inner">
             <div class="product-list product-list--vertical product-list--scrollable">
               {%- comment -%}
-                If the merchant is explicitly using SuperFields, we use the hand-picked related products, otherwise we
-                switch to the Shopify automatic recommendation
+              If the merchant is explicitly using SuperFields, we use the hand-picked related products, otherwise we
+              switch to the Shopify automatic recommendation
               {%- endcomment -%}
 
               {%- if use_recommendations -%}
                 {%- for product in recommendations.products -%}
-                  {%- render 'product-item',
-                    product: product,
-                    grid_classes: '1/4--lap 1/5--desk 1/6--wide',
-                    show_add_to_cart: section.settings.show_quick_buy
-                  -%}
+                  {%- render 'product-item', product: product, grid_classes: '1/4--lap 1/5--desk 1/6--wide', show_add_to_cart: section.settings.show_quick_buy -%}
                 {%- else -%}
                   {%- comment -%}Hide the section if there is no recommendations to show{%- endcomment -%}
                   <style>
@@ -59,11 +48,7 @@
               {%- else -%}
                 {%- for block in section.blocks -%}
                   {%- if block.settings.product != blank -%}
-                    {%- render 'product-item',
-                      product: block.settings.product,
-                      grid_classes: '1/4--lap 1/5--desk 1/6--wide',
-                      show_add_to_cart: section.settings.show_quick_buy
-                    -%}
+                    {%- render 'product-item', product: block.settings.product, grid_classes: '1/4--lap 1/5--desk 1/6--wide', show_add_to_cart: section.settings.show_quick_buy -%}
                   {%- endif -%}
                 {%- endfor -%}
               {%- endif -%}
@@ -75,18 +60,14 @@
   </div>
 
   {%- comment -%}
-    --------------------------------------------------------------------------------------
-    QUICK VIEW CONTAINER
-    --------------------------------------------------------------------------------------
+  --------------------------------------------------------------------------------------
+  QUICK VIEW CONTAINER
+  --------------------------------------------------------------------------------------
   {%- endcomment -%}
 
   <div id="modal-quick-view-{{ section.id }}" class="modal" aria-hidden="true">
     <div class="modal__dialog modal__dialog--stretch" role="dialog">
-      <button
-        class="modal__close link"
-        data-action="close-modal"
-        title="{{ 'general.accessibility.close' | t | escape }}"
-      >
+      <button class="modal__close link" data-action="close-modal" title="{{ 'general.accessibility.close' | t | escape }}">
         {%- render 'icon', icon: 'close' -%}
       </button>
 

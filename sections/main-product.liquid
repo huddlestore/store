@@ -3,6 +3,7 @@
 {%- assign buy_buttons_block = section.blocks | where: 'type', 'buy_buttons' | first -%}
 {%- assign bandeiras_block = section.blocks | where: 'type', 'bandeiras' | first -%}
 
+
 {%- capture section_settings -%}
 {
   "showShippingEstimator": {% if template == 'product.quick-view' or product.available == false or shipping_estimator_block == blank %}false{% else %}true{% endif %},
@@ -21,59 +22,45 @@
 }
 {%- endcapture -%}
 
-<section
-  class="marcoscontainer"
-  data-section-id="{{ section.id }}"
-  data-section-type="product"
-  data-section-settings="{{ section_settings }}"
->
+<section class="marcoscontainer" data-section-id="{{ section.id }}" data-section-type="product" data-section-settings='{{ section_settings }}'>
   {%- if template != 'product.quick-view' -%}
     <div class="container container--flush">
-      <div class="page__sub-header">
-        {%- if settings.show_caminho -%}
-          <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb">
-            <ol class="breadcrumb__list" role="list">
-              <li class="breadcrumb__item">
-                <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
-                {%- render 'icon', icon: 'arrow-right' -%}
-              </li>
 
-              <li class="breadcrumb__item">
-                {%- if collection -%}
-                  <a class="breadcrumb__link link" href="{{ collection.url }}">{{ collection.title }}</a>
-                  {%- render 'icon', icon: 'arrow-right' -%}
-                {%- else -%}
-                  <a class="breadcrumb__link link" href="{{ routes.all_products_collection_url }}">
-                    {{- 'collection.general.all_products' | t -}}
-                  </a>
-                  {%- render 'icon', icon: 'arrow-right' -%}
-                {%- endif -%}
-              </li>
+    <div class="page__sub-header">
+      
+       {%- if settings.show_caminho -%}
+    <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb">
+          <ol class="breadcrumb__list" role="list">
+            <li class="breadcrumb__item">
+              <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+            </li>
 
-              <li class="breadcrumb__item">
-                <span class="breadcrumb__link" aria-current="page">{{ product.title | truncate: 40 }}</span>
-              </li>
-            </ol>
-          </nav>
-        {%- endif -%}
+            <li class="breadcrumb__item">
+              {%- if collection -%}
+                <a class="breadcrumb__link link" href="{{ collection.url }}">{{ collection.title }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+              {%- else -%}
+                <a class="breadcrumb__link link" href="{{ routes.all_products_collection_url }}">{{- 'collection.general.all_products' | t -}}</a> {%- render 'icon', icon: 'arrow-right' -%}
+              {%- endif -%}
+            </li>
 
+            <li class="breadcrumb__item">
+              <span class="breadcrumb__link" aria-current="page">{{ product.title | truncate: 40 }}</span>
+            </li>
+          </ol>
+        </nav>
+  {%- endif -%}
+    
         {%- if collection.previous_product or collection.next_product -%}
           <div class="page__navigation">
             {%- if collection.previous_product -%}
               <span class="page__navigation-item page__navigation-item--prev">
-                <a href="{{ collection.previous_product.url }}" class="link" rel="prev">
-                  {%- render 'icon', icon: 'arrow-left' -%}
-                  {{- 'product.general.previous_product' | t -}}
-                </a>
+                <a href="{{ collection.previous_product.url }}" class="link" rel="prev">{%- render 'icon', icon: 'arrow-left' -%} {{- 'product.general.previous_product' | t -}}</a>
               </span>
             {%- endif -%}
 
             {%- if collection.next_product -%}
               <span class="page__navigation-item page__navigation-item--next">
-                <a href="{{ collection.next_product.url }}" class="link" rel="next">
-                  {{- 'product.general.next_product' | t -}}
-                  {%- render 'icon', icon: 'arrow-right' -%}
-                </a>
+                <a href="{{ collection.next_product.url }}" class="link" rel="next">{{- 'product.general.next_product' | t -}} {%- render 'icon', icon: 'arrow-right' -%}</a>
               </span>
             {%- endif -%}
           </div>
@@ -94,25 +81,19 @@
 
           {%- for block in section.blocks -%}
             {%- case block.type -%}
-                {%- comment -%}
-                  --------------------------------------------------------------------------------------
-                  DESCRIPTION
-                  --------------------------------------------------------------------------------------
-                {%- endcomment -%}
+              {%- comment -%}
+
+              
+              --------------------------------------------------------------------------------------
+              DESCRIPTION
+              --------------------------------------------------------------------------------------
+              {%- endcomment -%}
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
-                  <div
-                    class="product-block-list__item product-block-list__item--description"
-                    {{ block.shopify_attributes }}
-                  >
+                  <div class="product-block-list__item product-block-list__item--description" {{ block.shopify_attributes }}>
                     <div class="card">
                       {%- if block.settings.display_mode == 'collapse' -%}
-                        <button
-                          class="card__collapsible-button"
-                          data-action="toggle-collapsible"
-                          aria-expanded="false"
-                          aria-controls="block-{{ section.id }}-{{ block.id }}"
-                        >
+                        <button class="card__collapsible-button" data-action="toggle-collapsible" aria-expanded="false" aria-controls="block-{{ section.id }}-{{ block.id }}">
                           <span class="card__title heading h3">{{ 'product.general.description' | t }}</span>
                           <span class="plus-button plus-button--large"></span>
                         </button>
@@ -125,37 +106,13 @@
                           </div>
                         </div>
                       {%- else -%}
-                        {% if settings.show_descricao %}
-                          <div
-                            class="card__header"
-                            style="box-shadow: 0px 9px 25px -24px black;padding: 9px;border-bottom: inherit;;border-radius: 6px 6px 0 0;"
-                          >
-                            <h2
-                              class="card__title heading h3"
-                              style="display: flex;flex-direction: row-reverse;align-items: center;justify-content: flex-end;font-size: 13px;text-transform: uppercase;"
-                            >
-                              {{ 'product.general.description' | t }}
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                x="0px"
-                                y="0px"
-                                width="30"
-                                height="30"
-                                viewBox="0 0 30 30"
-                                style="fill: #727272;width: 25px;"
-                              >
-                                <path d="M24,4H6C4.895,4,4,4.895,4,6v18c0,1.105,0.895,2,2,2h18c1.105,0,2-0.895,2-2V6C26,4.895,25.105,4,24,4z M9,16 c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1s1,0.448,1,1C10,15.552,9.552,16,9,16z M21,16h-8c-0.552,0-1-0.448-1-1 c0-0.552,0.448-1,1-1h8c0.552,0,1,0.448,1,1C22,15.552,21.552,16,21,16z M9,10c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1 s1,0.448,1,1C10,9.552,9.552,10,9,10z M21,10h-8c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1h8c0.552,0,1,0.448,1,1 C22,9.552,21.552,10,21,10z M9,22c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1s1,0.448,1,1C10,21.552,9.552,22,9,22z M21,22h-8 c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1h8c0.552,0,1,0.448,1,1C22,21.552,21.552,22,21,22z"></path>
-                              </svg>
-                            </h2>
-                          </div>
-                        {% endif %}
 
-                        <div
-                          class="card__section {% if block.settings.display_mode == 'view_more' %}expandable-content{% endif %}"
-                          {% if block.settings.display_mode == 'view_more' %}
-                            aria-expanded="false"
-                          {% endif %}
-                        >
+                         {% if settings.show_descricao %}
+                        <div class="card__header" style="box-shadow: 0px 9px 25px -24px black;padding: 9px;border-bottom: inherit;;border-radius: 6px 6px 0 0;"><h2 class="card__title heading h3" style="display: flex;flex-direction: row-reverse;align-items: center;justify-content: flex-end;font-size: 13px;text-transform: uppercase;">{{ 'product.general.description' | t }}<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30" style="fill: #727272;width: 25px;"><path d="M24,4H6C4.895,4,4,4.895,4,6v18c0,1.105,0.895,2,2,2h18c1.105,0,2-0.895,2-2V6C26,4.895,25.105,4,24,4z M9,16 c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1s1,0.448,1,1C10,15.552,9.552,16,9,16z M21,16h-8c-0.552,0-1-0.448-1-1 c0-0.552,0.448-1,1-1h8c0.552,0,1,0.448,1,1C22,15.552,21.552,16,21,16z M9,10c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1 s1,0.448,1,1C10,9.552,9.552,10,9,10z M21,10h-8c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1h8c0.552,0,1,0.448,1,1 C22,9.552,21.552,10,21,10z M9,22c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1s1,0.448,1,1C10,21.552,9.552,22,9,22z M21,22h-8 c-0.552,0-1-0.448-1-1c0-0.552,0.448-1,1-1h8c0.552,0,1,0.448,1,1C22,21.552,21.552,22,21,22z"></path></svg></h2>
+                        </div>
+                       {% endif %}
+
+                        <div class="card__section {% if block.settings.display_mode == 'view_more' %}expandable-content{% endif %}" {% if block.settings.display_mode == 'view_more' %}aria-expanded="false"{% endif %}>
                           <div class="rte text--pull">
                             {{ product.description | remove: 'data-section-type="product"' }}
                           </div>
@@ -163,13 +120,7 @@
                           {%- if block.settings.display_mode == 'view_more' -%}
                             <button class="expandable-content__toggle">
                               <span class="expandable-content__toggle-icon"></span>
-                              <span
-                                class="expandable-content__toggle-text"
-                                data-view-more="{{ 'product.general.view_more' | t | escape }}"
-                                data-view-less="{{ 'product.general.view_less' | t | escape }}"
-                              >
-                                {{- 'product.general.view_more' | t -}}
-                              </span>
+                              <span class="expandable-content__toggle-text" data-view-more="{{ 'product.general.view_more' | t | escape }}" data-view-less="{{ 'product.general.view_less' | t | escape }}">{{- 'product.general.view_more' | t -}}</span>
                             </button>
                           {%- endif -%}
                         </div>
@@ -180,9 +131,9 @@
 
               {%- when 'content' -%}
                 {%- comment -%}
-                  --------------------------------------------------------------------------------------
-                  CONTENT (we first check the page and then inline content)
-                  --------------------------------------------------------------------------------------
+                --------------------------------------------------------------------------------------
+                CONTENT (we first check the page and then inline content)
+                --------------------------------------------------------------------------------------
                 {%- endcomment -%}
 
                 {%- assign page = block.settings.page -%}
@@ -196,18 +147,10 @@
                 {%- endif -%}
 
                 {%- if title != blank and content != blank -%}
-                  <div
-                    class="product-block-list__item product-block-list__item--content"
-                    {{ block.shopify_attributes }}
-                  >
+                  <div class="product-block-list__item product-block-list__item--content" {{ block.shopify_attributes }}>
                     <div class="card">
                       {%- if block.settings.display_mode == 'collapse' -%}
-                        <button
-                          class="card__collapsible-button"
-                          data-action="toggle-collapsible"
-                          aria-expanded="false"
-                          aria-controls="block-{{ section.id }}-{{ block.id }}"
-                        >
+                        <button class="card__collapsible-button" data-action="toggle-collapsible" aria-expanded="false" aria-controls="block-{{ section.id }}-{{ block.id }}">
                           <span class="card__title heading h3">{{ title }}</span>
                           <span class="plus-button plus-button--large"></span>
                         </button>
@@ -224,12 +167,7 @@
                           <h2 class="card__title heading h3">{{ title }}</h2>
                         </div>
 
-                        <div
-                          class="card__section {% if block.settings.display_mode == 'view_more' %}expandable-content{% endif %}"
-                          {% if block.settings.display_mode == 'view_more' %}
-                            aria-expanded="false"
-                          {% endif %}
-                        >
+                        <div class="card__section {% if block.settings.display_mode == 'view_more' %}expandable-content{% endif %}" {% if block.settings.display_mode == 'view_more' %}aria-expanded="false"{% endif %}>
                           <div class="rte text--pull">
                             {{ content }}
                           </div>
@@ -237,13 +175,7 @@
                           {%- if block.settings.display_mode == 'view_more' -%}
                             <button class="expandable-content__toggle">
                               <span class="expandable-content__toggle-icon"></span>
-                              <span
-                                class="expandable-content__toggle-text"
-                                data-view-more="{{ 'product.general.view_more' | t | escape }}"
-                                data-view-less="{{ 'product.general.view_less' | t | escape }}"
-                              >
-                                {{- 'product.general.view_more' | t -}}
-                              </span>
+                              <span class="expandable-content__toggle-text" data-view-more="{{ 'product.general.view_more' | t | escape }}" data-view-less="{{ 'product.general.view_less' | t | escape }}">{{- 'product.general.view_more' | t -}}</span>
                             </button>
                           {%- endif -%}
                         </div>
@@ -252,107 +184,78 @@
                   </div>
                 {%- endif -%}
 
-              {%- when 'liquid' -%}
-                {%- comment -%}
-                  --------------------------------------------------------------------------------------
-                  LIQUID COE
-                  --------------------------------------------------------------------------------------
-                {%- endcomment -%}
+            {%- when 'liquid' -%}
+              {%- comment -%}
+              --------------------------------------------------------------------------------------
+              LIQUID COE
+              --------------------------------------------------------------------------------------
+              {%- endcomment -%}
 
-                {%- assign title = block.settings.title -%}
-                {%- assign liquid = block.settings.liquid -%}
+              {%- assign title = block.settings.title -%}
+              {%- assign liquid = block.settings.liquid -%}
 
-                {%- if title != blank and liquid != blank -%}
-                  <div
-                    class="product-block-list__item product-block-list__item--content"
-                    {{ block.shopify_attributes }}
-                  >
-                    <div class="card">
-                      {%- if block.settings.display_mode == 'collapse' -%}
-                        <button
-                          class="card__collapsible-button"
-                          data-action="toggle-collapsible"
-                          aria-expanded="false"
-                          aria-controls="block-{{ section.id }}-{{ block.id }}"
-                        >
-                          <span class="card__title heading h3">{{ title }}</span>
-                          <span class="plus-button plus-button--large"></span>
-                        </button>
+              {%- if title != blank and liquid != blank -%}
+                <div class="product-block-list__item product-block-list__item--content" {{ block.shopify_attributes }}>
+                  <div class="card">
+                    {%- if block.settings.display_mode == 'collapse' -%}
+                      <button class="card__collapsible-button" data-action="toggle-collapsible" aria-expanded="false" aria-controls="block-{{ section.id }}-{{ block.id }}">
+                        <span class="card__title heading h3">{{ title }}</span>
+                        <span class="plus-button plus-button--large"></span>
+                      </button>
 
-                        <div id="block-{{ section.id }}-{{ block.id }}" class="card__collapsible">
-                          <div class="card__collapsible-content">
-                            <div class="rte text--pull">
-                              {{ liquid }}
-                            </div>
-                          </div>
-                        </div>
-                      {%- else -%}
-                        <div class="card__header">
-                          <h2 class="card__title heading h3">{{ title }}</h2>
-                        </div>
-
-                        <div
-                          class="card__section {% if block.settings.display_mode == 'view_more' %}expandable-content{% endif %}"
-                          {% if block.settings.display_mode == 'view_more' %}
-                            aria-expanded="false"
-                          {% endif %}
-                        >
+                      <div id="block-{{ section.id }}-{{ block.id }}" class="card__collapsible">
+                        <div class="card__collapsible-content">
                           <div class="rte text--pull">
                             {{ liquid }}
                           </div>
-
-                          {%- if block.settings.display_mode == 'view_more' -%}
-                            <button class="expandable-content__toggle">
-                              <span class="expandable-content__toggle-icon"></span>
-                              <span
-                                class="expandable-content__toggle-text"
-                                data-view-more="{{ 'product.general.view_more' | t | escape }}"
-                                data-view-less="{{ 'product.general.view_less' | t | escape }}"
-                              >
-                                {{- 'product.general.view_more' | t -}}
-                              </span>
-                            </button>
-                          {%- endif -%}
                         </div>
-                      {%- endif -%}
-                    </div>
-                  </div>
-                {%- endif -%}
+                      </div>
+                    {%- else -%}
+                      <div class="card__header">
+                        <h2 class="card__title heading h3">{{ title }}</h2>
+                      </div>
 
-                {%- comment -%}
-                  --------------------------------------------------------------------------------------
-                  REVIEWS
-                  --------------------------------------------------------------------------------------
-                {%- endcomment -%}
+                      <div class="card__section {% if block.settings.display_mode == 'view_more' %}expandable-content{% endif %}" {% if block.settings.display_mode == 'view_more' %}aria-expanded="false"{% endif %}>
+                        <div class="rte text--pull">
+                          {{ liquid }}
+                        </div>
+
+                        {%- if block.settings.display_mode == 'view_more' -%}
+                          <button class="expandable-content__toggle">
+                            <span class="expandable-content__toggle-icon"></span>
+                            <span class="expandable-content__toggle-text" data-view-more="{{ 'product.general.view_more' | t | escape }}" data-view-less="{{ 'product.general.view_less' | t | escape }}">{{- 'product.general.view_more' | t -}}</span>
+                          </button>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
+
+              {%- comment -%}
+              --------------------------------------------------------------------------------------
+              REVIEWS
+              --------------------------------------------------------------------------------------
+              {%- endcomment -%}
               {%- when 'reviews' -%}
                 <div class="product-block-list__item product-block-list__item--reviews" {{ block.shopify_attributes }}>
                   <span id="product-reviews" class="anchor"></span>
 
                   <div class="card">
                     <div class="card__section">
-                      {%- assign reviews_count = product.metafields.spr.reviews
-                        | split: '<meta itemprop="reviewCount" content="'
-                        | last
-                        | split: '">'
-                        | first
-                        | times: 1
-                      -%}
-                      <div
-                        id="shopify-product-reviews"
-                        class="spr-reviews {% if reviews_count > 0 %}spr-reviews--has-reviews{% endif %}"
-                        data-id="{{ product.id }}"
-                      >
-                        {{ product.metafields.spr.reviews }}
-                      </div>
+                      {%- assign reviews_count = product.metafields.spr.reviews | split: '<meta itemprop="reviewCount" content="' | last | split: '">' | first | times: 1 -%}
+                      <div id="shopify-product-reviews" class="spr-reviews {% if reviews_count > 0 %}spr-reviews--has-reviews{% endif %}" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
                     </div>
                   </div>
                 </div>
 
-                {%- comment -%}
-                  --------------------------------------------------------------------------------------
-                  TRUST BADGE
-                  --------------------------------------------------------------------------------------
-                {%- endcomment -%}
+           
+          
+              {%- comment -%}
+              --------------------------------------------------------------------------------------
+              TRUST BADGE
+              --------------------------------------------------------------------------------------
+              {%- endcomment -%}
 
               {%- when 'trust' -%}
                 {%- if block.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
@@ -378,14 +281,16 @@
 
                           <div class="payment-list">
                             {% for type in shop.enabled_payment_types %}
-                              <img class="cartoes" src="{{ 'Visa.svg' | asset_url }}" alt="Visa">
-                              <img class="cartoes" src="{{ 'mastercard.svg' | asset_url }}" alt="Mastercard">
-                              <img class="cartoes" src="{{ 'hipercard.svg' | asset_url }}" alt="Hipercard">
-                              <img class="cartoes" src="{{ 'Elo.svg' | asset_url }}" alt="Elo">
-                              <img class="cartoes" src="{{ 'Amex.svg' | asset_url }}" alt="Amex">
-                              <img class="cartoes" src="{{ 'Discover.svg' | asset_url }}" alt="Discover">
-                              <img class="cartoes" src="{{ 'Pix.svg' | asset_url }}" alt="Pix">
-                              <img class="cartoes" src="{{ 'Boleto.svg' | asset_url }}" alt="Pix">
+                              
+            <img class="cartoes" src="{{ 'Visa.svg' | asset_url }}" alt="Visa">
+            <img class="cartoes" src="{{ 'mastercard.svg' | asset_url }}" alt="Mastercard">
+            <img class="cartoes" src="{{ 'hipercard.svg' | asset_url }}" alt="Hipercard">
+         <img class="cartoes" src="{{ 'Elo.svg' | asset_url }}" alt="Elo">
+        <img class="cartoes" src="{{ 'Amex.svg' | asset_url }}" alt="Amex">
+           <img class="cartoes" src="{{ 'Discover.svg' | asset_url }}" alt="Discover">
+          <img class="cartoes" src="{{ 'Pix.svg' | asset_url }}" alt="Pix">
+            <img class="cartoes" src="{{ 'Boleto.svg' | asset_url }}" alt="Pix">
+                              
                             {% endfor %}
                           </div>
 
@@ -401,35 +306,26 @@
                             <p class="card__subtitle heading h6">{{ 'product.general.security' | t }}</p>
                           {%- endif -%}
 
-                          {%- assign badge_width = block.settings.custom_security_badge.width
-                            | at_most: 450
-                            | append: 'x'
-                          -%}
-                          <img
-                            class="product__trust-badge"
-                            style="width: {{ block.settings.custom_security_badge_width }}px"
-                            src="{{ block.settings.custom_security_badge | img_url: badge_width }}"
-                            srcset="{{ block.settings.custom_security_badge | img_url: badge_width }} 1x, {{ block.settings.custom_security_badge | img_url: badge_width, scale: 2 }} 2x"
-                            alt="{{ block.settings.custom_security_badge.alt | escape }}"
-                          >
+                          {%- assign badge_width = block.settings.custom_security_badge.width | at_most: 450 | append: 'x' -%}
+                          <img class="product__trust-badge" style="width: {{ block.settings.custom_security_badge_width }}px"
+                               src="{{ block.settings.custom_security_badge | img_url: badge_width }}"
+                               srcset="{{ block.settings.custom_security_badge | img_url: badge_width }} 1x, {{ block.settings.custom_security_badge | img_url: badge_width, scale: 2 }} 2x"
+                               alt="{{ block.settings.custom_security_badge.alt | escape }}">
                         {%- endif -%}
                       </div>
                     </div>
                   </div>
                 {%- endif -%}
 
-                {%- comment -%}
-                  --------------------------------------------------------------------------------------
-                  ESTIMATE SHIPPING
-                  --------------------------------------------------------------------------------------
-                {%- endcomment -%}
+              {%- comment -%}
+              --------------------------------------------------------------------------------------
+              ESTIMATE SHIPPING
+              --------------------------------------------------------------------------------------
+              {%- endcomment -%}
 
               {%- when 'shipping_estimator' -%}
                 {%- if product.available -%}
-                  <div
-                    class="product-block-list__item product-block-list__item--shipping"
-                    {{ block.shopify_attributes }}
-                  >
+                  <div class="product-block-list__item product-block-list__item--shipping" {{ block.shopify_attributes }}>
                     <div class="card">
                       <div class="card__header">
                         <h2 class="card__title heading h3">{{ 'product.general.estimate_shipping' | t }}</h2>
@@ -439,62 +335,34 @@
                         <div class="shipping-estimator form" role="form">
                           <div class="form__input-row">
                             <div class="form__input-wrapper">
-                              <label for="shipping-estimator-country" class="form__label">
-                                {{- 'cart.shipping_estimator.country' | t -}}
-                              </label>
+                              <label for="shipping-estimator-country" class="form__label">{{ 'cart.shipping_estimator.country' | t }}</label>
 
                               <div class="select-wrapper select-wrapper--primary">
                                 {%- render 'icon', icon: 'arrow-bottom' -%}
 
-                                <select
-                                  name="country"
-                                  id="shipping-estimator-country"
-                                  data-default="{{ customer.default_address.country | default: block.settings.shipping_estimator_default_country }}"
-                                  required
-                                >
+                                <select name="country" id="shipping-estimator-country" data-default="{{ customer.default_address.country | default: block.settings.shipping_estimator_default_country }}" required>
                                   {{- country_option_tags -}}
                                 </select>
                               </div>
                             </div>
 
                             <div class="form__input-wrapper" style="display: none">
-                              <label for="shipping-estimator-province" class="form__label">
-                                {{- 'cart.shipping_estimator.province' | t -}}
-                              </label>
+                              <label for="shipping-estimator-province" class="form__label">{{ 'cart.shipping_estimator.province' | t }}</label>
 
                               <div class="select-wrapper select-wrapper--primary">
                                 {%- render 'icon', icon: 'arrow-bottom' -%}
 
-                                <select
-                                  name="province"
-                                  id="shipping-estimator-province"
-                                  data-default="{{ customer.default_address.province }}"
-                                ></select>
+                                <select name="province" id="shipping-estimator-province" data-default="{{ customer.default_address.province }}"></select>
                               </div>
                             </div>
 
                             <div class="form__input-wrapper" style="max-width: 155px">
-                              <label for="shipping-estimator-zip" class="form__label">
-                                {{- 'cart.shipping_estimator.zip_code' | t -}}
-                              </label>
-                              <input
-                                type="text"
-                                name="zip"
-                                id="shipping-estimator-zip"
-                                class="form__field form__field--text"
-                                value="{{ customer.default.address.zip }}"
-                                required
-                              >
+                              <label for="shipping-estimator-zip" class="form__label">{{ 'cart.shipping_estimator.zip_code' | t }}</label>
+                              <input type="text" name="zip" id="shipping-estimator-zip" class="form__field form__field--text" value="{{ customer.default.address.zip }}" required>
                             </div>
                           </div>
 
-                          <button
-                            type="button"
-                            class="form__submit button button--primary"
-                            data-action="estimate-shipping"
-                          >
-                            {{ 'cart.shipping_estimator.estimate' | t }}
-                          </button>
+                          <button type="button" class="form__submit button button--primary" data-action="estimate-shipping">{{ 'cart.shipping_estimator.estimate' | t }}</button>
 
                           <div class="shipping-estimator__results rte" style="display: none;"></div>
                         </div>
@@ -502,14 +370,7 @@
 
                       {%- if block.settings.show_refunds_policy and shop.refund_policy != blank -%}
                         <div class="card__section card__section--tight">
-                          <button
-                            class="product__refund-policy-link link link--accented"
-                            data-action="open-modal"
-                            aria-controls="modal-refunds-policy"
-                          >
-                            {{ 'product.general.refund_policy' | t }}
-                            {%- render 'icon', icon: 'arrow-right' -%}
-                          </button>
+                          <button class="product__refund-policy-link link link--accented" data-action="open-modal" aria-controls="modal-refunds-policy">{{ 'product.general.refund_policy' | t }} {%- render 'icon', icon: 'arrow-right' -%}</button>
                         </div>
                       {%- endif -%}
                     </div>
@@ -519,11 +380,7 @@
                         <div class="modal__dialog" role="dialog">
                           <header class="modal__header">
                             <h3 class="modal__title heading h2">{{ 'product.general.refund_policy' | t }}</h3>
-                            <button
-                              class="modal__close link"
-                              data-action="close-modal"
-                              title="{{ 'general.accessibility.close' | t | escape }}"
-                            >
+                            <button class="modal__close link" data-action="close-modal" title="{{ 'general.accessibility.close' | t | escape }}">
                               {%- render 'icon', icon: 'close' -%}
                             </button>
                           </header>
@@ -542,6 +399,7 @@
           {%- endfor -%}
         </div>
       </div>
+      
     </div>
   {%- else -%}
     {%- comment -%}We display the quick view within the product template so we can re-use the same settings{%- endcomment -%}
@@ -650,11 +508,11 @@
           "label": "Mostrar seletor de quantidade de compra",
           "default": true
         },
-
+       
         {
           "type": "header",
           "content": "Estoque"
-        },
+        },    
         {
           "type": "paragraph",
           "content": "Você também pode adicionar uma contagem regressiva de estoque. [Saiba mais](https://support.maestrooo.com/pt-BR/article/177-product-show-an-stock-countdown-bar)."
@@ -677,7 +535,7 @@
         }
       ]
     },
-
+    
     {
       "type": "buy_buttons",
       "name": "Botões de compra",
@@ -793,6 +651,7 @@
       "settings": [
         {
           "type": "text",
+
 
           "id": "title",
           "label": "Título"

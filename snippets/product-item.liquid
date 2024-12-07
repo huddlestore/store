@@ -20,22 +20,24 @@
 
       {%- if settings.show_discount and product.price < product.compare_at_price -%}
         {%- if settings.discount_mode == 'percentage' -%}
-          {%- assign savings = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round | append: '% ' -%}
+          {%- assign savings = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round | append: '% ' -%} 
         {%- else -%}
           {%- capture savings -%}<span>{{ product.compare_at_price | minus: product.price | money }}</span>{%- endcapture -%}
         {%- endif -%}
 
-        <span class="product-label product-label--on-sale">{{ 'collection.product.discount_html' | t: savings: savings }}<svg width="16" viewBox="0 0 16 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowDownChevron"><path d="M0 -3.65575e-06L16 0L8 8L0 -3.65575e-06Z" fill="#fff"></path></svg></span>
+        <span class="product-label product-label--on-sale">{{ 'collection.product.discount_html' | t: savings: savings }}<svg width="16" viewBox="0 0 16 8" fill="none" xmlns="https://www.w3.org/2000/svg" class="IconArrowDownChevron"><path d="M0 -3.65575e-06L16 0L8 8L0 -3.65575e-06Z" fill="#fff"></path></svg></span> 
       {%- endif -%}
     {%- endunless -%}
   {%- endcapture -%}
 
-  <!-- RYVIU APP :: WIDGET-TOTAL -->
+    <!-- RYVIU APP :: WIDGET-TOTAL --> 
 
-  <!-- / RYVIU APP -->
+<!-- / RYVIU APP -->  
 
-  <!-- AREVIEWS -->
-
+  
+<!-- AREVIEWS -->
+  
+  
   <!-- AREVIEWS -->
 
   {%- if product_labels != blank -%}
@@ -55,37 +57,18 @@
   {%- if product.media.size > 0 -%}
     {%- assign primary_media = product.featured_media -%}
 
-    <a
-      href="{{ product.url }}"
-      class="product-item__image-wrapper {% if show_secondary_media %}product-item__image-wrapper--with-secondary{% endif %}"
-    >
+    <a href="{{ product.url }}" class="product-item__image-wrapper {% if show_secondary_media %}product-item__image-wrapper--with-secondary{% endif %}">
       {%- capture supported_sizes -%}{%- render 'image-size', sizes: '200,300,400,500,600,700,800', image: primary_media.preview_image -%}{%- endcapture -%}
       {%- assign image_url = primary_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
-      <div
-        class="aspect-ratio {% if settings.product_image_size != 'natural' %}aspect-ratio--{{ settings.product_image_size }}{% endif %}"
-        style="padding-bottom: {{ 100.0 | divided_by: primary_media.preview_image.aspect_ratio }}%"
-      >
-        <img
-          class="product-item__primary-image lazyload image--fade-in"
-          data-media-id="{{ primary_media.id }}"
-          data-src="{{ image_url }}"
-          data-sizes="auto"
-          data-widths="[{{ supported_sizes }}]"
-          alt="{{ primary_media.alt | escape }}"
-        >
+      <div class="aspect-ratio {% if settings.product_image_size != 'natural' %}aspect-ratio--{{ settings.product_image_size }}{% endif %}" style="padding-bottom: {{ 100.0 | divided_by: primary_media.preview_image.aspect_ratio }}%">
+        <img class="product-item__primary-image lazyload image--fade-in" data-media-id="{{ primary_media.id }}" data-src="{{ image_url }}" data-sizes="auto" data-widths="[{{ supported_sizes }}]" alt="{{ primary_media.alt | escape }}">
 
         {%- if show_secondary_media -%}
           {%- capture supported_sizes -%}{%- render 'image-size', sizes: '200,300,400,500,600,700,800', image: product.media[1].preview_image -%}{%- endcapture -%}
           {%- assign image_url = product.media[1] | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
-          <img
-            class="product-item__secondary-image lazyload image--fade-in"
-            data-src="{{ image_url }}"
-            data-sizes="auto"
-            data-widths="[{{ supported_sizes }}]"
-            alt="{{ product.media[1].alt | escape }}"
-          >
+          <img class="product-item__secondary-image lazyload image--fade-in" data-src="{{ image_url }}" data-sizes="auto" data-widths="[{{ supported_sizes }}]" alt="{{ product.media[1].alt | escape }}">
         {%- endif -%}
 
         <noscript>
@@ -94,6 +77,7 @@
       </div>
     </a>
   {%- endif -%}
+  
 
   <div class="product-item__info">
     <div class="product-item__info-inner">
@@ -109,7 +93,7 @@
                 {%- capture price_max -%}{{ product.price_max | money }}{%- endcapture -%}
               {%- endif -%}
 
-
+          
           <span class="price price--compare">
                 <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
 
@@ -124,9 +108,9 @@
                 {{- 'collection.product.from_price_html' | t: price_min: price_min, price_max: price_max -}}
               </span>
 
-
+              
             {%- else -%}
-
+          
           <span class="price price--compare">
                 <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
                 {%- if settings.currency_code_enabled -%}
@@ -145,7 +129,7 @@
                 {%- endif -%}
               </span>
 
-
+              
             {%- endif -%}
           {%- elsif product.price_varies -%}
             {%- if settings.currency_code_enabled -%}
@@ -201,7 +185,7 @@
         {%- endif -%}
       {%- endcapture -%}
 
-      {%- if settings.product_price_position == 'before_title' -%}
+{%- if settings.product_price_position == 'before_title' -%}
         {{ price_list }}
       {%- endif -%}
 
@@ -209,9 +193,7 @@
         {{ vendor }}
       {%- endif -%}
 
-      <a href="{{ filtered_variant.url | default: product.url }}" class="product-item__title text--strong link">
-        {{- product.title | truncatewords: 5 -}}
-      </a>
+      <a href="{{ filtered_variant.url | default: product.url }}" class="product-item__title text--strong link">{{ product.title |truncatewords: 5 }}</a>
 
       {%- if settings.product_price_position == 'before_title' -%}
         {{ vendor }}
@@ -277,37 +259,22 @@
         </a>
       {%- endif -%}
 
-      {% liquid
-        assign taxa_12x = settings.juros_parcelamento | divided_by: 100 | plus: 1
-      %}
-
-      <p style="font-size: 12px;font-weight: 500;margin-top: -8px;margin-bottom: 14px;">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          x="0px"
-          y="0px"
-          width="14"
-          height="14"
-          viewBox="0 0 32 32"
-          style="top: 3px;position: relative;"
-        >
-          <path d="M 5 6 C 3.355469 6 2 7.355469 2 9 L 2 23 C 2 24.644531 3.355469 26 5 26 L 27 26 C 28.644531 26 30 24.644531 30 23 L 30 9 C 30 7.355469 28.644531 6 27 6 Z M 5 8 L 27 8 C 27.566406 8 28 8.433594 28 9 L 28 11 L 5 11 L 5 13 L 28 13 L 28 23 C 28 23.566406 27.566406 24 27 24 L 5 24 C 4.433594 24 4 23.566406 4 23 L 4 9 C 4 8.433594 4.433594 8 5 8 Z">
-          </path>
-        </svg>
-        ou 12x de
-        <b style="font-size:12px;color: var(--color-parcel-ini);">
-          {{- product.price | divided_by: 12 | times: taxa_12x | money -}}
-        </b>
-      </p>
-      {%- if settings.comprar_produto -%}
-        {% assign random = product.id | divided_by: 220022 | modulo: 40551 %}
-        <p style="font-size: 11px;margin-top: -16px;margin-bottom: -3px;">
-          +{{ random }}
-          {{ settings.mostrar_vendidos_text }}
-        </p>
+      
+      {% liquid assign taxa_12x = settings.juros_parcelamento | divided_by: 100 | plus: 1%}
+       
+<p style="font-size: 12px;font-weight: 500;margin-top: -8px;margin-bottom: 14px;" >
+  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="14" height="14" viewBox="0 0 32 32" style="top: 3px;position: relative;">
+    <path d="M 5 6 C 3.355469 6 2 7.355469 2 9 L 2 23 C 2 24.644531 3.355469 26 5 26 L 27 26 C 28.644531 26 30 24.644531 30 23 L 30 9 C 30 7.355469 28.644531 6 27 6 Z M 5 8 L 27 8 C 27.566406 8 28 8.433594 28 9 L 28 11 L 5 11 L 5 13 L 28 13 L 28 23 C 28 23.566406 27.566406 24 27 24 L 5 24 C 4.433594 24 4 23.566406 4 23 L 4 9 C 4 8.433594 4.433594 8 5 8 Z">
+    </path>
+  </svg> ou 12x de <b style="font-size:12px;color: var(--color-parcel-ini);">{{ product.price| divided_by: 12 | times: taxa_12x | money}}</b></p>
+{%- if settings.comprar_produto -%}
+        {% assign random = product.id | divided_by: 220022 | modulo: 40551 %}   
+    <p style="font-size: 11px;margin-top: -16px;margin-bottom: -3px;"> +{{ random }} {{ settings.mostrar_vendidos_text }}</p>
       {%- else -%}
-      {%- endif -%}
+  
 
+      {%- endif -%}
+       
       {%- if settings.show_inventory_quantity and product.template_suffix != 'pre-order' -%}
         {%- if product.available -%}
           {%- assign should_calculate_inventory = true -%}
@@ -334,26 +301,15 @@
             {%- endfor -%}
 
             {%- if all_inventory <= settings.low_inventory_threshold -%}
-              <span class="product-item__inventory inventory inventory--low">
-                {{- 'collection.product.low_stock_with_quantity_count' | t: count: all_inventory -}}
-              </span>
+              <span class="product-item__inventory inventory inventory--low">{{ 'collection.product.low_stock_with_quantity_count' | t: count: all_inventory }}</span>
             {%- else -%}
-              <span class="product-item__inventory inventory inventory--high">
-                {{- 'collection.product.in_stock_with_quantity_count' | t: count: all_inventory -}}
-              </span>
+              <span class="product-item__inventory inventory inventory--high">{{ 'collection.product.in_stock_with_quantity_count' | t: count: all_inventory }}</span>
             {%- endif -%}
           {%- else -%}
-            {%- if product.variants.first.inventory_policy == 'continue'
-              and product.variants.first.inventory_quantity <= 0
-              and product.variants.first.requires_shipping
-            -%}
-              <span class="product-item__inventory inventory inventory--high">
-                {{- 'collection.product.oversell_stock' | t -}}
-              </span>
+            {%- if product.variants.first.inventory_policy == 'continue' and product.variants.first.inventory_quantity <= 0 and product.variants.first.requires_shipping -%}
+              <span class="product-item__inventory inventory inventory--high">{{ 'collection.product.oversell_stock' | t }}</span>
             {%- else -%}
-              <span class="product-item__inventory inventory inventory--high">
-                {{- 'collection.product.in_stock' | t -}}
-              </span>
+              <span class="product-item__inventory inventory inventory--high">{{ 'collection.product.in_stock' | t }}</span>
             {%- endif -%}
           {%- endif -%}
         {%- else -%}
@@ -363,10 +319,7 @@
     </div>
 
     {%- if request.page_type == 'collection' or request.page_type == 'search' or show_add_to_cart -%}
-      {%- if section.settings.show_quick_view == 'list_grid'
-        or section.settings.show_quick_buy == 'list_grid'
-        or show_add_to_cart
-      -%}
+      {%- if section.settings.show_quick_view == 'list_grid' or section.settings.show_quick_buy == 'list_grid' or show_add_to_cart -%}
         {%- assign product_form_classes = 'product-item__action-list button-stack' -%}
       {%- else -%}
         {%- assign product_form_classes = 'product-item__action-list product-item__action-list--list-view-only button-stack' -%}
@@ -376,11 +329,7 @@
 
       {%- if product.template_suffix == 'contact' -%}
         <div class="{{ product_form_classes }}">
-          <a
-            href="mailto:{{ shop.email }}"
-            class="product-item__action-button button button--small button--primary"
-            style="font-size: 14px;"
-          >
+          <a href="mailto:{{ shop.email }}" class="product-item__action-button button button--small button--primary" style="font-size: 14px;">
             {{- 'product.form.contact_us' | t -}}
           </a>
         </div>
@@ -405,14 +354,10 @@
                 {%- endif -%}
               </button>
             {%- else -%}
-              <a href="{{ product.url }}" class="{{ quick_buy_classes }}">
-                {{- 'collection.product.choose_options' | t -}}
-              </a>
+              <a href="{{ product.url }}" class="{{ quick_buy_classes }}">{{ 'collection.product.choose_options' | t }}</a>
             {%- endif -%}
           {%- else -%}
-            <button class="{{ quick_buy_classes | replace: 'button--primary', 'button--disabled' }}" disabled>
-              {{ 'collection.product.sold_out' | t }}
-            </button>
+            <button class="{{ quick_buy_classes | replace: 'button--primary', 'button--disabled' }}" disabled>{{ 'collection.product.sold_out' | t }}</button>
           {%- endif -%}
 
           {%- if section.settings.show_quick_view == 'list_grid' -%}
@@ -421,16 +366,7 @@
             {%- assign quick_view_classes = 'product-item__action-button product-item__action-button--list-view-only button button--small button--ternary hidden-phone' -%}
           {%- endif -%}
 
-          <button
-            type="button"
-            class="{{ quick_view_classes }}"
-            data-action="open-modal"
-            data-secondary-action="open-quick-view"
-            aria-controls="modal-quick-view-{{ section.id }}"
-            data-product-url="{{ product.url }}"
-          >
-            {{ 'collection.product.quick_view' | t }}
-          </button>
+          <button type="button" class="{{ quick_view_classes }}" data-action="open-modal" data-secondary-action="open-quick-view" aria-controls="modal-quick-view-{{ section.id }}" data-product-url="{{ product.url }}">{{ 'collection.product.quick_view' | t }}</button>
         {%- endform -%}
       {%- endif -%}
     {%- endif -%}

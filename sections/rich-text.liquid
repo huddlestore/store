@@ -19,9 +19,7 @@
       {{ section.settings.content }}
 
       {%- if section.settings.button_link != blank and section.settings.button_text != blank -%}
-        <a href="{{ section.settings.button_link }}" class="button button--primary">
-          {{- section.settings.button_text | escape -}}
-        </a>
+        <a href="{{ section.settings.button_link }}" class="button button--primary">{{ section.settings.button_text | escape }}</a>
       {%- endif -%}
     </div>
   </div>
