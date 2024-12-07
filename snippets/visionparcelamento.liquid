@@ -2,7 +2,7 @@
     assign price = selected_variant.price
 -%}
 
-  
+
     <a onclick="toggleModal()" href="#" id="modal-open-button" style="display: inline-block;line-height: 1.3;margin-bottom: 20px;margin-top:9px;left:0px;position: relative;color:var(--color-quint-parcelamento);border: solid 1px var(--borda-atv-parcelamento2);text-decoration: underline !important;padding: 4px 6px;background:var(--color-quart-parcelamento);border-radius: var(--borda-atv-parcelamento);font-size: 14px;">+ Formas de pagamento</a>
 
     <div class="backdrop-modal-parcel" id="backdrop-modal-parcel">
@@ -187,7 +187,7 @@
                             Aceitamos:
                         </div>
                          <div style="padding: 8px;width: 100%;">
-          <center style="margin-top: -20px;">                   
+          <center style="margin-top: -20px;">
             {% if settings.show_bandeiras1 %}
             {% if settings.show_visa_p %}<img class="cartoesp" src="{{ 'Visa.svg' | asset_url }}" alt="Visa">{% endif %}
             {% if settings.show_master_p %}<img class="cartoesp" src="{{ 'mastercard.svg' | asset_url }}" alt="Mastercard">{% endif %}
@@ -203,11 +203,11 @@
             {% if settings.show_hiper_p %}<img class="cartoesp" src="{{ 'Hipercard2.svg' | asset_url }}" alt="Hipercard">{% endif %}
             {% if settings.show_elo_p %}<img class="cartoesp" src="{{ 'Elo2.svg' | asset_url }}" alt="Elo">{% endif %}
             {% if settings.show_amex_p %}<img class="cartoesp" src="{{ 'Amex2.svg' | asset_url }}" alt="Amex">{% endif %}
-            
+
 {% endif %}
-  
+
             </center>
-        </div> 
+        </div>
                     </div>
                 </div>
 

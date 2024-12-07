@@ -5,9 +5,12 @@
 }
 {%- endcapture -%}
 
-
-
-<section class="section" data-section-id="{{ section.id }}" data-section-type="featured-collection" data-section-settings='{{ section_settings }}'>
+<section
+  class="section"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-collection"
+  data-section-settings="{{ section_settings }}"
+>
   {%- assign collection = section.settings.collection -%}
 
   <div class="container">
@@ -17,7 +20,13 @@
       </div>
 
       {%- if section.settings.link_title != blank -%}
-        <a href="{{ section.settings.link_url | default: collection.url | default: '#' }}" class="section__action-link link">{{ section.settings.link_title | escape }} {% render 'icon', icon: 'tail-right' %}</a>
+        <a
+          href="{{ section.settings.link_url | default: collection.url | default: '#' }}"
+          class="section__action-link link"
+        >
+          {{- section.settings.link_title | escape }}
+          {% render 'icon', icon: 'tail-right' -%}
+        </a>
       {%- endif -%}
     </header>
   </div>
@@ -98,14 +107,18 @@
   </div>
 
   {%- comment -%}
-  --------------------------------------------------------------------------------------
-  QUICK VIEW CONTAINER
-  --------------------------------------------------------------------------------------
+    --------------------------------------------------------------------------------------
+    QUICK VIEW CONTAINER
+    --------------------------------------------------------------------------------------
   {%- endcomment -%}
 
   <div id="modal-quick-view-{{ section.id }}" class="modal" aria-hidden="true">
     <div class="modal__dialog modal__dialog--stretch" role="dialog">
-      <button class="modal__close link" data-action="close-modal" title="{{ 'general.accessibility.close' | t | escape }}">
+      <button
+        class="modal__close link"
+        data-action="close-modal"
+        title="{{ 'general.accessibility.close' | t | escape }}"
+      >
         {%- render 'icon', icon: 'close' -%}
       </button>
 

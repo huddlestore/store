@@ -5,11 +5,11 @@
   </div>
 
   {%- endif -%}
-    
+
  {% if settings.show_whats_compra %}
- 
+
 <a href="https://api.whatsapp.com/send?phone={{ settings.whats_num_compra }}&text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20o%20produto:%20{{ product.title | escape }}" class="btn-whatsapp-buy" target="_blank"><ion-icon name="logo-whatsapp" class="logo-whatsapp-ionic md hydrated" role="img" aria-label="logo whatsapp"></ion-icon>{{ settings.whats_compra_text }}</a>
- 
+
  <style>
 .logo-whatsapp-ionic {
     color: var(--wpp_cor1);
@@ -51,7 +51,7 @@
    <div style="margin-bottom:-15px"></div>
   {% endif %}
 
- 
+
  {% if settings.show_bandeiras %}
 
 <style>
@@ -62,7 +62,7 @@
     width: var(--bandeiras-w-mobile);
     margin-top: 0px;
     margin-bottom: 5px;
-  }  
+  }
   }
 
   @media(min-width:769px) {
@@ -73,7 +73,7 @@
     margin-bottom: 5px;
   }
   }
-  
+
   .security__payment p {
 	color: #565656;
 	text-align: center;
@@ -82,7 +82,7 @@
 }
 </style>
 
-  
+
 <center style="
     background: white;
     border: 1px solid #f6f6f8;
@@ -92,11 +92,11 @@
     margin-bottom: var(--margin-band-i);
     box-shadow: 0px 5px 6px -5px #f6f6f8;"><div class="security__payment" style="margin: 5px 0px 8px;"><p style="padding: 0px 0px 0px 0px;background: #f6f6f8;margin-top: -6px;border-radius: 4px;"><i style="color: #3A2A2F;"></i> <b>{{ settings.titulo_bandeiras }}</b></p>
     </div
-      
+
     <center style=""><div class="payment-list2">
 
    {% if settings.show_bandeiras1 %}
-      
+
             {% if settings.show_visa_p %}<img class="cartoes" src="{{ 'Visa.svg' | asset_url }}" alt="Visa">{% endif %}
             {% if settings.show_master_p %}<img class="cartoes" src="{{ 'mastercard.svg' | asset_url }}" alt="Mastercard">{% endif %}
             {% if settings.show_hiper_p %}<img class="cartoes" src="{{ 'hipercard.svg' | asset_url }}" alt="Hipercard">{% endif %}
@@ -116,20 +116,20 @@
             {% if settings.show_amex_p %}<img class="cartoes" src="{{ 'Amex2.svg' | asset_url }}" alt="Amex">{% endif %}
             {% if settings.show_pix_p %}<img class="cartoes" src="{{ 'Pix2.svg' | asset_url }}" alt="Pix">{% endif %}
             {% if settings.show_boleto_p %}<img class="cartoes" src="{{ 'Boleto2.svg' | asset_url }}" alt="Pix">{% endif %}
-     
+
 {% endif %}
 
-      
+
   </div>   </center></center>
 
 {% endif %}
 
 {% if settings.show_garantia %}
- 
+
    <div class="bandeiras-background-top" style="margin-top: var(--margin-gar-s)!important;margin-bottom: var(--margin-gar-i); padding: 12px 15px 4px 15px; border-radius: 6px; background: #FAFAFA; display: flex;">
  <div style="margin-right: 10px">
    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="28" height="28" x="0" y="0" viewBox="0 0 20 20" style="enable-background:new 0 0 512 512;border-radius: 18px;padding: 4px;border: 1px solid var(--product-icon-return-color);" xml:space="preserve"><g><path d="M10 0 2 2.3v7.4c0 4.7 3.2 8.9 7.7 10.2l.3.1.3-.1c4.5-1.3 7.7-5.5 7.7-10.2V2.3zm6 9.7c0 3.7-2.5 7.1-6 8.2-3.5-1.1-6-4.5-6-8.2V3.8l6-1.7 6 1.7z" fill="var(--product-icon-return-color)" data-original="#000000"></path><path d="M7.4 8.4 6 9.8l3.3 3.3 4.6-4.7L12.5 7l-3.2 3.2z" fill="var(--product-icon-return-color)" data-original="#000000"></path></g></svg>
-  </div>  
+  </div>
    <span style="margin-top: -5px; margin-bottom: 5px;"><div style="font-weight: 700;font-size: 14px;color: var(--product-return-color);">{{ settings.titulo_garantia }}</div><div style="font-size: 12px; line-height: 10px; color: #8f8f8f;">{{ settings.titulo_garantia2 }}</div><div style="font-size: 12px; color: #8f8f8f;">{{ settings.titulo_garantia3 }}</div>    </span>
  </div>
 {% endif %}

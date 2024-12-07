@@ -5,7 +5,7 @@
 {%- endif -%}
 
 {%- assign downcase_title = mega_menu.title | downcase | strip -%}
-{%- assign mega_menu_block = nil -%}
+{%- assign mega_menu_block = null -%}
 
 {%- for block in section.blocks -%}
   {%- assign downcase_block_menu_item = block.settings.menu_item | downcase | strip -%}
@@ -16,7 +16,14 @@
   {%- endif -%}
 {%- endfor -%}
 
-<div id="{{ index }}" class="mega-menu {% if is_floating %}mega-menu--floating{% endif %}" data-type="menu" aria-hidden="true" role="list" {{ mega_menu_block.shopify_attributes }}>
+<div
+  id="{{ index }}"
+  class="mega-menu {% if is_floating %}mega-menu--floating{% endif %}"
+  data-type="menu"
+  aria-hidden="true"
+  role="list"
+  {{ mega_menu_block.shopify_attributes }}
+>
   {%- capture mega_menu_inner -%}
     {%- assign should_center = false -%}
 

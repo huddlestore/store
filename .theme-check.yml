@@ -1,0 +1,22 @@
+# Disable specific checks
+DeprecateLazysizes:
+  enabled: false
+
+ImgWidthAndHeight:
+  enabled: false
+
+ValidSchema:
+  enabled: false
+
+# Enable specific checks
+Performance:
+  enabled: true
+
+LiquidSyntax:
+  enabled: true
+
+# Set the severity level for specific checks
+severity:
+  DeprecateLazysizes: warning
+  ImgWidthAndHeight: warning
+  ValidSchema: warning

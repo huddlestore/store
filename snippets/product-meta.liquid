@@ -28,35 +28,49 @@
 {%- endif -%}
 
 <div class="product-meta">
-            {% assign random = product.id | divided_by: 220022 | modulo: 4055 %}   
+  {% assign random = product.id | divided_by: 220022 | modulo: 4055 %}
 
-  {% if settings.mostrar_label %}<span class="quantitysell" style="font-size: 10px;color: var(--vendidos-cor-fonte);background: var(--vendidos-cor-fundo);padding: 3px 5px;border-radius: 3px;">{{ random }} VENDIDOS</span>{% endif %}
- {% if settings.mostrar_label2  %}<span class="quantitysell" style="padding: 3px 5px;font-size: 10px;border-radius: 3px;background-color: var(--label2-cor-fundo);color: var(--label2-cor-fonte);">{{ settings.label2_texto }}</span> {% endif %}
-  {% if settings.mostrar_label3  %}<span class="quantitysell" style="padding: 3px 5px;font-size: 10px;border-radius: 3px;background-color:var(--label3-cor-fundo);color: var(--label3-cor-fonte);">{{ settings.label3_texto }}</span> {% endif %}
-   
-  
-      
+  {% if settings.mostrar_label -%}
+    <span
+      class="quantitysell"
+      style="font-size: 10px;color: var(--vendidos-cor-fonte);background: var(--vendidos-cor-fundo);padding: 3px 5px;border-radius: 3px;"
+    >
+      {{- random }} VENDIDOS</span
+    >
+  {%- endif %}
+  {% if settings.mostrar_label2 -%}
+    <span
+      class="quantitysell"
+      style="padding: 3px 5px;font-size: 10px;border-radius: 3px;background-color: var(--label2-cor-fundo);color: var(--label2-cor-fonte);"
+    >
+      {{- settings.label2_texto -}}
+    </span>
+  {% endif %}
+  {% if settings.mostrar_label3 -%}
+    <span
+      class="quantitysell"
+      style="padding: 3px 5px;font-size: 10px;border-radius: 3px;background-color:var(--label3-cor-fundo);color: var(--label3-cor-fonte);"
+    >
+      {{- settings.label3_texto -}}
+    </span>
+  {% endif %}
+
   {%- if template.name == 'product' and template != 'product.quick-view' -%}
     <h1 class="product-meta__title heading h1">{{ product.title }}</h1>
-  
 
-  
   {%- else -%}
     <h3 class="product-meta__title heading h2">
       <a href="{{ product.url }}">{{ product.title }}</a>
     </h3>
   {%- endif -%}
 
-  
-      <!-- Start Areviews Collection Rating Code -->
-      
-      <!-- End Areviews Collection Rating Code -->
-      
-  
+  <!-- Start Areviews Collection Rating Code -->
+
+  <!-- End Areviews Collection Rating Code -->
+
   <!-- AREVIEWS -->
-  
-  
-{%- capture product_labels -%}
+
+  {%- capture product_labels -%}
     {%- for tag in product.tags -%}
       {%- if tag contains '__label:' -%}
         <span class="product-label product-label--custom1">{{ tag | split: '__label:' | last }}</span>
@@ -70,8 +84,8 @@
         <span class="product-label product-label--custom2">{{ tag | split: '__label2:' | last }}</span>
       {%- endif -%}
     {%- endfor -%}
-  
-  
+
+
   {% comment %}
 
     {%- if settings.show_discount -%}
@@ -85,11 +99,9 @@
 
       <span class="product-label product-label--on-sale" {% unless selected_variant.price < selected_variant.compare_at_price %}style="display: none"{% endunless %}>{{ 'collection.product.discount_html' | t: savings: savings }}</span>
     {%- endif -%}
-  
+
   {% endcomment %}
   {%- endcapture -%}
-  
-  
 
   {%- if product_labels != blank -%}
     <div class="product-meta__label-list">
@@ -102,20 +114,28 @@
       {%- if block.settings.show_vendor -%}
         {%- assign vendor_handle = product.vendor | handle -%}
         {%- assign collection_for_vendor = collections[vendor_handle] -%}
-
-
       {%- endif -%}
 
       {%- if block.settings.show_sku -%}
-        <span class="product-meta__sku" {% if selected_variant.sku == blank %}style="display: none"{% endif %}>
-          {{- 'product.general.sku' | t -}} <span class="product-meta__sku-number">{{ selected_variant.sku }}</span>
+        <span
+          class="product-meta__sku"
+          {% if selected_variant.sku == blank %}
+            style="display: none"
+          {% endif %}
+        >
+          {{- 'product.general.sku' | t -}}
+          <span class="product-meta__sku-number">{{ selected_variant.sku }}</span>
         </span>
       {%- endif -%}
     </div>
   {%- endif -%}
 
   {%- if block.settings.show_reviews_badge -%}
-    <a href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews" class="product-meta__reviews-badge link" data-offset="30">
+    <a
+      href="{% if template.name != 'product' or template == 'product.quick-view' %}{{ product.url }}{% endif %}#product-reviews"
+      class="product-meta__reviews-badge link"
+      data-offset="30"
+    >
       {%- render 'product-rating', product: product -%}
     </a>
   {%- endif -%}
@@ -126,6 +146,5 @@
     </div>
   {%- endif -%}
 </div>
-
 
 <hr class="card__separator">
