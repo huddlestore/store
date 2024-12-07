@@ -17,6 +17,10 @@
 }
 </style>
 
+{% if collection.sort_by == 'best-selling' %}
+<br><br><center><h4>Erro de carregamento de filtro<br><br></h4></center>
+{% else %}
+
 {%- assign color_label = 'color,colour,couleur,cor,colore,farbe,색,色,カラー,färg,farve,szín,barva' | split: ',' -%}
 {%- assign items_per_page = cart.attributes.collection_products_per_page | default: section.settings.default_products_per_page -%}
 {%- assign quick_links_menu = section.settings.quick_links -%}
@@ -754,6 +758,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 {% schema %}
 {
   "name": "Coleção",
