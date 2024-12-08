@@ -1,0 +1,71 @@
+<style>
+   #YQNum {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 1px solid #000000;
+      border-radius: 4px;
+   }
+
+   .botaorastreio {
+      display: inline-block;
+      background-color: #041E42;
+      border: none;
+      color: #f1f1f1;
+      text-align: center;
+      font-size: 24px;
+      padding: 15px 32px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 4px 2px;
+      padding: 4px 20px;
+      margin: 20px;
+      border-radius: 8px;
+   }
+
+   .botaorastreio span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+   }
+</style>
+<p style="font-weight: bold; text-align: center;">Insira seu n&uacute;mero de rastreamento abaixo.</p>
+<div style="text-align: center;"><input id="YQNum" class="textorastreio" maxlength="50" type="text"
+      placeholder="Insira o código de rastreio:" />
+   <div id="container"></div>
+   <br />
+   <div id="YQContainer"></div>
+   <script src="//www.17track.net/externalcall.js" type="text/javascript"></script>
+   <script type="text/javascript">
+      function doTrack() {
+         var num = document.getElementById("YQNum").value;
+         if (num === "") {
+            alert("Digite o seu código de rastreio.");
+            Retorna;
+         }
+         YQV5.trackSingle({
+            YQ_ContainerId: "YQContainer",
+            YQ_Height: 800,
+            YQ_Fc: "0",
+            YQ_Lang: "pt-br",
+            YQ_Num: num
+         });
+      }
+   </script>
+   <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+         var button = document.createElement('button');
+         button.type = 'button';
+         button.innerHTML = 'Buscar';
+         button.className = 'botaorastreio';
+
+         button.onclick = function () {
+            doTrack()
+         };
+         var container = document.getElementById('container');
+         container.appendChild(button);
+      }, false);
+   </script>
