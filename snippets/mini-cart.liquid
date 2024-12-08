@@ -198,7 +198,7 @@
           <div class="button-group button-group--loose button-group--fit" style="display: flex;flex-direction: column;flex-wrap: nowrap;align-content">
             {%- if settings.cart_show_checkout_button -%}
               
-             <button type="submit" name="checkout" class="page__button-action button button--primary-cart metade" style="width: 90% !important;align-self: center;" onclick='JavaScript:timedRedirect()'><i class="fas fa-check-square"></i> {{ 'cart.general.checkout' | t }}</button>
+             <button type="submit" name="checkout" class="page__button-action button button--primary-cart metade" style="width: 90% !important;align-self: center;" onclick='JavaScript:timedRedirect()'>{{ 'cart.general.checkout' | t }}</button>
           <a class="metade" href="/collections"><span style="font-size: 18px !important; width: 95% !important;" class="page__button-action button button--primary botaocontinuar"><i class="fas fa-undo-alt"></i> CONTINUAR COMPRANDO</span></a>
   
               {%- endif -%}
