@@ -12413,3 +12413,5 @@ body.active-modal .backdrop-modal-parcel {
     font-size: 12px;
     margin-top: -5px !important;
 }
+
+button#checkout { display:none !important; }
