@@ -3773,7 +3773,7 @@ button.product-form__add-button.button.button--primary {
 	object-position: center;
 	font-family: "object-fit: cover; object-position: center;";
 	transition: opacity .2s ease-in-out, transform .95s cubic-bezier(.25, .46, .45, .94)
-  
+
 }
 
 .collection-item__title {
@@ -4500,7 +4500,7 @@ select::-ms-expand {
 .footer {
 	padding: 10px 0 30px;
 	border-top: var(--footer-border);
-	background: var(--rodape-degrade-background); 
+	background: var(--rodape-degrade-background);
     color: var(--footer-body-text-color);
 	font-size: 15px
 }
@@ -5225,7 +5225,7 @@ select::-ms-expand {
 	display: flex;
 	height: 37px;
 	align-items: center;
-	
+
 	background: #f4f4f4;
 	color: var(--text-color);
 	z-index: 1;
@@ -5424,7 +5424,7 @@ select::-ms-expand {
     padding: 2px 5px 2px 5px;
     transition: background .2s ease-in-out;
     border-bottom: 1px solid #d9d9d9;
-    
+
 }
 
 .search-bar__result-item--skeleton {
@@ -5962,7 +5962,7 @@ select::-ms-expand {
 	border: 1px solid var(--border-color);
 	white-space: nowrap;
 	z-index: 1;
-	column-count: 2;
+	column-count: 4;
 	break-inside: avoid;
 	line-height: 3
 }
@@ -8502,7 +8502,7 @@ screen and (min-width:1000px) and (hover:hover) {
 
 	.product-block-list__wrapper {
 		    width: calc(50% - 15px);
-    margin-left: 0; 
+    margin-left: 0;
     padding-left: 120px;
 	}
 
@@ -8942,11 +8942,11 @@ screen and (min-width:1000px) and (hover:hover) {
 	overflow: hidden
 }
 
- 
+
 .section__title {
 	margin-bottom: 0;
 	font-size: 18px;
-	
+
 }
 h2.section__title.heading.h3{
 border-bottom: 3px solid var(--sub-titulo-inicial);
@@ -9245,7 +9245,7 @@ border-bottom: 3px solid var(--sub-titulo-inicial);
 	}
 
 	.section__header-stack>.section__title {
-		margin: 0 
+		margin: 0
 	}
 
 	.slideshow:not(.slideshow--edge2edge) {
@@ -9575,7 +9575,7 @@ border-bottom: 3px solid var(--sub-titulo-inicial);
 	.text-with-icons__item {
 		display: flex;
 		flex-basis: calc(50% - 140px);
-          
+
     justify-content: center;
 	}
 }
@@ -11739,7 +11739,7 @@ ul.footer__linklist.list--unstyled {
 	margin-top: -5px;
 	margin-bottom: .5rem;
     display: block;
- 
+
 }
 
 @media only screen and (max-width:600px) {
@@ -11752,7 +11752,7 @@ margin-bottom: 4.5rem;
 .payment-box2 {
 	margin-top: 0;
 	margin-bottom: 15px;
-    
+
 }
 
 .selo {
@@ -12183,10 +12183,10 @@ body.active-modal .backdrop-modal-parcel {
       top: 10px;
    text-align: -webkit-center;
   }
-  
+
 .modal-parcel {
     position: relative;
-    
+
     padding: 15px 20px 10px 20px;
     background: #ffffff;
    min-height: fit-content;
@@ -12207,14 +12207,14 @@ body.active-modal .backdrop-modal-parcel {
         background: #ffffff;
         max-width: 430px;
         min-width:  340px ;
-        
+
         cursor: initial;
         font-family: 'Poppins', sans-serif;
         border-radius: 4px;
         box-sizing: border-box;
     }
 }
-    
+
 
 .modal-parcel-content {
     display: flex;
